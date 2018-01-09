@@ -1,0 +1,43 @@
+{
+    "name": "setka/setka-editor",
+    "description": "Setka Editor. Create beautiful posts with WordPress.",
+    "type": "wordpress-plugin",
+    "license": "GPLv2 or later",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Kolya Korobochkin",
+            "email": "me@korobochkin.com"
+        }
+    ],
+    "require": {
+        "composer/installers": "^1.2",
+        "symfony/form": "^3.3",
+        "symfony/validator": "^3.3",
+        "symfony/twig-bridge": "^3.3",
+        "symfony/http-foundation": "^3.3",
+        "symfony/polyfill-mbstring": "^1.5",
+        "php": ">=5.5.9",
+        "monolog/monolog": "^1.23",
+        "symfony/config": "^3.3"
+    },
+    "autoload": {
+        "files": [
+            "source/libraries/polyfill-mbstring/bootstrap.php"
+        ],
+        "psr-4": {
+            "Setka\\Editor\\": "source/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Setka\\Editor\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "automattic/vipwpcs": "@dev",
+        "phpunit/phpunit": "^4.8.36",
+        "symfony/finder": "^3.3",
+        "hanneskod/classtools": "^1.1"
+    }
+}

@@ -1,0 +1,312 @@
+/*
+Theme Name: Pranayama Yoga
+
+Adding support for language written in a Right To Left (RTL) direction is easy -
+it's just a matter of overwriting all the horizontal positioning attributes
+of your CSS stylesheet in a separate stylesheet file named rtl.css.
+
+https://codex.wordpress.org/Right_to_Left_Language_Support
+
+*/
+
+body {
+    direction: rtl;
+    unicode-bidi: embed;
+}
+
+.site-header .header-t .contact-info {
+    float: right;
+}
+
+.site-header .header-t .right-panel {
+    float: left;
+}
+
+.site-header .header-t .contact-info .fa {
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+.site-header .header-t .right-panel .social-networks li {
+    float: right;
+    margin-left: 0;
+    margin-right: 20px;
+}
+
+.site-header .header-t .right-panel .social-networks,
+.site-header .header-t .right-panel .contact-number {
+    float: left
+}
+
+.site-header .header-t .right-panel .contact-number a {
+    display: inline-block;
+}
+
+.site-header .header-t .right-panel .contact-number span {
+    margin-right: 0;
+    margin-left: 12px;
+}
+
+.site-header .header-t .right-panel .contact-number {
+    margin-left: 0;
+    margin-right: 19px;
+}
+
+.site-header .site-branding {
+    float: right;
+}
+
+.site-header .header-b .right-panel {
+    float: left;
+    margin-right: 0;
+    margin-left: 11px;
+}
+
+.main-navigation li {
+    float: right;
+    margin-right: 0;
+    margin-left: 19px;
+    padding-left: 28px;
+    padding-right: 0;
+}
+
+.site-header .header-b .btn-search {
+    float: left;
+    margin-left: 0;
+    margin-right: 22px;
+}
+
+.main-navigation li {
+    border-right: 0;
+    border-left: 1px solid #eaeaeb;
+}
+
+.site-header .header-b .btn-search .search-form {
+    right: auto;
+    left: 0;
+}
+
+.site-header .header-b .btn-search .search-form label,
+.site-header .header-b .btn-search .search-form input[type="search"] {
+    float: right;
+}
+
+.site-header .header-b .btn-search .search-form input[type="submit"] {
+    float: left;
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+.main-navigation ul ul,
+.main-navigation ul ul ul {
+    display: none;
+}
+
+.main-navigation ul li:hover > ul {
+    left: auto;
+    right: -20px;
+    display: block;
+}
+
+.main-navigation ul ul li:hover > ul {
+    left: 100%;
+    right: auto;
+    display: block;
+}
+
+.section-one .text-holder {
+    float: right;
+}
+
+.section-one .img-holder {
+    float: left;
+    text-align: left;
+}
+
+.section-one .img-holder img {
+    margin-right: 30px;
+    margin-left: 0;
+}
+
+.section-two .tabs-menu,
+.section-two .tab,
+.section-three .col,
+.section-five .col,
+.blog-section .post,
+.blog-section .post .posted-on {
+    float: right;
+}
+
+.blog-section .post .text-holder {
+    padding-left: 0;
+    padding-right: 20px;
+}
+
+.blog-section .post .text-holder {
+    border-left: 0;
+    border-right: 1px solid #e4e4e5;
+}
+
+.section-eight .col-left {
+    float: right;
+    padding-right: 15px;
+    padding-left: 64px;
+}
+
+.section-eight .col-mid {
+    float: right;
+}
+
+.section-eight .col-left .text-holder {
+    text-align: left;
+}
+
+.section-eight .col-mid .img-holder {
+    margin-left: 0;
+    margin-right: -36px;
+}
+
+.site-footer .footer-t .column {
+    float: right;
+}
+
+.widget.widget_pranayama_yoga_recent_post ul li .post-thumbnail,
+.widget.widget_pranayama_yoga_popular_post ul li .post-thumbnail {
+    float: right;
+    margin-right: 0;
+    margin-left: 20px;
+}
+
+.widget.widget_pranayama_yoga_social_links li {
+    float: right;
+    margin-right: 0;
+    margin-left: 20px;
+}
+
+.site-footer .footer-b .site-info {
+    float: right;
+}
+
+.site-footer .footer-b .site-info a {
+    display: inline-block;
+}
+
+.site-footer .footer-b .social-networks {
+    float: left;
+}
+
+.site-footer .footer-b .social-networks li {
+    float: right;
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+.page-header {
+    float: right;
+}
+
+#crumbs {
+    float: left;
+}
+
+#crumbs a,
+#crumbs span{
+	display: inline-block;
+}
+
+.widget.widget_search .search-form label,
+.error404 .error-holder .search-form label,
+.widget.widget_search .search-form input[type="search"],
+.error404 .error-holder .search-form input[type="search"] {
+    float: right;
+}
+
+.widget.widget_search .search-form input[type="submit"],
+.error404 .error-holder .search-form input[type="submit"] {
+    float: left;
+}
+
+#primary .post .entry-header .entry-meta span{
+	margin-right: 0;
+	margin-left: 33px;
+}
+
+#primary .post .entry-header .entry-meta .byline a::before,
+#primary .post .entry-header .entry-meta .comments-link a::before,
+#primary .post .entry-header .entry-meta .posted-on a::before{
+	margin-left: 8px;
+	margin-right: 0;
+	display: inline-block;
+}
+
+.pagination span,
+.pagination a{
+	margin-right: 0;
+	margin-left: 9px;
+}
+
+#primary .post .entry-content blockquote, #primary .page .entry-content blockquote{
+	background-position: calc(100% - 30px) 35px;
+	border-left: 0;
+	border-right: 2px solid #80ab4e;
+}
+
+.wpcf7{
+	direction: rtl;
+}
+
+.comments-area .comment-body .avatar{
+	float: right;
+	margin-right: 0;
+	margin-left: 20px;
+}
+
+.comment-author,
+.comments-area .comment-body .comment-metadata{
+	float: right;
+}
+
+.comments-area .comment-body .reply,
+.comments-area .comment-body .comment-content{
+	margin-left: 0;
+	margin-right: 97px;
+}
+
+.comments-area .comment-list .children{
+	padding-left: 0;
+	padding-right: 77px;
+}
+
+.comments-area .comment-body .fn{
+	float: right;
+	margin-right: 0;
+	margin-left: 15px;
+}
+
+media only screen and (max-width: 991px){
+    .site-header .site-branding{
+        float: left;
+    }
+
+    .site-header .header-b .right-panel{
+        float: right;
+    }
+
+    .site-header .header-b .btn-search .search-form{
+        left: auto;
+        right: 0;
+    }
+
+    .section-one .img-holder img{
+        margin-right: 0;
+    }
+
+   
+}
+
+@media only screen and (max-width: 767px){
+     .site-header .header-b .btn-search{
+        margin-right: 0;
+    }
+}
+

@@ -1,0 +1,420 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Sauna Lite\n"
+"POT-Creation-Date: 2016-02-11 19:00+0530\n"
+"PO-Revision-Date: 2016-02-11 19:00+0530\n"
+"Last-Translator: \n"
+"Language-Team: ThemesCaliber <support@themescaliber.com>\n"
+"Language: English\n"
+"MIME-Version: 1.1.1.4\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: 404.php:14
+msgid "<strong>404</strong> Not Found"
+msgstr ""
+
+#: 404.php:15
+msgid "Looks like you have taken a wrong turn"
+msgstr ""
+
+#: 404.php:16
+#: no-results.php:21
+msgid "Don\'t worry &hellip it happens to the best of us."
+msgstr ""
+
+#: 404.php:17
+#: no-results.php:23
+msgid "Back to Home Page"
+msgstr ""
+
+#. translators: %s: post title
+#: comments.php:30
+msgctxt "comments title"
+msgid "One thought on &ldquo;%s&rdquo;"
+msgstr ""
+
+#. translators: 1: number of comments, 2: post title
+#: comments.php:35
+msgctxt "comments title"
+msgid "%1$s thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:68
+msgid "'Comments are closed."
+msgstr ""
+
+#: footer.php:36
+msgid "Professional WordPress Themes By"
+msgstr ""
+
+#: functions.php:55
+msgid "Primary Menu"
+msgstr ""
+
+#: functions.php:56
+msgid "Footer Menu"
+msgstr ""
+
+
+#: functions.php:75
+msgid "Blog Sidebar"
+msgstr ""
+
+#: functions.php:76
+#: functions.php:86
+#: functions.php:96
+msgid "Appears on blog page sidebar"
+msgstr ""
+
+#: functions.php:85
+msgid "Posts and Pages Sidebar"
+msgstr ""
+
+#: functions.php:95
+msgid "Third Column Sidebar"
+msgstr ""
+
+#: functions.php:105
+msgid "Footer 1"
+msgstr ""
+
+#: functions.php:115
+msgid "Footer 2"
+msgstr ""
+
+#: functions.php:125
+msgid "Footer 3"
+msgstr ""
+
+#: functions.php:135
+msgid "Footer 4"
+msgstr ""
+
+#: functions.php:106
+#: functions.php:116
+#: functions.php:126
+#: functions.php:136
+msgid "Appears on footer"
+msgstr ""
+
+#: header.php:20
+msgid "Menu"
+msgstr ""
+
+#: image.php:35
+#: image.php:86
+#: image.php:138
+#: image.php:190
+#: image.php:243
+#: image.php:297
+#: page.php:25
+#: single.php:34
+#: single.php:90
+#: single.php:147
+#: single.php:204
+#: single.php:262
+#: single.php:320
+msgid "Pages:"
+msgstr ""
+
+#: image.php:40
+#: image.php:91
+#: image.php:143
+#: image.php:195
+#: image.php:248
+#: image.php:32
+msgid "Edit"
+msgstr ""
+
+#: archive.php:43
+#: archive.php:77
+#: archive.php:111
+#: archive.php:145
+#: archive.php:180
+#: archive.php:215
+#: image.php:58
+#: image.php:109
+#: image.php:161
+#: image.php:213
+#: image.php:266
+#: image.php:320
+#: index.php:44
+#: index.php:74
+#: index.php:104
+#: index.php:134
+#: index.php:165
+#: index.php:196
+#: search.php:38
+#: search.php:69
+#: search.php:100
+#: search.php:131
+#: search.php:163
+#: search.php:195
+#: single.php:48
+#: single.php:88
+#: single.php:129
+#: single.php:170
+#: single.php:212
+#: single.php:254
+msgid "Previous page"
+msgstr ""
+
+#: archive.php:44
+#: archive.php:78
+#: archive.php:112
+#: archive.php:146
+#: archive.php:181
+#: archive.php:216
+#: image.php:55
+#: image.php:106
+#: image.php:158
+#: image.php:210
+#: image.php:263
+#: image.php:317
+#: index.php:45
+#: index.php:75
+#: index.php:105
+#: index.php:135
+#: index.php:166
+#: index.php:197
+#: search.php:39
+#: search.php:70
+#: search.php:101
+#: search.php:132
+#: search.php:164
+#: search.php:196
+#: single.php:45
+#: single.php:85
+#: single.php:126
+#: single.php:167
+#: single.php:209
+#: single.php:251
+msgid "Next page"
+msgstr ""
+
+#: archive.php:45
+#: archive.php:79
+#: archive.php:113
+#: archive.php:147
+#: archive.php:182
+#: archive.php:217
+#: index.php:46
+#: index.php:76
+#: index.php:106
+#: index.php:136
+#: index.php:167
+#: index.php:198
+#: page.php:29
+#: search.php:40
+#: search.php:71
+#: search.php:102
+#: search.php:133
+#: search.php:165
+#: search.php:197
+#: single.php:38
+#: single.php:94
+#: single.php:151
+#: single.php:208
+#: single.php:266
+#: single.php:324
+msgid "page"
+msgstr ""
+
+#: no-results.php:11
+msgid "Nothing Found"
+msgstr ""
+
+#: no-results.php:16
+#, php-format
+msgid "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: no-results.php:18
+msgid "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+msgstr ""
+
+#: search.php:16
+#: search.php:47
+#: search.php:78
+#: search.php:109
+#: search.php:141
+#: search.php:173
+#, php-format
+msgid "Results For: %s"
+msgstr ""
+
+#: search.php:51
+#: search.php:95
+#: search.php:142
+msgid "Read Full"
+msgstr ""
+
+#: searchform.php:10
+#: searchform.php:12
+msgid "Search"
+msgstr ""
+
+#: sidebar.php:11
+msgid "Archives"
+msgstr ""
+
+#: sidebar.php:17
+msgid "Meta"
+msgstr ""
+
+#: image.php:56
+#: image.php:107
+#: image.php:159
+#: image.php:211
+#: image.php:264
+#: image.php:318
+#: single.php:46
+#: single.php:86
+#: single.php:127
+#: single.php:168
+#: single.php:210
+#: single.php:252
+msgid "Next post:"
+msgstr ""
+
+#: image.php:59
+#: image.php:110
+#: image.php:162
+#: image.php:214
+#: image.php:268
+#: image.php:321
+#: single.php:49
+#: single.php:89
+#: single.php:130
+#: single.php:171
+#: single.php:213
+#: single.php:255
+msgid "Previous post:"
+msgstr ""
+
+#: inc/customizer.php:20
+msgid "TC Settings"
+msgstr ""
+
+#: inc/customizer.php:21
+msgid "Description of what this panel does."
+msgstr ""
+
+#: inc/customizer.php:26
+msgid "Theme Layout Settings"
+msgstr ""
+
+#: inc/customizer.php:44
+msgid "Left Sidebar"
+msgstr ""
+
+#: inc/customizer.php:45
+msgid "Right Sidebar"
+msgstr ""
+
+#: inc/customizer.php:46
+msgid "One Column"
+msgstr ""
+
+#: inc/customizer.php:47
+msgid "Three Columns"
+msgstr ""
+
+#: inc/customizer.php:48
+msgid "Four Columns"
+msgstr ""
+
+#: inc/customizer.php:49
+msgid "Grid Layout"
+msgstr ""
+
+#: inc/customizer.php:139
+msgid "Slider Settings"
+msgstr ""
+
+#: inc/customizer.php:153
+msgid "Select Slide Image Page"
+msgstr ""
+
+#: inc/customizer.php:56
+msgid "Topbar Section"
+msgstr ""
+
+#: inc/customizer.php:57
+msgid "Add topbar contact details here"
+msgstr ""
+
+#: inc/customizer.php:68
+msgid "Add Contact Number"
+msgstr ""
+
+#: inc/customizer.php:80
+msgid "Add email address here"
+msgstr ""
+
+#: inc/customizer.php:88
+msgid "Social Links"
+msgstr ""
+
+#: inc/customizer.php:110
+msgid "Twitter URL"
+msgstr ""
+
+#: inc/customizer.php:121
+msgid "'RSS URL"
+msgstr ""
+
+#: inc/customizer.php:99
+msgid "Facebook URL"
+msgstr ""
+
+#: inc/customizer.php:132
+msgid "Youtube URL"
+msgstr ""
+
+#: inc/customizer.php:162
+msgid "Why Choose Us Section"
+msgstr ""
+
+#: inc/customizer.php:163
+msgid "This section will appear below the slider."
+msgstr ""
+
+#: inc/customizer.php:174
+msgid "Section Title"
+msgstr ""
+
+#: inc/customizer.php:187
+msgid "Select Service Page"
+msgstr ""
+
+#: inc/customizer.php:196
+msgid "Footer Text"
+msgstr ""
+
+#: inc/customizer.php:197
+msgid "Add some text for footer like copyright etc."
+msgstr ""
+
+#: inc/customizer.php:208
+msgid "Copyright Text"
+msgstr ""
+
+#: inc/customizer.php:299
+msgid "Sauna Pro"
+msgstr ""
+
+#: inc/customizer.php:300
+msgid "Go Pro"
+msgstr ""
+
+#: page-template/custom-home-page.php:54
+msgid "Learn More"
+msgstr ""

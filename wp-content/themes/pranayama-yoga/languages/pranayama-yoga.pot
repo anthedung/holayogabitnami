@@ -1,0 +1,704 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: _s 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/tags/_s\n"
+"POT-Creation-Date: 2017-06-30 10:23+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#: 404.php:17
+msgid "404"
+msgstr ""
+
+#: 404.php:18
+msgid "Page Not Found."
+msgstr ""
+
+#: 404.php:21
+msgid ""
+"Can not find what you need? Take a moment and do a search below or start "
+"form our"
+msgstr ""
+
+#: 404.php:22
+msgid "Home page"
+msgstr ""
+
+#: comments.php:30
+#, php-format
+msgctxt "comments title"
+msgid "1 Comment"
+msgid_plural "%1$s Comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:47
+msgid "Comment navigation"
+msgstr ""
+
+#: comments.php:50
+msgid "Older Comments"
+msgstr ""
+
+#: comments.php:51
+msgid "Newer Comments"
+msgstr ""
+
+#: comments.php:64
+msgid "Comments are closed."
+msgstr ""
+
+#. Name of the template
+msgid "Home Page"
+msgstr ""
+
+#: inc/custom-functions.php:55
+msgid "Primary"
+msgstr ""
+
+#: inc/custom-functions.php:297
+msgid "Name*"
+msgstr ""
+
+#: inc/custom-functions.php:299
+msgid "Email*"
+msgstr ""
+
+#: inc/custom-functions.php:301
+msgid "Website"
+msgstr ""
+
+#: inc/custom-functions.php:316
+msgid "Comment"
+msgstr ""
+
+#: inc/custom-functions.php:318
+msgid "Submit"
+msgstr ""
+
+#: inc/extras.php:19
+msgid "Leave a comment"
+msgstr ""
+
+#: inc/extras.php:19
+msgid "1 Comment"
+msgstr ""
+
+#: inc/extras.php:19
+msgid "% Comments"
+msgstr ""
+
+#. translators: used between list items, there is a space after the comma
+#: inc/extras.php:39 inc/extras.php:45
+msgid ", "
+msgstr ""
+
+#: inc/extras.php:41 inc/extras.php:47
+#, php-format
+msgid " %1$s "
+msgstr ""
+
+#. translators: %s: Name of current post
+#: inc/extras.php:54
+#, php-format
+msgid "Edit %s"
+msgstr ""
+
+#: inc/extras.php:115
+msgid "Prev"
+msgstr ""
+
+#: inc/extras.php:116
+msgid "Next"
+msgstr ""
+
+#: inc/extras.php:117
+msgid "Page"
+msgstr ""
+
+#: inc/extras.php:146 inc/customizer/social.php:69
+msgid "Facebook"
+msgstr ""
+
+#: inc/extras.php:150 inc/customizer/social.php:87
+msgid "Twitter"
+msgstr ""
+
+#: inc/extras.php:154 inc/customizer/social.php:105
+msgid "Google Plus"
+msgstr ""
+
+#: inc/extras.php:158 inc/customizer/social.php:123
+msgid "LinkedIn"
+msgstr ""
+
+#: inc/extras.php:162 inc/customizer/social.php:141
+msgid "Pinterest"
+msgstr ""
+
+#: inc/extras.php:166 inc/customizer/social.php:159
+msgid "Instagram"
+msgstr ""
+
+#: inc/extras.php:170
+msgid "Youtube"
+msgstr ""
+
+#: inc/extras.php:174 inc/customizer/social.php:195
+msgid "OK"
+msgstr ""
+
+#: inc/extras.php:178 inc/customizer/social.php:212
+msgid "VK"
+msgstr ""
+
+#: inc/extras.php:182 inc/customizer/social.php:230
+msgid "Xing"
+msgstr ""
+
+#: inc/info.php:11
+msgid "Information Links"
+msgstr ""
+
+#: inc/info.php:21
+msgid "Need help?"
+msgstr ""
+
+#: inc/info.php:22
+msgid "View demo"
+msgstr ""
+
+#: inc/info.php:22 inc/info.php:23 inc/info.php:24 inc/info.php:25
+#: inc/info.php:26 inc/info.php:27
+msgid "here"
+msgstr ""
+
+#: inc/info.php:23
+msgid "View documentation"
+msgstr ""
+
+#: inc/info.php:24
+msgid "Theme info"
+msgstr ""
+
+#: inc/info.php:25
+msgid "Support ticket"
+msgstr ""
+
+#: inc/info.php:26
+msgid "Rate this theme"
+msgstr ""
+
+#: inc/info.php:27
+msgid "More WordPress Themes"
+msgstr ""
+
+#: inc/info.php:31
+msgid "About Pranayama Yoga"
+msgstr ""
+
+#. $id
+#: inc/metabox.php:13
+msgid "Sidebar Layout"
+msgstr ""
+
+#: inc/metabox.php:23
+msgid "Right sidebar (default)"
+msgstr ""
+
+#: inc/metabox.php:28
+msgid "No sidebar"
+msgstr ""
+
+#: inc/metabox.php:40
+msgid "Choose Sidebar Template"
+msgstr ""
+
+#: inc/template-functions.php:209 inc/customizer/breadcrumb.php:79
+msgid ">"
+msgstr ""
+
+#: inc/template-functions.php:210 inc/customizer/breadcrumb.php:61
+msgid "Home"
+msgstr ""
+
+#: inc/template-functions.php:235
+msgid "Search Results for \""
+msgstr ""
+
+#: inc/template-functions.php:235
+msgid "\""
+msgstr ""
+
+#: inc/template-functions.php:307
+msgid "404 Error - Page not Found"
+msgstr ""
+
+#: inc/template-functions.php:339
+#, php-format
+msgid "Search Results for: %s"
+msgstr ""
+
+#: inc/template-functions.php:347
+msgid "404 - Page not found"
+msgstr ""
+
+#: inc/template-functions.php:439
+#, php-format
+msgid "About %s"
+msgstr ""
+
+#: inc/template-functions.php:552
+msgid "&copy; Copyright "
+msgstr ""
+
+#: inc/template-functions.php:555
+msgid "Pranayama Yoga by Rara Theme."
+msgstr ""
+
+#: inc/template-functions.php:559
+#, php-format
+msgid "Powered by %s"
+msgstr ""
+
+#: inc/template-functions.php:559
+msgid "https://wordpress.org/"
+msgstr ""
+
+#: sections/about.php:8 sections/slider.php:8 inc/customizer/home/about.php:62
+#: inc/customizer/home/banners.php:63
+msgid "Learn More"
+msgstr ""
+
+#: sections/promotional.php:9
+msgid "Book Now"
+msgstr ""
+
+#: sections/subscription.php:9 template-parts/content.php:44
+msgid "Read More"
+msgstr ""
+
+#: template-parts/content-none.php:14
+msgid "Nothing Found"
+msgstr ""
+
+#: template-parts/content-none.php:21
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: template-parts/content-none.php:25
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: template-parts/content-none.php:31
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#: template-parts/content-page.php:28 template-parts/content-single.php:33
+#: template-parts/content.php:37
+msgid "Pages:"
+msgstr ""
+
+#. translators: %s: Name of current post.
+#: template-parts/content-single.php:28 template-parts/content.php:31
+#, php-format
+msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: inc/customizer/breadcrumb.php:14
+msgid "Breadcrumb Settings"
+msgstr ""
+
+#: inc/customizer/breadcrumb.php:33
+msgid "Enable Breadcrumb"
+msgstr ""
+
+#: inc/customizer/breadcrumb.php:51
+msgid "Show current"
+msgstr ""
+
+#: inc/customizer/breadcrumb.php:69
+msgid "Breadcrumb Home Text"
+msgstr ""
+
+#: inc/customizer/breadcrumb.php:87
+msgid "Breadcrumb Separator"
+msgstr ""
+
+#: inc/customizer/custom.php:14
+msgid "Custom CSS Settings"
+msgstr ""
+
+#: inc/customizer/custom.php:32
+msgid "Custom Css"
+msgstr ""
+
+#: inc/customizer/custom.php:34
+msgid "Put your custom CSS"
+msgstr ""
+
+#: inc/customizer/customizer.php:18
+msgid "Choose Post"
+msgstr ""
+
+#: inc/customizer/customizer.php:30
+msgid "Choose Page"
+msgstr ""
+
+#: inc/customizer/customizer.php:46
+msgid "Choose Category"
+msgstr ""
+
+#: inc/customizer/default.php:17
+msgid "Default Settings"
+msgstr ""
+
+#: inc/customizer/default.php:18
+msgid "Default section provided by WordPress customizer"
+msgstr ""
+
+#: inc/customizer/header.php:14
+msgid "Header Info"
+msgstr ""
+
+#: inc/customizer/header.php:32
+msgid "Address"
+msgstr ""
+
+#: inc/customizer/header.php:50
+msgid "Text for Phone Number"
+msgstr ""
+
+#: inc/customizer/header.php:68
+msgid "Phone Number"
+msgstr ""
+
+#: inc/customizer/home.php:17
+msgid "Home Page Settings"
+msgstr ""
+
+#: inc/customizer/home.php:18
+msgid "Customize Home Page Settings"
+msgstr ""
+
+#: inc/customizer/social.php:14
+msgid "Social Settings"
+msgstr ""
+
+#: inc/customizer/social.php:15
+msgid "Leave blank if you do not want to show the social link."
+msgstr ""
+
+#: inc/customizer/social.php:33
+msgid "Enable Social Links in Header"
+msgstr ""
+
+#: inc/customizer/social.php:51
+msgid "Enable Social Links in Footer"
+msgstr ""
+
+#: inc/customizer/social.php:177
+msgid "YouTube"
+msgstr ""
+
+#. Base ID
+#: inc/widgets/widget-popular-post.php:24
+msgid "RARA: Popular Post"
+msgstr ""
+
+#: inc/widgets/widget-popular-post.php:25
+msgid "A Popular Post Widget"
+msgstr ""
+
+#: inc/widgets/widget-popular-post.php:106
+#: inc/widgets/widget-recent-post.php:106
+#: inc/widgets/widget-social-links.php:64
+msgid "Title"
+msgstr ""
+
+#: inc/widgets/widget-popular-post.php:111
+#: inc/widgets/widget-recent-post.php:111
+msgid "Number of Posts"
+msgstr ""
+
+#: inc/widgets/widget-popular-post.php:117
+#: inc/widgets/widget-recent-post.php:117
+msgid "Show Post Thumbnail"
+msgstr ""
+
+#: inc/widgets/widget-popular-post.php:122
+#: inc/widgets/widget-recent-post.php:122
+msgid "Show Post Date"
+msgstr ""
+
+#. Base ID
+#: inc/widgets/widget-recent-post.php:25
+msgid "RARA: Recent Post"
+msgstr ""
+
+#: inc/widgets/widget-recent-post.php:26
+msgid "A Recent Post Widget"
+msgstr ""
+
+#. Base ID
+#: inc/widgets/widget-social-links.php:25
+msgid "RARA: Social Links"
+msgstr ""
+
+#: inc/widgets/widget-social-links.php:26
+msgid "A Social Links Widget."
+msgstr ""
+
+#: inc/widgets/widget-social-links.php:69
+msgid ""
+"You can change the social links from the customizer in Social Settings "
+"options."
+msgstr ""
+
+#: inc/widgets/widgets.php:12
+msgid "Right Sidebar"
+msgstr ""
+
+#: inc/widgets/widgets.php:14
+msgid "Add widgets here."
+msgstr ""
+
+#: inc/widgets/widgets.php:17
+msgid "Footer One"
+msgstr ""
+
+#: inc/widgets/widgets.php:19
+msgid "Add footer one widgets."
+msgstr ""
+
+#: inc/widgets/widgets.php:22
+msgid "Footer Two"
+msgstr ""
+
+#: inc/widgets/widgets.php:24
+msgid "Add footer two widgets."
+msgstr ""
+
+#: inc/widgets/widgets.php:27
+msgid "Footer Three"
+msgstr ""
+
+#: inc/widgets/widgets.php:29
+msgid "Add footer three widgets."
+msgstr ""
+
+#: inc/widgets/widgets.php:32
+msgid "Footer Four"
+msgstr ""
+
+#: inc/widgets/widgets.php:34
+msgid "Add footer four widgets."
+msgstr ""
+
+#: inc/customizer/home/about.php:16
+msgid "About Section"
+msgstr ""
+
+#: inc/customizer/home/about.php:34
+msgid "Enable About Section"
+msgstr ""
+
+#: inc/customizer/home/about.php:51
+msgid "Select Post"
+msgstr ""
+
+#: inc/customizer/home/about.php:70
+msgid "Read More Text"
+msgstr ""
+
+#: inc/customizer/home/banners.php:16
+msgid "Banner Section"
+msgstr ""
+
+#: inc/customizer/home/banners.php:34
+msgid "Enable Banner Section"
+msgstr ""
+
+#: inc/customizer/home/banners.php:52
+msgid "Select Banner Post"
+msgstr ""
+
+#: inc/customizer/home/banners.php:71
+msgid "Readmore Text"
+msgstr ""
+
+#: inc/customizer/home/blog.php:14
+msgid "Blog Section"
+msgstr ""
+
+#: inc/customizer/home/blog.php:32
+msgid "Enable Blog Section"
+msgstr ""
+
+#: inc/customizer/home/blog.php:50 inc/customizer/home/promotional.php:49
+#: inc/customizer/home/subscription.php:49 inc/customizer/home/trainer.php:51
+#: inc/customizer/home/yogaclasses.php:52
+msgid "Section Title"
+msgstr ""
+
+#: inc/customizer/home/blog.php:68 inc/customizer/home/promotional.php:67
+#: inc/customizer/home/subscription.php:67
+msgid "Section Description"
+msgstr ""
+
+#: inc/customizer/home/information.php:16
+msgid "information Section"
+msgstr ""
+
+#: inc/customizer/home/information.php:34
+msgid "Enable information Section"
+msgstr ""
+
+#: inc/customizer/home/information.php:51 inc/customizer/home/reason.php:70
+#: inc/customizer/home/trainer.php:69 inc/customizer/home/yogaclasses.php:69
+msgid "Select Post One"
+msgstr ""
+
+#: inc/customizer/home/information.php:69 inc/customizer/home/reason.php:89
+#: inc/customizer/home/trainer.php:88 inc/customizer/home/yogaclasses.php:87
+msgid "Select Post Two"
+msgstr ""
+
+#: inc/customizer/home/information.php:88 inc/customizer/home/reason.php:108
+#: inc/customizer/home/trainer.php:107 inc/customizer/home/yogaclasses.php:106
+msgid "Select Post Three"
+msgstr ""
+
+#: inc/customizer/home/information.php:107 inc/customizer/home/reason.php:127
+#: inc/customizer/home/yogaclasses.php:125
+msgid "Select Post Four"
+msgstr ""
+
+#: inc/customizer/home/promotional.php:14
+msgid "Promotional Section"
+msgstr ""
+
+#: inc/customizer/home/promotional.php:32
+msgid "Enable Promotional Section"
+msgstr ""
+
+#: inc/customizer/home/promotional.php:83
+#: inc/customizer/home/subscription.php:83
+msgid "Call To Action Button Text"
+msgstr ""
+
+#: inc/customizer/home/promotional.php:100
+#: inc/customizer/home/subscription.php:100
+msgid "Link Here"
+msgstr ""
+
+#: inc/customizer/home/reason.php:15
+msgid "Reasons Section"
+msgstr ""
+
+#: inc/customizer/home/reason.php:33
+msgid "Enable Reasons Section"
+msgstr ""
+
+#: inc/customizer/home/reason.php:51
+msgid "Select Page"
+msgstr ""
+
+#: inc/customizer/home/reason.php:146 inc/customizer/home/yogaclasses.php:144
+msgid "Select Post Five"
+msgstr ""
+
+#: inc/customizer/home/reason.php:165 inc/customizer/home/yogaclasses.php:163
+msgid "Select Post Six"
+msgstr ""
+
+#: inc/customizer/home/subscription.php:14
+msgid "Promotional Section Two"
+msgstr ""
+
+#: inc/customizer/home/subscription.php:32
+msgid "Enable Promotional Section Two"
+msgstr ""
+
+#: inc/customizer/home/testimonials.php:16
+msgid "Testimonial Section"
+msgstr ""
+
+#: inc/customizer/home/testimonials.php:34
+msgid "Enable Testimonial Section"
+msgstr ""
+
+#: inc/customizer/home/testimonials.php:52
+msgid "Choose Testimonials Category"
+msgstr ""
+
+#: inc/customizer/home/trainer.php:15
+msgid "Team Section"
+msgstr ""
+
+#: inc/customizer/home/trainer.php:33
+msgid "Enable Team Section"
+msgstr ""
+
+#: inc/customizer/home/yogaclasses.php:16
+msgid "Yoga Classes Section"
+msgstr ""
+
+#: inc/customizer/home/yogaclasses.php:34
+msgid "Enable Yoga Classes Section"
+msgstr ""
+
+#. Name of the theme
+msgid "Pranayama Yoga"
+msgstr ""
+
+#. Description of the theme
+msgid ""
+"Pranayama Yoga is a simple adaptable and flexible multipurpose theme meant "
+"for yoga, fitness, and sports related websites.  The theme is very versatile "
+"and the use of the theme is not limited to the yoga and wellness websites. "
+"The theme is easily customizable and can be used for various types of "
+"business and corporate websites. The theme is SEO friendly with optimized "
+"codes, which make it easy for your site to rank on Google and other search "
+"engines. Pranayama Yoga comes with several features to make a user-friendly, "
+"interactive and visually stunning website. Such features include a custom "
+"menu, attractive Banner Section, About Section, Courses section, Trainer "
+"section, Testimonial Section, Banner with Call to Action Button (CTA), and "
+"social media. It has four footer area and a right sidebar and includes four "
+"custom widgets. The theme is built on Customizer and it allows you to easily "
+"customize your website with live previews. The theme is rigorously tested "
+"and optimized for speed and faster page load time and has a secure and clean "
+"code. The theme is also translation ready. Designed with visitor engagement "
+"in mind, Pranayama Yoga helps you to easily and intuitively create "
+"professional and appealing websites. Check demo at https://raratheme."
+"com/preview/pranayama-yoga/ and documentation at https://raratheme."
+"com/documentation/pranayama-yoga. Read theme details at https://raratheme."
+"com/wordpress-themes/pranayama-yoga and get free support at https:"
+"//raratheme.com/support-ticket."
+msgstr ""
+
+#. URI of the theme
+msgid "http://raratheme.com/wordpress-themes/pranayama-yoga/"
+msgstr ""
+
+#. Author of the theme
+msgid "Rara Theme"
+msgstr ""
+
+#. Author URI of the theme
+msgid "http://raratheme.com/"
+msgstr ""
