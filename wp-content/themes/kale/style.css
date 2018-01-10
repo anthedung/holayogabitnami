@@ -53,7 +53,7 @@ h6{font-size:12px;}
         
 /* --- Fonts --- */
 .logo .header-logo-text{line-height:60px;font-size:60px;font-weight:200;font-family: 'Raleway', sans-serif;text-transform:uppercase;}
-.tagline{font-family: 'Caveat', cursive; font-size:18px;}
+.tagline{font-family: 'Dancing Script', cursive; font-size:x-large;}
 
 .form-label{text-transform:uppercase;font-weight:400;font-family: 'Montserrat', sans-serif;}
 .navbar-nav > li > a{font-family: 'Montserrat', sans-serif;text-transform:uppercase;font-weight:400;}

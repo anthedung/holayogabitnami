@@ -43,7 +43,7 @@ if ( is_rtl() ) {
 		</div>
 		<div id="elementor-preview-responsive-wrapper" class="elementor-device-desktop elementor-device-rotate-portrait">
 			<div id="elementor-preview-loading">
-				<i class="fa fa-spin fa-circle-o-notch"></i>
+				<i class="fa fa-spin fa-circle-o-notch" aria-hidden="true"></i>
 			</div>
 			<?php
 			// IFrame will be create here by the Javascript later.
@@ -54,6 +54,7 @@ if ( is_rtl() ) {
 </div>
 <?php
 	wp_footer();
+	/** This action is documented in wp-admin/admin-footer.php */
 	do_action( 'admin_print_footer_scripts' );
 ?>
 </body>

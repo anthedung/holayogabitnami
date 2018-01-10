@@ -27,7 +27,7 @@ class es_cls_widget {
 		if( $es_name == "YES" ) {
 			$es .= '<div class="es_lablebox"><label class="es_shortcode_form_name">'.__( 'Name', ES_TDOMAIN ).'</label></div>';
 			$es .= '<div class="es_textbox">';
-				$es .= '<input type="text" id="es_txt_name_pg" class="es_textbox_class" name="es_txt_name_pg" value="" maxlength="225">';
+				$es .= '<input type="text" id="es_txt_name_pg" class="es_textbox_class" name="es_txt_name_pg" value="" maxlength="225" placeholder="asd">';
 			$es .= '</div>';
 		}
 		$es .= '<div class="es_lablebox"><label class="es_shortcode_form_email">'.__( 'Email *', ES_TDOMAIN ).'</label></div>';

@@ -1067,15 +1067,15 @@ class es_widget_register extends WP_Widget {
 				<?php if( $es_name == "YES" ) { ?>
 					<div class="es_lablebox"><label class="es_widget_form_name"><?php echo __( 'Name', ES_TDOMAIN ); ?></label></div>
 					<div class="es_textbox">
-						<input type="text" id="es_txt_name" class="es_textbox_class" name="es_txt_name" value="" maxlength="225">
+						<input type="text" id="es_txt_name" class="es_textbox_class" name="es_txt_name" placeholder="  Tên ❤"  value="" maxlength="225">
 					</div>
 				<?php } ?>
 				<div class="es_lablebox"><label class="es_widget_form_email"><?php echo __( 'Email *', ES_TDOMAIN ); ?></label></div>
 				<div class="es_textbox">
-					<input type="text" id="es_txt_email" class="es_textbox_class" name="es_txt_email" onkeypress="if(event.keyCode==13) es_submit_page(event,'<?php echo $url; ?>')" value="" maxlength="225">
+					<input type="text" id="es_txt_email" class="es_textbox_class" name="es_txt_email" placeholder="  Email ❤"  onkeypress="if(event.keyCode==13) es_submit_page(event,'<?php echo $url; ?>')" value="" maxlength="225">
 				</div>
 				<div class="es_button">
-					<input type="button" id="es_txt_button" class="es_textbox_button es_submit_button" name="es_txt_button" onClick="return es_submit_page(event,'<?php echo $url; ?>')" value="<?php echo __( 'Subscribe', ES_TDOMAIN ); ?>">
+					<input type="button" id="es_txt_button" class="es_textbox_button es_submit_button" name="es_txt_button" onClick="return es_submit_page(event,'<?php echo $url; ?>')" value="<?php echo __( 'Đăng Kí', ES_TDOMAIN ); ?>">
 				</div>
 				<div class="es_msg" id="es_widget_msg">
 					<span id="es_msg"></span>
