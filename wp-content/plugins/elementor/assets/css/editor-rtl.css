@@ -1,4 +1,4 @@
-/*! elementor - v1.9.0 - 09-01-2018 */
+/*! elementor - v1.9.1 - 10-01-2018 */
 @charset "UTF-8";
 .dialog-widget-content {
   background-color: #fff;
@@ -2155,7 +2155,7 @@ select {
   .elementor-panel .wp-picker-open ~ .wp-picker-holder {
     clear: both;
     margin-bottom: 15px; }
-  .elementor-panel .iris-square-value {
+  .elementor-panel .elementor-control .wp-picker-container .iris-square-value {
     -webkit-transition: none;
     -o-transition: none;
     transition: none; }

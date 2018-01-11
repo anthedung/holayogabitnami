@@ -1,4 +1,4 @@
-/*! elementor - v1.9.0 - 09-01-2018 */
+/*! elementor - v1.9.1 - 10-01-2018 */
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = Marionette.Behavior.extend( {
 	previewWindow: null,
@@ -4030,14 +4030,14 @@ ControlWPWidgetItemView = ControlBaseDataView.extend( {
 				self.ui.form.html( data );
 				// WP >= 4.8
 				if ( wp.textWidgets ) {
-					this.ui.form.addClass( 'open' );
+					self.ui.form.addClass( 'open' );
 					var event = new jQuery.Event( 'widget-added' );
 					wp.textWidgets.handleWidgetAdded( event, self.ui.form );
 					wp.mediaWidgets.handleWidgetAdded( event, self.ui.form );
 
 					// WP >= 4.9
 					if ( wp.customHtmlWidgets ) {
-						wp.customHtmlWidgets.handleWidgetAdded( event, this.ui.form );
+						wp.customHtmlWidgets.handleWidgetAdded( event, self.ui.form );
 					}
 				}
 
