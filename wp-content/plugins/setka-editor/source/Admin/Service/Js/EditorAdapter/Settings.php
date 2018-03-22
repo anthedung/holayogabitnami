@@ -12,85 +12,82 @@ use Setka\Editor\Entries;
  * Class Settings
  * @package Setka\Editor\Admin\Service\Js\EditorAdapter
  */
-class Settings {
+class Settings
+{
 
-	/**
-	 * Returns settings editor-adapter translations.settings.
-	 *
-	 * @since 0.0.2
-	 *
-	 * @return array Settings for editor-adapter translations.settings array field (cell).
-	 */
-	public static function get_settings() {
-		$defaults = self::get_defaults();
+    /**
+     * Returns settings editor-adapter translations.settings.
+     *
+     * @since 0.0.2
+     *
+     * @return array Settings for editor-adapter translations.settings array field (cell).
+     */
+    public static function getSettings()
+    {
+        $defaults = self::getDefaults();
 
-		// Editor
-		$use_editor_meta = new Entries\Meta\UseEditorMeta();
-		$use_editor_meta->setPostId( get_the_ID() );
-		if( $use_editor_meta->isValid() ) {
-			$defaults['useSetkaEditor'] = $use_editor_meta->getValue();
-		}
+        $useEditorMeta = new Entries\Meta\UseEditorMeta();
+        $useEditorMeta->setPostId(get_the_ID());
+        if($useEditorMeta->isValid()) {
+            $defaults['useSetkaEditor'] = $useEditorMeta->getValue();
+        }
 
-		// Layout
-		$post_layout_meta = new Entries\Meta\PostLayoutMeta();
-		$post_layout_meta->setPostId( get_the_ID() );
-		if( $post_layout_meta->isValid() ) {
-			$defaults['editorConfig']['layout'] = $post_layout_meta->getValue();
-		}
+        $postLayoutMeta = new Entries\Meta\PostLayoutMeta();
+        $postLayoutMeta->setPostId(get_the_ID());
+        if($postLayoutMeta->isValid()) {
+            $defaults['editorConfig']['layout'] = $postLayoutMeta->getValue();
+        }
 
-		// Theme
-		$post_theme_meta = new Entries\Meta\PostThemeMeta();
-		$post_theme_meta->setPostId( get_the_ID() );
-		if( $post_theme_meta->isValid() ) {
-			$defaults['editorConfig']['theme'] = $post_theme_meta->getValue();
-		}
+        $postThemeMeta = new Entries\Meta\PostThemeMeta();
+        $postThemeMeta->setPostId(get_the_ID());
+        if($postThemeMeta->isValid()) {
+            $defaults['editorConfig']['theme'] = $postThemeMeta->getValue();
+        }
 
-		// TypeKit ID
-		$type_kit_id = new Entries\Meta\TypeKitIDMeta();
-		$type_kit_id->setPostId( get_the_ID() );
-		$defaults['editorConfig']['typeKitId'] = $type_kit_id->getValue();
+        $typeKitIDMeta = new Entries\Meta\TypeKitIDMeta();
+        $typeKitIDMeta->setPostId(get_the_ID());
+        $defaults['editorConfig']['typeKitId'] = $typeKitIDMeta->getValue();
 
-		// Public Token
-        $publicTokenOption = new Options\PublicToken\PublicTokenOption();
+        $publicTokenOption                        = new Options\PublicToken\PublicTokenOption();
         $defaults['editorConfig']['public_token'] = $publicTokenOption->getValue();
 
-		// Theme JSON-data
-		if(Options\Files\UseLocalFilesUtilities::useLocal()) {
-			$theme_json = new Options\ThemeResourceJSLocal\ThemeResourceJSLocalOption();
-		} else {
-			$theme_json = new Options\ThemeResourceJS\Option();
-		}
-		$defaults['themeData'] = $theme_json->getValue();
+        if(Options\Files\UseLocalFilesUtilities::useLocal()) {
+            $themeJson = new Options\ThemeResourceJSLocal\ThemeResourceJSLocalOption();
+        } else {
+            $themeJson = new Options\ThemeResourceJS\Option();
+        }
+        $defaults['themeData'] = $themeJson->getValue();
 
-		return $defaults;
-	}
+        return $defaults;
+    }
 
-	/**
-	 * Returns default settings for editor-adapter which will be overwritten by post data.
-	 *
-	 * @since 0.0.2
-	 *
-	 * @return array Default settings.
-	 */
-	public static function get_defaults() {
-		$user = get_userdata(get_current_user_id());
-		if(is_a($user, \WP_User::class)) {
-			$caps = $user->get_role_caps();
-		} else {
-			$caps = array();
-		}
-		unset($user);
+    /**
+     * Returns default settings for editor-adapter which will be overwritten by post data.
+     *
+     * @since 0.0.2
+     *
+     * @return array Default settings.
+     */
+    public static function getDefaults()
+    {
+        $user = get_userdata(get_current_user_id());
+        if(is_a($user, \WP_User::class)) {
+            $caps = $user->get_role_caps();
+        } else {
+            $caps = array();
+        }
+        unset($user);
 
-		$settings = array(
-			'useSetkaEditor' => false,
-			'editorConfig' => array(
-				'medialib_image_alt_attr' => true,
-				'user' => array(
-					'capabilities' => $caps,
-				),
+        $settings = array(
+            'useSetkaEditor' => false,
+            'editorConfig' => array(
+                'medialib_image_alt_attr' => true,
+                'user' => array(
+                    'capabilities' => $caps,
+                ),
                 'public_token' => '',
-			),
-		);
-		return $settings;
-	}
+            ),
+        );
+        return $settings;
+    }
 }

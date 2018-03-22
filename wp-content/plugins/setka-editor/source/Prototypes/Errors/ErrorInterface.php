@@ -12,17 +12,18 @@ namespace Setka\Editor\Prototypes\Errors;
  * with already defined text and error code. And all we need to do — add this error
  * to ErrorsInterface instance.
  */
-interface ErrorInterface {
+interface ErrorInterface
+{
 
-	public function getCode();
-	public function setCode( $code );
+    public function getCode();
+    public function setCode($code);
 
-	public function getMessage();
-	public function setMessage( $message );
+    public function getMessage();
+    public function setMessage($message);
 
-	public function getMessageHTML();
-	public function setMessageHTML($message);
+    public function getMessageHTML();
+    public function setMessageHTML($message);
 
-	public function getData();
-	public function setData( $data );
+    public function getData();
+    public function setData($data);
 }

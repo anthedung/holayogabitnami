@@ -7,10 +7,12 @@ use Setka\Editor\Plugin;
 /**
  * @deprecated No longer used. This file is stored only for plugin uninstaller.
  */
-class Transient extends Transients\Transient {
+class Transient extends Transients\Transient
+{
 
-	public function __construct() {
-		$this->setName( Plugin::_NAME_ . '_settings_token' );
-		$this->setExpiration( 30 );
-	}
+    public function __construct()
+    {
+        $this->setName(Plugin::_NAME_ . '_settings_token');
+        $this->setExpiration(30);
+    }
 }

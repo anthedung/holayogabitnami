@@ -1,9 +1,9 @@
 <?php
 namespace Setka\Editor\Admin\Service\FilesManager;
 
-use Setka\Editor\Admin\Cron\Tasks\Files\FilesManagerTask;
-use Setka\Editor\Admin\Cron\Tasks\Files\FilesQueueTask;
-use Setka\Editor\Admin\Cron\Tasks\Files\SendFilesStatTask;
+use Setka\Editor\Admin\Cron\Files\FilesManagerCronEvent;
+use Setka\Editor\Admin\Cron\Files\FilesQueueCronEvent;
+use Setka\Editor\Admin\Cron\Files\SendFilesStatCronEvent;
 use Setka\Editor\Admin\Options\Files\FileSyncFailureOption;
 use Setka\Editor\Admin\Options\Files\FileSyncOption;
 use Setka\Editor\Admin\Options\Files\FileSyncStageOption;
@@ -22,22 +22,23 @@ use Setka\Editor\Entries\Meta\AttemptsToDownloadMeta;
 use Setka\Editor\Entries\PostStatuses;
 use Setka\Editor\Entries\SetkaEditorFilePostType;
 
-class FilesManager {
+class FilesManager
+{
 
-	/**
-	 * @var callable Callback which checked after each iteration in $this->syncFiles().
-	 */
-	protected $continueExecution;
+    /**
+     * @var callable Callback which checked after each iteration in $this->syncFiles().
+     */
+    protected $continueExecution;
 
     /**
      * @var FileSyncFailureOption
      */
-	protected $fileSyncFailureOption;
+    protected $fileSyncFailureOption;
 
     /**
      * @var FileSyncOption
      */
-	protected $fileSyncOption;
+    protected $fileSyncOption;
 
     /**
      * @var FileSyncStageOption
@@ -65,87 +66,88 @@ class FilesManager {
         FileSyncStageOption $fileSyncStageOption,
         UseLocalFilesOption $useLocalFilesOption
     ) {
-        $this->continueExecution = $continueExecution;
+        $this->continueExecution     = $continueExecution;
         $this->fileSyncFailureOption = $fileSyncFailureOption;
-        $this->fileSyncOption = $fileSyncOption;
-        $this->fileSyncStageOption = $fileSyncStageOption;
-        $this->useLocalFilesOption = $useLocalFilesOption;
+        $this->fileSyncOption        = $fileSyncOption;
+        $this->fileSyncStageOption   = $fileSyncStageOption;
+        $this->useLocalFilesOption   = $useLocalFilesOption;
     }
 
-    public function enableSyncingTasks() {
-        $task = new FilesManagerTask();
-        $task->register();
+    public function enableSyncingTasks()
+    {
+        $task = new FilesManagerCronEvent();
+        $task->schedule();
 
-        $task = new FilesQueueTask();
-        $task->register();
+        $task = new FilesQueueCronEvent();
+        $task->schedule();
 
         return $this;
     }
 
-    public function disableSyncingTasks() {
-        $task = new FilesManagerTask();
-        $task->unRegisterHook();
+    public function disableSyncingTasks()
+    {
+        $task = new FilesManagerCronEvent();
+        $task->unScheduleAll();
 
-        $task = new FilesQueueTask();
-        $task->unRegisterHook();
+        $task = new FilesQueueCronEvent();
+        $task->unScheduleAll();
 
         $this->disableLocalUsage();
 
         return $this;
     }
 
-    public function restartSyncing() {
-        // Disable local usage
+    public function restartSyncing()
+    {
         $this->disableLocalUsage();
 
-        // Reset failure flag
         $this->fileSyncFailureOption->delete();
 
-        // Reset stage option
         $this->fileSyncStageOption->delete();
 
         return $this;
     }
 
-    public function disableLocalUsage() {
+    public function disableLocalUsage()
+    {
         $this->useLocalFilesOption->delete();
         return $this;
     }
 
-    protected function enableLocalUsage() {
+    protected function enableLocalUsage()
+    {
         $this->useLocalFilesOption->updateValue('1');
         return $this;
     }
 
-    public function run() {
+    public function run()
+    {
         // Check if sync enabled?
         // Disable local usage if needed
-        if('0' === $this->fileSyncOption->getValue())
+        if('0' === $this->fileSyncOption->getValue()) {
             throw new SyncDisabledByUseException();
+        }
 
-        if(defined('SETKA_EDITOR_SYNC_FILES') && false === SETKA_EDITOR_SYNC_FILES)
+        if(defined('SETKA_EDITOR_SYNC_FILES') && false === SETKA_EDITOR_SYNC_FILES) {
             throw new SyncDisabledByUseException();
+        }
 
-        if('1' === $this->fileSyncFailureOption->getValue())
+        if('1' === $this->fileSyncFailureOption->getValue()) {
             throw new FailureOptionException();
-
-        // Lets switch states.
+        }
 
         $stages = $this->fileSyncStageOption;
-        $stage = $this->fileSyncStageOption->getValue();
+        $stage  = $this->fileSyncStageOption->getValue();
 
         switch($stage) {
-            // Download list of files // and update stage
             case $stages::DOWNLOAD_FILES_LIST:
             default:
                 $this->continueExecution();
 
                 try {
-                    // Get and save new list of files.
                     $downloadListOfFiles = DownloadListOfFilesFactory::create();
                     $downloadListOfFiles->execute();
 
-                    // Reset download counters.
                     $this->resetAllDownloadsCounters();
                 } catch (\Exception $exception) {
                     throw $exception;
@@ -157,8 +159,7 @@ class FilesManager {
 
                 // END of this stage //
 
-            // Create files in DB // and update stage
-            case $stages::CREATE_ENTRIES;
+            case $stages::CREATE_ENTRIES:
                 $this->continueExecution();
 
                 try {
@@ -183,12 +184,11 @@ class FilesManager {
                     $sync->syncFiles();
                 }
                 catch (LimitDownloadingAttemptsException $exception) {
-                    // Disable everything
                     $this->failureOnSyncing();
 
                     // Send stat
-                    $sendFilesStatTask = new SendFilesStatTask();
-                    $sendFilesStatTask->register();
+                    $sendFilesStatTask = new SendFilesStatCronEvent();
+                    $sendFilesStatTask->schedule();
 
                     throw $exception;
                 }
@@ -207,7 +207,6 @@ class FilesManager {
 
                 // END of this stage //
 
-            // Generate JSON and switch to local usage // and update stage
             case $stages::GENERATE_EDITOR_CONFIG:
                 $this->continueExecution();
 
@@ -220,9 +219,8 @@ class FilesManager {
                     unset($generator);
                 }
 
-                // Send stat
-                $sendFilesStatTask = new SendFilesStatTask();
-                $sendFilesStatTask->register();
+                $sendFilesStatTask = new SendFilesStatCronEvent();
+                $sendFilesStatTask->schedule();
 
                 $this->fileSyncStageOption->updateValue('ok');
                 $stage = $this->fileSyncStageOption->getValue();
@@ -238,66 +236,67 @@ class FilesManager {
         return $this;
     }
 
-    public function failureOnSyncing() {
+    public function failureOnSyncing()
+    {
         $this->fileSyncFailureOption->updateValue('1');
         return $this;
     }
 
-	/**
-	 * Loop over pending files and mark it as drafts.
-	 *
-	 * Sync process attempt download this files (drafts) again.
+    /**
+     * Loop over pending files and mark it as drafts.
+     *
+     * Sync process attempt download this files (drafts) again.
      *
      * @return $this For chain calls.
-	 */
-	public function checkPendingFiles() {
-		do {
-			$query = WPQueryFactory::createWhereFilesIsPending();
+     */
+    public function checkPendingFiles()
+    {
+        do {
+            $query = WPQueryFactory::createWhereFilesIsPending();
 
             $this->continueExecution();
 
-			if($query->have_posts()) {
-				$query->the_post();
-				$post = get_post();
+            if($query->have_posts()) {
+                $query->the_post();
+                $post = get_post();
 
-				$attemptsToDownloadMeta = new AttemptsToDownloadMeta();
-				$attemptsToDownloadMeta->setPostId($post->ID);
-				$attempts = (int)$attemptsToDownloadMeta->getValue();
+                $attemptsToDownloadMeta = new AttemptsToDownloadMeta();
+                $attemptsToDownloadMeta->setPostId($post->ID);
+                $attempts = (int) $attemptsToDownloadMeta->getValue();
 
-				if($attempts < SETKA_EDITOR_FILES_DOWNLOADING_ATTEMPTS) {
-					wp_update_post(array(
-						'ID' => $post->ID,
-						'post_status' => PostStatuses::DRAFT,
-					));
-				} else {
-					// Disable sync.
+                if($attempts < SETKA_EDITOR_FILES_DOWNLOADING_ATTEMPTS) {
+                    wp_update_post(array(
+                        'ID' => $post->ID,
+                        'post_status' => PostStatuses::DRAFT,
+                    ));
+                } else {
                     $this->failureOnSyncing();
-					// Stop the loop.
-					break;
-				}
+                    break;
+                }
 
-				$query->rewind_posts();
-			}
-		} while ($query->have_posts());
+                $query->rewind_posts();
+            }
+        } while ($query->have_posts());
 
-		wp_reset_postdata(); // restore globals back
+        wp_reset_postdata(); // restore globals back
 
         return $this;
-	}
+    }
 
-	/**
-	 * Mark all files in DB as archived.
-	 *
-	 * After this operation this files will no longer affects downloading queue.
-	 *
-	 * @return mixed Result of SQL request with $wpdb->query().
+    /**
+     * Mark all files in DB as archived.
+     *
+     * After this operation this files will no longer affects downloading queue.
+     *
+     * @return mixed Result of SQL request with $wpdb->query().
      *
      * @throws FlushingCacheException If cache flushing was failed.
-	 */
-	public function markAllFilesAsArchived() {
-		global $wpdb;
+     */
+    public function markAllFilesAsArchived()
+    {
+        global $wpdb;
 
-		$query = "
+        $query = "
 		UPDATE {$wpdb->posts}
 		SET
 			post_status = %s
@@ -305,61 +304,63 @@ class FilesManager {
 			post_type = %s
 		";
 
-		$query = $wpdb->prepare(
-			$query,
-			PostStatuses::ARCHIVE,
-			SetkaEditorFilePostType::NAME
-		);
+        $query = $wpdb->prepare(
+            $query,
+            PostStatuses::ARCHIVE,
+            SetkaEditorFilePostType::NAME
+        );
 
-		$queryResult = $wpdb->query($query);
+        $queryResult = $wpdb->query($query);
 
-        // Reset cache
         $result = wp_cache_flush();
 
         // Different flushing mechanisms working different.
         // For example Memcached returns null as successful result.
-        if(false === $result)
+        if(false === $result) {
             throw new FlushingCacheException();
+        }
 
         return $queryResult;
-	}
+    }
 
-	/**
-	 * Completely remove downloads counters from post meta for all posts.
-	 *
-	 * And also resetting object cache.
-	 *
-	 * @return $this For chain calls.
-	 *
-	 * @throws FlushingCacheException If can't reset the object cache.
-	 * @throws DeletingAttemptsDownloadsMetaException If can't delete post metas from DB.
-	 */
-	public function resetAllDownloadsCounters() {
-		// Reset cache
-		$result = wp_cache_flush();
+    /**
+     * Completely remove downloads counters from post meta for all posts.
+     *
+     * And also resetting object cache.
+     *
+     * @return $this For chain calls.
+     *
+     * @throws FlushingCacheException If can't reset the object cache.
+     * @throws DeletingAttemptsDownloadsMetaException If can't delete post metas from DB.
+     */
+    public function resetAllDownloadsCounters()
+    {
+        $result = wp_cache_flush();
 
-		// Different flushing mechanisms working different.
-		// For example Memcached returns null as successful result.
-		if($result === false)
-			throw new FlushingCacheException();
+        // Different flushing mechanisms working different.
+        // For example Memcached returns null as successful result.
+        if(false === $result) {
+            throw new FlushingCacheException();
+        }
 
-		unset($result);
-		global $wpdb;
+        unset($result);
+        global $wpdb;
 
-		// Remove post metas from table
-		$attemptsDownloadsMeta = new AttemptsToDownloadMeta();
-		$query = "DELETE FROM {$wpdb->postmeta} WHERE meta_key = %s";
-		$query = $wpdb->prepare($query, $attemptsDownloadsMeta->getName());
+        $attemptsDownloadsMeta = new AttemptsToDownloadMeta();
+        $query                 = "DELETE FROM {$wpdb->postmeta} WHERE meta_key = %s";
+        $query                 = $wpdb->prepare($query, $attemptsDownloadsMeta->getName());
 
-		$result = $wpdb->query($query);
+        $result = $wpdb->query($query);
 
-		if(!is_numeric($result))
-			throw new DeletingAttemptsDownloadsMetaException();
+        if(!is_numeric($result)) {
+            throw new DeletingAttemptsDownloadsMetaException();
+        }
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function getFilesStat() {
+    public function getFilesStat()
+    {
         global $wpdb;
 
         $stat = array(
@@ -380,12 +381,12 @@ class FilesManager {
     		WHERE post_type = %s
     		GROUP BY post_status";
 
-        $query = $wpdb->prepare($query, SetkaEditorFilePostType::NAME);
+        $query   = $wpdb->prepare($query, SetkaEditorFilePostType::NAME);
         $results = $wpdb->get_results($query);
 
         if(is_array($results)) {
             foreach($results as $result) {
-                $stat[$result->status] = (int)$result->counter;
+                $stat[$result->status] = (int) $result->counter;
             }
         }
         unset($results, $result);
@@ -395,34 +396,37 @@ class FilesManager {
     		FROM {$wpdb->posts}
     		WHERE post_type = %s";
 
-        $query = $wpdb->prepare($query, SetkaEditorFilePostType::NAME);
+        $query   = $wpdb->prepare($query, SetkaEditorFilePostType::NAME);
         $results = $wpdb->get_results($query);
 
         if(is_array($results)) {
-            $stat[PostStatuses::ANY] = (int)$results[0]->amount;
+            $stat[PostStatuses::ANY] = (int) $results[0]->amount;
         }
 
         return $stat;
     }
 
-	/**
-	 * @return callable
-	 */
-	public function getContinueExecution() {
-		return $this->continueExecution;
-	}
+    /**
+     * @return callable
+     */
+    public function getContinueExecution()
+    {
+        return $this->continueExecution;
+    }
 
-	/**
-	 * @param callable $continueExecution
-	 *
-	 * @return $this For chain calls.
-	 */
-	public function setContinueExecution($continueExecution) {
-		$this->continueExecution = $continueExecution;
-		return $this;
-	}
+    /**
+     * @param callable $continueExecution
+     *
+     * @return $this For chain calls.
+     */
+    public function setContinueExecution($continueExecution)
+    {
+        $this->continueExecution = $continueExecution;
+        return $this;
+    }
 
-	public function continueExecution() {
+    public function continueExecution()
+    {
         return call_user_func($this->getContinueExecution());
     }
 }

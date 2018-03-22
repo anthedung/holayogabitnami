@@ -54,6 +54,7 @@
             <!-- Header Row 2 -->
             <div class="header-row-2">
                 <div class="logo">
+					
                     <?php 
                     if(kale_get_option('kale_image_logo_show') == 1) { 
                         if ( function_exists( 'the_custom_logo' ) ) the_custom_logo(); 
@@ -64,9 +65,16 @@
                     ?>
 					
 						<?php if ( is_front_page() ) { ?>
-						<h1 class="header-logo-text"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($kale_text_logo) ?></a></h1>
+							<p>
+								<a href="http://holayoga.vn"><img src="http://holayoga.vn/wp-content/uploads/2018/03/holayoga_logo_svg.svg" style='width:100%;max-width: 474px;' border="0" alt="Null"/></a>
+</p>
+							
+<!-- 						<h1 class="header-logo-text"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($kale_text_logo) ?></a></h1> -->
 						<?php } else { ?>
-						<div class="header-logo-text"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($kale_text_logo) ?></a></div>
+<!-- 						<div class="header-logo-text"><a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html($kale_text_logo) ?></a></div> -->
+					<p>
+								<a href="http://holayoga.vn"><img src="http://holayoga.vn/wp-content/uploads/2018/03/holayoga_logo_svg.svg" style='width:100%;max-width: 474px;' border="0" alt="Null"/></a>
+</p>
 						<?php } ?>
 					
                     <?php } ?>

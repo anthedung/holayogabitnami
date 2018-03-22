@@ -6,33 +6,37 @@ use Setka\Editor\Admin\Service\SetkaAPI\Errors;
 use Setka\Editor\Admin\Service\SetkaAPI\Helpers;
 use Symfony\Component\HttpFoundation\Request;
 
-class GetFilesAction extends SetkaAPI\Prototypes\ActionAbstract {
+class GetFilesAction extends SetkaAPI\Prototypes\ActionAbstract
+{
 
     /**
      * GetFilesAction constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this
             ->setMethod(Request::METHOD_GET)
             ->setEndpoint('/api/v1/wordpress/files.json');
     }
 
-    public function getConstraint() {}
+    public function getConstraint()
+    {
+    }
 
-	public function handleResponse() {
-		$response = $this->getResponse();
+    public function handleResponse()
+    {
+        $response = $this->getResponse();
 
-		switch($response->getStatusCode()) {
-			case $response::HTTP_OK:
-				break;
+        switch($response->getStatusCode()) {
+            case $response::HTTP_OK:
+                break;
 
-			default:
-				$this->getErrors()->add(new Errors\UnknownError());
-				return;
-		}
+            default:
+                $this->getErrors()->add(new Errors\UnknownError());
+                return;
+        }
 
-		// Validate each file.
-		$helper = new Helpers\FileHelper($this->getApi(), $response, $this->getErrors());
-		$helper->handleResponse();
-	}
+        $helper = new Helpers\FileHelper($this->getApi(), $response, $this->getErrors());
+        $helper->handleResponse();
+    }
 }

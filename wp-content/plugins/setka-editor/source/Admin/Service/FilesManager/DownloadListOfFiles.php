@@ -8,7 +8,8 @@ use Setka\Editor\Admin\Service\SetkaAPI\API;
 use Setka\Editor\Admin\Service\SetkaAPI\APIFactory;
 use Setka\Editor\Admin\Service\SetkaAPI\AuthCredits;
 
-class DownloadListOfFiles {
+class DownloadListOfFiles
+{
 
     /**
      * @var OptionInterface
@@ -30,20 +31,19 @@ class DownloadListOfFiles {
      *
      * @param $tokenOption
      */
-    public function __construct(OptionInterface $tokenOption) {
+    public function __construct(OptionInterface $tokenOption)
+    {
         $this->tokenOption = $tokenOption;
     }
 
-    public function execute() {
-        // Prepare API
+    public function execute()
+    {
         $api = $this->api = APIFactory::create();
         $api->setAuthCredits(new AuthCredits($this->tokenOption->getValue()));
 
-        // Make request
         $action = $this->action = new GetFilesAction();
         $api->request($action);
 
-        // Processing request
         if($action->getErrors()->hasErrors()) {
             throw new \Exception();
         } else {

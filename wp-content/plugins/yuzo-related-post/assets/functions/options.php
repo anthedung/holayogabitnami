@@ -24,7 +24,7 @@ class yuzo_related_post_make extends IF_utils2{
 								 'name_plugin_url'=>'yuzo-related-post',
 								 'descripcion'    =>'Gets the related post on your blog with any design characteristics.',
 
-								 'version'        =>'5.12.71',
+								 'version'        =>'5.12.73',
 								 'db_version'     =>'1.4',
 								 'present_version'=>'2.0', // html
 								 'popup_version'  =>array('id'=>'0.155','second_close'=>'6','html'=>''),
@@ -591,6 +591,15 @@ class yuzo_related_post_make extends IF_utils2{
 																				'value_check'=>'1',
 																				'id'    =>$this->parameter['name_option'].'_'.'yuzo_conflict',
 																				'name'  =>$this->parameter['name_option'].'_'.'yuzo_conflict',
+																				'class' =>'',
+																				'row'   =>array('a','b')),
+
+																		array(  'title' =>__('Hook priority',$this->parameter['name_option']),
+																				'help'  =>__('It helps to place Yuzo Related Post in different positions within the content, this works ONLY when you have the <code>Automatically append to the post content</code> activated. Example: 50',$this->parameter['name_option']),
+																				'type'  =>'text',
+																				'value' =>'10',
+																				'id'    =>$this->parameter['name_option'].'_'.'hook_priority',
+																				'name'  =>$this->parameter['name_option'].'_'.'hook_priority',
 																				'class' =>'',
 																				'row'   =>array('a','b')),
 

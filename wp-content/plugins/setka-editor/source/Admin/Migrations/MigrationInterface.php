@@ -1,7 +1,8 @@
 <?php
 namespace Setka\Editor\Admin\Migrations;
 
-interface MigrationInterface {
+interface MigrationInterface
+{
 
     public function up();
 }

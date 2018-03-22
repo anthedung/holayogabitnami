@@ -6,32 +6,36 @@ use Setka\Editor\Plugin;
 use Setka\Editor\Prototypes\PostMetas;
 use Symfony\Component\Validator\Constraints;
 
-class PostThemeMeta extends PostMetas\AbstractMeta {
+class PostThemeMeta extends PostMetas\AbstractMeta
+{
 
-	public function __construct() {
-		$this->setName( Plugin::_NAME_ . '_post_theme' );
-		$this->setVisible( false );
-		$this->setDefaultValue( '' );
+    public function __construct()
+    {
+        $this->setName(Plugin::_NAME_ . '_post_theme');
+        $this->setVisible(false);
+        $this->setDefaultValue('');
 
-		$postTypes = new Options\EditorAccessPostTypes\Option();
-		$this->setAllowedPostTyes( $postTypes->getValue() );
-	}
+        $postTypes = new Options\EditorAccessPostTypes\Option();
+        $this->setAllowedPostTyes($postTypes->getValue());
+    }
 
-	public function buildConstraint() {
-		return array(
-			new Constraints\NotBlank(),
-			new Constraints\Length(array(
-				'min' => 2
-			))
-		);
-	}
+    public function buildConstraint()
+    {
+        return array(
+            new Constraints\NotBlank(),
+            new Constraints\Length(array(
+                'min' => 2
+            ))
+        );
+    }
 
-	public function sanitize( $value ) {
-		$value = sanitize_text_field( $value );
-		$this->setValue( $value );
-		if( $this->isValid() ) {
-			return $value;
-		}
-		return $this->getDefaultValue();
-	}
+    public function sanitize($value)
+    {
+        $value = sanitize_text_field($value);
+        $this->setValue($value);
+        if($this->isValid()) {
+            return $value;
+        }
+        return $this->getDefaultValue();
+    }
 }

@@ -338,9 +338,10 @@ class popupPps extends modulePps {
 		}
 		if(!$renderedBefore) {
 			framePps::_()->getModule('templates')->loadCoreJs();
-			framePps::_()->addScript('frontend.popup', $this->getModPath(). 'js/frontend.popup.js');
+			$assetSuf = PPS_MINIFY_ASSETS ? '.min' : '';
+			framePps::_()->addScript('frontend.popup', $this->getModPath(). 'js/frontend.popup'. $assetSuf. '.js');
 			framePps::_()->addJSVar('frontend.popup', $jsListVarName, $popups);
-			framePps::_()->addStyle('frontend.popup', $this->getModPath(). 'css/frontend.popup.css');
+			framePps::_()->addStyle('frontend.popup', $this->getModPath(). 'css/frontend.popup'. $assetSuf. '.css');
 			// Detect what animation library should be loaded. Be advised that they can be used both in same time.
 			$loadOldAnims = $loadNewAnims = false;
 			foreach($popups as $p) {

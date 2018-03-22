@@ -7,14 +7,16 @@ use Setka\Editor\Admin\Options\Files\FileSyncStageOption;
 use Setka\Editor\Admin\Options\Files\UseLocalFilesOption;
 use Setka\Editor\Admin\Service\ContinueExecution\CronLock;
 
-class FilesManagerFactory {
+class FilesManagerFactory
+{
 
-	/**
-	 * Creates FileWatcher instance and setup continueExecution callback.
-	 *
-	 * @return FilesManager
-	 */
-	public static function create() {
+    /**
+     * Creates FileWatcher instance and setup continueExecution callback.
+     *
+     * @return FilesManager
+     */
+    public static function create()
+    {
 
         if(defined('DOING_CRON') && true === DOING_CRON) {
             $continueExecution = array(CronLock::class, 'check');
@@ -23,9 +25,9 @@ class FilesManagerFactory {
         }
 
         $fileSyncFailureOption = new FileSyncFailureOption();
-        $fileSyncOption = new FileSyncOption();
-        $fileSyncStageOption = new FileSyncStageOption();
-        $useLocalFilesOption = new UseLocalFilesOption();
+        $fileSyncOption        = new FileSyncOption();
+        $fileSyncStageOption   = new FileSyncStageOption();
+        $useLocalFilesOption   = new UseLocalFilesOption();
 
         return new FilesManager(
             $continueExecution,
@@ -34,5 +36,5 @@ class FilesManagerFactory {
             $fileSyncStageOption,
             $useLocalFilesOption
         );
-	}
+    }
 }

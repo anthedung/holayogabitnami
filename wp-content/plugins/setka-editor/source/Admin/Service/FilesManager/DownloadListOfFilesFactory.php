@@ -3,9 +3,11 @@ namespace Setka\Editor\Admin\Service\FilesManager;
 
 use Setka\Editor\Admin\Options;
 
-class DownloadListOfFilesFactory {
+class DownloadListOfFilesFactory
+{
 
-    public static function create($tokenOption = null) {
+    public static function create($tokenOption = null)
+    {
         if(!$tokenOption) {
             $tokenOption = new Options\Token\Option();
         }

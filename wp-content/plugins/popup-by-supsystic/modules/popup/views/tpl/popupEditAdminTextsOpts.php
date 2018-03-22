@@ -66,6 +66,14 @@
 							</label>
 						</td>
 					</tr>
+					<tr class="supsystic-tooltip" title="<?php _e('If it is primary - then it will be used when we check "Whom to Show" -> "Until user makes an action" condition.', PPS_LANG_CODE)?>">
+						<td><?php _e('Use as Primary Action', PPS_LANG_CODE)?>:</td>
+						<td>
+							<?php echo htmlPps::checkbox('params[tpl][is_btn_primary_'. $i. ']', array(
+								'checked' => htmlPps::checkedOpt($this->popup['params']['tpl'], 'is_btn_primary_'. $i),
+							))?>
+						</td>
+					</tr>
 				</table>
 			</span>
 		</fieldset>

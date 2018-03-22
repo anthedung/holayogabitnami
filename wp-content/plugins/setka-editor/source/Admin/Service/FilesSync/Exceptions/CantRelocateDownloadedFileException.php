@@ -1,6 +1,7 @@
 <?php
 namespace Setka\Editor\Admin\Service\FilesSync\Exceptions;
 
-class CantRelocateDownloadedFileException extends \Exception {
+class CantRelocateDownloadedFileException extends \Exception
+{
 
 }

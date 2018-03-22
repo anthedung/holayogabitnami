@@ -1,6 +1,7 @@
 <?php
 namespace Setka\Editor\Admin\Service\FilesSync\Exceptions;
 
-class OriginUrlWithoutPathException extends \Exception {
+class OriginUrlWithoutPathException extends \Exception
+{
 
 }

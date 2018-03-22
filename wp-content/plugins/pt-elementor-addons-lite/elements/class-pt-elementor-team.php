@@ -988,7 +988,7 @@ class Pt_Elementor_Team extends Widget_Base {
 						$this->add_render_attribute( $link_key, 'rel', 'nofollow' );
 					}
 					?>
-					<a class="elementor-icon elementor-social-icon elementor-social-icon-<?php echo esc_html( $social . $class_animation ); ?>" <?php echo esc_html( $this->get_render_attribute_string( $link_key ) ); ?>>
+					<a class="elementor-icon elementor-social-icon elementor-social-icon-<?php echo esc_html( $social . $class_animation ); ?>" <?php echo $this->get_render_attribute_string( $link_key ); ?>>
 						<i class="<?php echo esc_html( $item['social'] ); ?>"></i>
 					</a>
 				<?php } ?>

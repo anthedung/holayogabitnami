@@ -66,6 +66,7 @@ abstract class CSS_File {
 	}
 
 	/**
+	 * @since 1.9.0
 	 * @access protected
 	 */
 	protected function use_external_file() {
@@ -152,7 +153,7 @@ abstract class CSS_File {
 			} else {
 				wp_add_inline_style( $dep , $meta['css'] );
 			}
-		} else {
+		} elseif ( self::CSS_STATUS_FILE === $meta['status'] ) { // Re-check if it's not empty after CSS update.
 			wp_enqueue_style( $this->get_file_handle_id(), $this->url, $this->get_enqueue_dependencies(), $meta['time'] );
 		}
 
@@ -177,6 +178,11 @@ abstract class CSS_File {
 		 * @param CSS_File $this The current CSS file.
 		 */
 		do_action( "elementor/{$name}-css-file/enqueue", $this );
+	}
+
+	public function print_css() {
+		echo '<style>' . $this->get_css() . '</style>';
+		Plugin::$instance->frontend->print_fonts_links();
 	}
 
 	/**
@@ -278,6 +284,7 @@ abstract class CSS_File {
 	}
 
 	/**
+	 * @since 1.9.0
 	 * @access public
 	 */
 	public function get_fonts() {

@@ -5,14 +5,17 @@ use Setka\Editor\Admin\Prototypes\Options\AbstractOption;
 use Setka\Editor\Plugin;
 use Symfony\Component\Validator\Constraints;
 
-class PublicTokenOption extends AbstractOption {
+class PublicTokenOption extends AbstractOption
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct(Plugin::_NAME_ . '_public_token', Plugin::_NAME_ . '_auth');
         $this->setDefaultValue('');
     }
 
-    public function buildConstraint() {
+    public function buildConstraint()
+    {
         return array(
             new Constraints\NotBlank(),
             new Constraints\Length(array(
@@ -22,7 +25,8 @@ class PublicTokenOption extends AbstractOption {
         );
     }
 
-    public function sanitize($instance) {
+    public function sanitize($instance)
+    {
         return sanitize_text_field($instance);
     }
 }

@@ -20,90 +20,88 @@ use Setka\Editor\API\V1\Errors;
  * @apiError (Data\ThemePluginsHelper) 400 If `[data][plugins]` is not presented in request or if it is not array. Also this
  * status code returned if one of the file in set not valid.
  */
-class ThemePluginsHelper extends AbstractHelper {
+class ThemePluginsHelper extends AbstractHelper
+{
 
-	public function handleRequest() {
-		$request  = $this->getRequest();
-		$response = $this->getResponse();
-		$api = $this->getApi();
+    public function handleRequest()
+    {
+        $request  = $this->getRequest();
+        $response = $this->getResponse();
+        $api      = $this->getApi();
 
-		// Data not exists
-		if( !$request->request->has('data') ) {
-			$response->setStatusCode( $response::HTTP_BAD_REQUEST );
-			$api->addError( new Errors\MissedDataAttributeError() );
-			return;
-		}
+        if(!$request->request->has('data')) {
+            $response->setStatusCode($response::HTTP_BAD_REQUEST);
+            $api->addError(new Errors\MissedDataAttributeError());
+            return;
+        }
 
-		// Convert data from array to ParameterBag if not
-		if( is_array( $request->request->get('data') ) ) {
-			$request->request->set(
-				'data',
-				new ParameterBag( $request->request->get('data') )
-			);
-		}
+        if(is_array($request->request->get('data'))) {
+            $request->request->set(
+                'data',
+                new ParameterBag($request->request->get('data'))
+            );
+        }
 
-		if( !is_a( $request->request->get('data'), ParameterBag::class ) ) {
-			$response->setStatusCode( $response::HTTP_BAD_REQUEST );
-			$api->addError( new Errors\RequestDataError() );
-			return;
-		}
+        if(!is_a($request->request->get('data'), ParameterBag::class)) {
+            $response->setStatusCode($response::HTTP_BAD_REQUEST);
+            $api->addError(new Errors\RequestDataError());
+            return;
+        }
 
-		$data = $request->request->get('data');
+        $data = $request->request->get('data');
 
-		// Not exists
-		if( !$data->has('plugins') ) {
-			$response->setStatusCode( $response::HTTP_BAD_REQUEST );
-			$api->addError( new Errors\Helpers\PluginFiles\PluginsAttributeError() );
-			return;
-		}
+        if(!$data->has('plugins')) {
+            $response->setStatusCode($response::HTTP_BAD_REQUEST);
+            $api->addError(new Errors\Helpers\PluginFiles\PluginsAttributeError());
+            return;
+        }
 
-		// Not array
-		$plugins = $data->get('plugins');
-		if( !is_array( $plugins ) ) {
-			$response->setStatusCode( $response::HTTP_BAD_REQUEST );
-			$api->addError( new Errors\Helpers\PluginFiles\PluginsAttributeError() );
-			return;
-		}
+        $plugins = $data->get('plugins');
+        if(!is_array($plugins)) {
+            $response->setStatusCode($response::HTTP_BAD_REQUEST);
+            $api->addError(new Errors\Helpers\PluginFiles\PluginsAttributeError());
+            return;
+        }
 
-		// Invalid format
-		if( !isset( $plugins[0] ) ) {
-			$response->setStatusCode( $response::HTTP_BAD_REQUEST );
-			$api->addError( new Errors\Helpers\PluginFiles\PluginsAttributeError() );
-			return;
-		}
+        if(!isset($plugins[0])) {
+            $response->setStatusCode($response::HTTP_BAD_REQUEST);
+            $api->addError(new Errors\Helpers\PluginFiles\PluginsAttributeError());
+            return;
+        }
 
-		if(!is_array($plugins[0])) {
-			$response->setStatusCode( $response::HTTP_BAD_REQUEST );
-			$api->addError( new Errors\Helpers\PluginFiles\PluginsAttributeError() );
-			return;
-		}
+        if(!is_array($plugins[0])) {
+            $response->setStatusCode($response::HTTP_BAD_REQUEST);
+            $api->addError(new Errors\Helpers\PluginFiles\PluginsAttributeError());
+            return;
+        }
 
-		$validator = $this->getApi()->getValidator();
-		$constraints = $this->getConstraint();
+        $validator   = $this->getApi()->getValidator();
+        $constraints = $this->getConstraint();
 
-		$results = $validator->validate( $plugins[0], $constraints );
-		if( count( $results ) !== 0 ) {
-			$response->setStatusCode( $response::HTTP_BAD_REQUEST );
-			$api->addError( new Errors\Helpers\PluginFiles\PluginsAttributeError() );
-			return;
-		}
-	}
+        $results = $validator->validate($plugins[0], $constraints);
+        if(count($results) !== 0) {
+            $response->setStatusCode($response::HTTP_BAD_REQUEST);
+            $api->addError(new Errors\Helpers\PluginFiles\PluginsAttributeError());
+            return;
+        }
+    }
 
-	public function getConstraint() {
-		return new Constraints\Collection(array(
-			'fields' => array(
-				'url' => array(
-					new Constraints\NotBlank(),
-					new Constraints\Url()
-				),
-				'filetype' => array(
-					new Constraints\NotBlank(),
-					new Constraints\IdenticalTo(array(
-						'value' => 'js'
-					))
-				)
-			),
-			'allowExtraFields' => true
-		));
-	}
+    public function getConstraint()
+    {
+        return new Constraints\Collection(array(
+            'fields' => array(
+                'url' => array(
+                    new Constraints\NotBlank(),
+                    new Constraints\Url()
+                ),
+                'filetype' => array(
+                    new Constraints\NotBlank(),
+                    new Constraints\IdenticalTo(array(
+                        'value' => 'js'
+                    ))
+                )
+            ),
+            'allowExtraFields' => true
+        ));
+    }
 }

@@ -18,7 +18,8 @@ use Symfony\Component\Validator\Constraints;
  *
  * If you switch to 1. we also need to disable local usage.
  */
-class FileSyncStageOption extends Prototypes\Options\AbstractOption {
+class FileSyncStageOption extends Prototypes\Options\AbstractOption
+{
 
     // 1 //
     const DOWNLOAD_FILES_LIST = 'download_files_list';
@@ -35,12 +36,14 @@ class FileSyncStageOption extends Prototypes\Options\AbstractOption {
     // 5 //
     const OK = 'ok';
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct(Plugin::_NAME_ . '_file_sync_stage', '');
         $this->setDefaultValue('download_files_list');
     }
 
-    public function buildConstraint() {
+    public function buildConstraint()
+    {
         return array(
             new Constraints\NotNull(),
             new Constraints\Type(array(
@@ -60,7 +63,8 @@ class FileSyncStageOption extends Prototypes\Options\AbstractOption {
         );
     }
 
-    public function sanitize($instance) {
+    public function sanitize($instance)
+    {
         if($this->validateValue($instance)) {
             return $instance;
         }

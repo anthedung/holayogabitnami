@@ -2,16 +2,18 @@
 
 namespace Setka\Editor\Admin\Options\WhiteLabel;
 
-class Utilities {
+class Utilities
+{
 
-	public static function is_white_label_enabled() {
-		$option = new WhiteLabelOption();
-		$value = $option->getValue();
+    public static function isWhiteLabelEnabled()
+    {
+        $option = new WhiteLabelOption();
+        $value  = $option->getValue();
 
-		if('1' === $value) {
-			return true;
-		}
+        if('1' === $value) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

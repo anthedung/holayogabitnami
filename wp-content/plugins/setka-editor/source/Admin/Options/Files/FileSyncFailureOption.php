@@ -5,14 +5,17 @@ use Setka\Editor\Admin\Prototypes\Options\AbstractOption;
 use Setka\Editor\Plugin;
 use Symfony\Component\Validator\Constraints;
 
-class FileSyncFailureOption extends AbstractOption {
+class FileSyncFailureOption extends AbstractOption
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct(Plugin::_NAME_ . '_file_sync_failure', '');
         $this->setDefaultValue('0');
     }
 
-    public function buildConstraint() {
+    public function buildConstraint()
+    {
         return array(
             new Constraints\NotNull(),
             new Constraints\Type(array(
@@ -26,7 +29,8 @@ class FileSyncFailureOption extends AbstractOption {
         );
     }
 
-    public function sanitize($instance) {
+    public function sanitize($instance)
+    {
         if($this->validateValue($instance)) {
             return $instance;
         }

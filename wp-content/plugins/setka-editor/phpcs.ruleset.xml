@@ -3,12 +3,96 @@
 	<description>Plugin coding standards based on WordPress VIP standards with excluded some rules.</description>
 
 	<arg name="colors"/>
+
+	<!-- WordPress related rules -->
 	<config name="installed_paths" value="vendor/wp-coding-standards/wpcs"/>
-	<rule ref="./vendor/automattic/vipwpcs/WordPressVIPMinimum/ruleset.xml" />
+	<rule ref="./vendor/automattic/vipwpcs/WordPressVIPMinimum/ruleset.xml">
+		<exclude name="WordPressVIPMinimum.Variables.VariableAnalysis.UnusedVariable"/>
+		<exclude name="WordPress.VIP.DirectDatabaseQuery"/>
+		<exclude name="WordPress.WP.PreparedSQL"/>
+	</rule>
 	<rule ref="WordPress.PHP.YodaConditions"/>
 
 	<file>./plugin.php</file>
 	<file>./source</file>
 	<file>./tests</file>
 	<exclude-pattern>./source/libraries</exclude-pattern>
+	<exclude-pattern>./tests/bootstrap.php</exclude-pattern>
+
+	<rule ref="PSR2"/>
+
+	<rule ref="Generic.Arrays.DisallowShortArraySyntax"/>
+	<rule ref="Generic.Classes.DuplicateClassName"/>
+	<rule ref="Generic.Commenting">
+		<exclude name="Generic.Commenting.DocComment"/>
+	</rule>
+	<rule ref="Generic.ControlStructures"/>
+	<rule ref="Generic.Debug"/>
+	<rule ref="Generic.Files">
+		<exclude name="Generic.Files.EndFileNoNewline"/>
+		<exclude name="Generic.Files.LowercasedFilename"/>
+		<exclude name="Generic.Files.LineLength"/>
+		<exclude name="Generic.Files.InlineHTML"/>
+	</rule>
+	<rule ref="Generic.Formatting">
+		<exclude name="Generic.Formatting.NoSpaceAfterCast"/>
+		<exclude name="Generic.Formatting.SpaceAfterNot"/>
+	</rule>
+	<rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+	<rule ref="Generic.Metrics"/>
+	<rule ref="Generic.Metrics.CyclomaticComplexity">
+		<properties>
+			<property name="complexity" value="12"/>
+		</properties>
+	</rule>
+	<rule ref="Generic.NamingConventions"/>
+	<rule ref="Generic.NamingConventions.CamelCapsFunctionName">
+		<properties>
+			<property name="strict" value="false"/>
+		</properties>
+	</rule>
+	<rule ref="Generic.PHP">
+		<exclude name="Generic.PHP.ClosingPHPTag"/>
+		<exclude name="Generic.PHP.UpperCaseConstant"/>
+	</rule>
+	<rule ref="Generic.Strings"/>
+	<rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
+
+	<rule ref="Squiz.Classes"/>
+
+	<rule ref="Squiz.Commenting.DocCommentAlignment"/>
+	<rule ref="Squiz.Commenting.VariableComment"/>
+	<rule ref="Squiz.ControlStructures">
+		<exclude name="Squiz.ControlStructures.ElseIfDeclaration"/>
+		<exclude name="Squiz.ControlStructures.ControlSignature"/>
+		<exclude name="Squiz.ControlStructures.SwitchDeclaration"/>
+	</rule>
+
+	<rule ref="PSR1.Files.SideEffects">
+		<exclude-pattern>*/plugin.php</exclude-pattern>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Variables.VariableAnalysis.UndefinedVariable">
+		<exclude-pattern>source/Admin/Prototypes/Options/Traits/*</exclude-pattern>
+		<exclude-pattern>source/Admin/Prototypes/Pages/PrepareTabsTrait.php</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.VIP.FileSystemWritesDisallow.file_ops_unlink">
+		<exclude-pattern>source/Admin/Service/FilesSync/WordPressDownloader.php</exclude-pattern>
+	</rule>
+	<rule ref="Generic.Metrics.CyclomaticComplexity.MaxExceeded">
+		<exclude-pattern>source/API/V1/Actions/CompanyStatus/Update/Action.php</exclude-pattern>
+	</rule>
+	<rule ref="Generic.Metrics.CyclomaticComplexity.TooHigh">
+		<exclude-pattern>source/Service/SetkaAccount/SignIn.php</exclude-pattern>
+		<exclude-pattern>source/API/V1/Helpers/ContentEditorFilesHelper.php</exclude-pattern>
+		<exclude-pattern>source/API/V1/Helpers/ThemeFilesHelper.php</exclude-pattern>
+		<exclude-pattern>source/API/V1/Actions/Resources/Update/Action.php</exclude-pattern>
+		<exclude-pattern>source/Admin/Pages/SetkaEditor/SignUp/SignUpPage.php</exclude-pattern>
+		<exclude-pattern>source/Admin/Pages/Settings/SettingsPage.php</exclude-pattern>
+		<exclude-pattern>source/Admin/Service/FilesManager/FilesManager.php</exclude-pattern>
+		<exclude-pattern>source/Admin/Service/SetkaAPI/Actions/UpdateStatusAction.php</exclude-pattern>
+		<exclude-pattern>source/Admin/Pages/Settings/SettingsPage.php</exclude-pattern>
+	</rule>
+	<rule ref="WordPress.WP.AlternativeFunctions.parse_url_parse_url">
+		<exclude-pattern>source/Admin/Service/EditorConfigGenerator/EditorConfigGenerator.php</exclude-pattern>
+	</rule>
 </ruleset>

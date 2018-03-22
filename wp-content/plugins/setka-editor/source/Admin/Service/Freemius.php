@@ -3,16 +3,17 @@ namespace Setka\Editor\Admin\Service;
 
 use Setka\Editor\Service\PathsAndUrls;
 
-class Freemius {
+class Freemius
+{
 
-	public static function run() {
+    public static function run()
+    {
         global $setka_editor_freemius;
 
         if(!isset($setka_editor_freemius)) {
-            // Include Freemius SDK.
-            require_once PathsAndUrls::get_plugin_dir_path('source/libraries/freemius/wordpress-sdk/start.php');
+            require_once PathsAndUrls::getPluginDirPath('source/libraries/freemius/wordpress-sdk/start.php');
 
-            $setka_editor_freemius = fs_dynamic_init( array(
+            $setka_editor_freemius = fs_dynamic_init(array(
                 'id'                  => '1245',
                 'slug'                => 'setka-editor',
                 'type'                => 'plugin',
@@ -26,10 +27,10 @@ class Freemius {
                     'contact'        => false,
                     'support'        => false,
                 ),
-            ) );
+            ));
         }
 
         // Signal that SDK was initiated.
-        do_action( 'setka_editor_freemius_loaded' );
-	}
+        do_action('setka_editor_freemius_loaded');
+    }
 }

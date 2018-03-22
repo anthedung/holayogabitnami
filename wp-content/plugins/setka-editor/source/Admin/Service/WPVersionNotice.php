@@ -1,54 +1,145 @@
 <?php
 namespace Setka\Editor\Admin\Service;
 
-use Setka\Editor\Plugin;
+/**
+ * Class WPVersionNotice
+ */
+class WPVersionNotice
+{
+    /**
+     * @var string Plugin base url.
+     */
+    protected $baseUrl;
 
-class WPVersionNotice {
+    /**
+     * @var string Plugin version.
+     */
+    protected $pluginVersion;
 
-	public static function run() {
-		add_action('admin_init', array(self::class, 'init'));
-	}
+    /**
+     * @var string Min WordPress version.
+     */
+    protected $wpVersionMin;
 
-	public static function init() {
-		if(
-			current_user_can('update_core') ||
-			current_user_can('install_plugins') ||
-			current_user_can('activate_plugins')
+    public function run()
+    {
+        add_action('admin_init', array($this, 'init'));
+    }
+
+    public function init()
+    {
+        if(current_user_can('update_core') ||
+            current_user_can('install_plugins') ||
+            current_user_can('activate_plugins')
         ) {
-			self::addActions();
-		}
+            $this->addActions();
+        }
     }
 
-    public static function addActions() {
-	    add_action('admin_enqueue_scripts', array('Setka\Editor\Admin\Service\ScriptStyles', 'register'));
-	    add_action('admin_enqueue_scripts', array(__CLASS__, 'enqueueAssets'), 11);
-	    add_action('admin_notices', array(__CLASS__, 'renderNotice'));
+    public function addActions()
+    {
+        add_action('admin_enqueue_scripts', array($this, 'enqueueAssets'), 11);
+        add_action('admin_notices', array($this, 'renderNotice'));
     }
 
-	public static function enqueueAssets() {
-		wp_enqueue_style(Plugin::NAME . '-wp-admin-main');
-	}
+    /**
+     * Enqueue scripts and styles.
+     */
+    public function enqueueAssets()
+    {
+        $file = 'assets/css/admin/main.min.css';
+        wp_register_style(
+            'setka-editor-wp-admin-main',
+            $this->baseUrl . $file,
+            array(),
+            $this->pluginVersion
+        );
 
-	public static function renderNotice() {
-	    global $wp_version;
-		?>
-		<div id="setka-editor-notice-wp-min-version" class="notice setka-editor-notice notice-error setka-editor-notice-error">
-            <p class="notice-title setka-editor-notice-title"><?php esc_html_e('Setka Editor plugin error', Plugin::NAME); ?></p>
-            <p><?php esc_html_e('Your WordPress version is obsolete. Please update your WordPress and then activate plugin again.', Plugin::NAME); ?></p>
-            <p><?php printf(
+        wp_enqueue_style('setka-editor-wp-admin-main');
+    }
+
+    /**
+     * Render notice.
+     */
+    public function renderNotice()
+    {
+        global $wp_version;
+        ?>
+        <div id="setka-editor-notice-wp-min-version" class="notice setka-editor-notice notice-error setka-editor-notice-error">
+            <p class="notice-title setka-editor-notice-title"><?php esc_html_e('Setka Editor plugin error', 'setka-editor'); ?></p>
+            <p><?php esc_html_e('Your WordPress version is obsolete. Please update your WordPress and then activate plugin again.', 'setka-editor'); ?></p>
+            <p><?php
+                printf( // WPCS: XSS ok.
                     /* translators: %1$s - current WordPress version in X.Y.Z format. */
-                    __('Your current WordPress version: <b>%1$s</b>', Plugin::NAME),
+                    __('Your current WordPress version: <b>%1$s</b>', 'setka-editor'),
                     esc_html($wp_version)
                 );
                 echo '<br>';
-	            printf(
-	                /* translators: %1$s - required WordPress version in X.Y.Z format. */
-		            __('Minimal version for Setka Editor plugin: <b>%1$s</b>', Plugin::NAME),
-		            esc_html(Plugin::WP_VERSION_MIN)
-	            );
+                printf( // WPCS: XSS ok.
+                    /* translators: %1$s - required WordPress version in X.Y.Z format. */
+                    __('Minimal version for Setka Editor plugin: <b>%1$s</b>', 'setka-editor'),
+                    esc_html($this->wpVersionMin)
+                );
             ?></p>
-            <p><a href="https://editor.setka.io/support" target="_blank"><?php esc_html_e('Contact Setka Editor Support', Plugin::NAME); ?></a></p>
+            <p><a href="https://editor.setka.io/support" target="_blank"><?php esc_html_e('Contact Setka Editor Support', 'setka-editor'); ?></a></p>
         </div>
-		<?php
-	}
+        <?php
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseUrl()
+    {
+        return $this->baseUrl;
+    }
+
+    /**
+     * @param string $baseUrl
+     *
+     * @return $this For chain calls.
+     */
+    public function setBaseUrl($baseUrl)
+    {
+        $this->baseUrl = $baseUrl;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPluginVersion()
+    {
+        return $this->pluginVersion;
+    }
+
+    /**
+     * @param string $pluginVersion
+     *
+     * @return $this For chain calls.
+     */
+    public function setPluginVersion($pluginVersion)
+    {
+        $this->pluginVersion = $pluginVersion;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWpVersionMin()
+    {
+        return $this->wpVersionMin;
+    }
+
+    /**
+     * @param string $wpVersionMin
+     *
+     * @return $this For chain calls.
+     */
+    public function setWpVersionMin($wpVersionMin)
+    {
+        $this->wpVersionMin = $wpVersionMin;
+        return $this;
+    }
 }

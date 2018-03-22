@@ -11,46 +11,52 @@ use Setka\Editor\Admin\Service\WPQueryFactory;
 use Setka\Editor\Entries\Meta\FileSubPathMeta;
 use Setka\Editor\Service\Config\Files;
 
-class EditorConfigGeneratorFactory {
+class EditorConfigGeneratorFactory
+{
 
-	public static function create(
-		Filesystem $filesystem = null,
-
+    public static function create(
+        Filesystem $filesystem = null,
         FileSubPathMeta $fileSubPathMeta = null,
-
         Options\ThemeResourceJS\Option $themeResourceJSOption = null,
         Options\ThemeResourceCSS\Option $themeResourceCSSOption = null,
-
         UseLocalFilesOption $useLocalFilesOption = null,
-		ThemeResourceJSLocalOption $themeResourceJSLocalOption = null,
+        ThemeResourceJSLocalOption $themeResourceJSLocalOption = null,
         ThemeResourceCSSLocalOption $themeResourceCSSLocalOption = null
-	) {
-		$filesystem = $filesystem ?
-            $filesystem : FilesystemFactory::create();
+    ) {
+        if(!$filesystem) {
+            $filesystem = FilesystemFactory::create();
+        }
 
-        $fileSubPathMeta = $fileSubPathMeta ?
-            $fileSubPathMeta : new FileSubPathMeta();
+        if(!$fileSubPathMeta) {
+            $fileSubPathMeta = new FileSubPathMeta();
+        }
 
-        $themeResourceJSOption = $themeResourceJSOption ?
-            $themeResourceJSOption : new Options\ThemeResourceJS\Option();
+        if(!$themeResourceJSOption) {
+            $themeResourceJSOption = new Options\ThemeResourceJS\Option();
+        }
 
-        $themeResourceCSSOption = $themeResourceCSSOption?
-            $themeResourceCSSOption : new Options\ThemeResourceCSS\Option();
+        if(!$themeResourceCSSOption) {
+            $themeResourceCSSOption = new Options\ThemeResourceCSS\Option();
+        }
+
 
         $queryJSON = WPQueryFactory::createThemeJSON($themeResourceJSOption->getValue());
-        $queryCSS = WPQueryFactory::createThemeCSS($themeResourceCSSOption->getValue());
+        $queryCSS  = WPQueryFactory::createThemeCSS($themeResourceCSSOption->getValue());
 
-		$useLocalFilesOption = $useLocalFilesOption ?
-            $useLocalFilesOption : new UseLocalFilesOption();
+        if(!$useLocalFilesOption) {
+            $useLocalFilesOption = new UseLocalFilesOption();
+        }
 
-		$themeResourceJSLocalOption = $themeResourceJSLocalOption ?
-            $themeResourceJSLocalOption : new ThemeResourceJSLocalOption();
+        if(!$themeResourceJSLocalOption) {
+            $themeResourceJSLocalOption = new ThemeResourceJSLocalOption();
+        }
 
-		$themeResourceCSSLocalOption = $themeResourceCSSLocalOption ?
-            $themeResourceCSSLocalOption : new ThemeResourceCSSLocalOption();
+        if(!$themeResourceCSSLocalOption) {
+            $themeResourceCSSLocalOption = new ThemeResourceCSSLocalOption();
+        }
 
-		return new EditorConfigGenerator(
-		    $filesystem,
+        return new EditorConfigGenerator(
+            $filesystem,
             Files::getPath(),
             Files::getUrl(),
             $queryJSON,
@@ -60,5 +66,5 @@ class EditorConfigGeneratorFactory {
             $themeResourceJSLocalOption,
             $themeResourceCSSLocalOption
         );
-	}
+    }
 }

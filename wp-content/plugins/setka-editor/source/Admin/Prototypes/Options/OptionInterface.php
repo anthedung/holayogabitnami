@@ -17,22 +17,23 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  * You can store custom values in this objects before inserting it into database. This is handy to store
  * some value inside of object, work with it, validate it and push it to the DB.
  */
-interface OptionInterface extends NodeInterface {
+interface OptionInterface extends NodeInterface
+{
 
-	public function getGroup();
-	public function setGroup( $group );
+    public function getGroup();
+    public function setGroup($group);
 
-	public function getValidator();
-	public function setValidator( ValidatorInterface $validator );
+    public function getValidator();
+    public function setValidator(ValidatorInterface $validator);
 
-	public function isAutoload();
-	public function setAutoload( $autoload );
-	public function enableAutoload();
-	public function disableAutoload();
+    public function isAutoload();
+    public function setAutoload($autoload);
+    public function enableAutoload();
+    public function disableAutoload();
 
-	public function delete();
-	public function flush();
-	public function updateValue( $value, $autoload = null );
+    public function delete();
+    public function flush();
+    public function updateValue($value, $autoload = null);
 
-	public function register();
+    public function register();
 }

@@ -5,20 +5,25 @@ use Setka\Editor\Admin\Service\SetkaAPI;
 use Setka\Editor\Admin\Service\SetkaAPI\Errors;
 use Symfony\Component\HttpFoundation\Request;
 
-class SendFilesStatAction extends SetkaAPI\Prototypes\ActionAbstract {
+class SendFilesStatAction extends SetkaAPI\Prototypes\ActionAbstract
+{
 
     /**
      * SendFilesStatAction constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this
             ->setMethod(Request::METHOD_POST)
             ->setEndpoint('/api/v1/wordpress/files/event.json');
     }
 
-    public function getConstraint() {}
+    public function getConstraint()
+    {
+    }
 
-    public function handleResponse() {
+    public function handleResponse()
+    {
         $response = $this->getResponse();
 
         switch($response->getStatusCode()) {

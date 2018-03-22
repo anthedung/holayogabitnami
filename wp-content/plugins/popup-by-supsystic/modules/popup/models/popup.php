@@ -308,7 +308,7 @@ class popupModelPps extends modelPps {
 						// Clear all prev. projects used this PopUp
 						$searchPrjcts = $this->_socShareGetSearchString($popupId);
 						$projects = $socShareProjMod->getModelsFactory()->get('projects');
-						$project = $projects->searchByPopupId($searchPrjcts);
+						$project = $projects->searchByElementId($searchPrjcts);
 						if(!empty($project)) {
 							$project->settings['popup_id'] = 0;
 							$socShareProjMod->getController()->getModelsFactory()->get('projects')->save($project->id, $project->settings);

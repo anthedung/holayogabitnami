@@ -3542,8 +3542,6 @@
 				delete_option( "fs_{$this->_slug}_activated" );
 
 				if ( ! function_exists( 'is_network_admin' ) || ! is_network_admin() ) {
-					$this->_redirect_on_activation_hook();
-
 					return;
 				}
 			}

@@ -7,19 +7,24 @@ use Setka\Editor\Admin\Service\SetkaAPI\Helpers;
 use Symfony\Component\HttpFoundation;
 use Setka\Editor\Admin\Options;
 
-class GetCurrentThemeAnonymouslyAction extends SetkaAPI\Prototypes\ActionAbstract {
-    public function __construct() {
+class GetCurrentThemeAnonymouslyAction extends SetkaAPI\Prototypes\ActionAbstract
+{
+    public function __construct()
+    {
         $this
             ->setMethod(HttpFoundation\Request::METHOD_GET)
             ->setEndpoint('/api/v1/wordpress/default_files.json')
             ->setAuthenticationRequired(false);
     }
 
-    public function getConstraint() {}
+    public function getConstraint()
+    {
+    }
 
-    public function handleResponse() {
+    public function handleResponse()
+    {
         $response = $this->getResponse();
-        $errors = $this->getErrors();
+        $errors   = $this->getErrors();
 
         switch($response->getStatusCode()) {
             /**
@@ -27,21 +32,18 @@ class GetCurrentThemeAnonymouslyAction extends SetkaAPI\Prototypes\ActionAbstrac
              * theme_files and content_editor_files must presented in response
              */
             case $response::HTTP_OK:
-                // Content Editor Files
                 $helper = new Helpers\ContentEditorFilesHelper($this->getApi(), $response, $errors);
                 $helper->handleResponse();
                 if($errors->hasErrors()) {
                     return;
                 }
 
-                // Theme Files
                 $helper = new Helpers\ThemeFilesHelper($this->getApi(), $response, $errors);
                 $helper->handleResponse();
                 if($errors->hasErrors()) {
                     return;
                 }
 
-                // Plugin Files
                 $helper = new Helpers\PluginsHelper($this->getApi(), $response, $errors);
                 $helper->handleResponse();
                 if($errors->hasErrors()) {

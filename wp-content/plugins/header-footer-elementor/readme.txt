@@ -1,10 +1,11 @@
-=== Header Footer Elementor ===
+=== Create Header / Footer with Elementor ===
 Contributors: brainstormforce, Nikschavan
 Tags: elementor, header footer builder, header, footer, page builder, template builder, landing page builder, front-end editor
 Donate link: https://www.paypal.me/BrainstormForce
 Requires at least: 4.4
-Tested up to: 4.9.1
-Stable tag: 1.0.8
+Requires PHP: 5.4
+Tested up to: 4.9.4
+Stable tag: 1.0.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,12 +66,43 @@ If you are a theme developer <a href="https://github.com/Nikschavan/header-foote
 1. Go to `Appearance -> Header Footer Builder` to build a header or footer layout using elementor.
 1. After the layout is ready assign the layout as header or footer using the option `Select the type of template this is` (<a href="https://cloudup.com/clK2sPg9nXK+">screenshot</a>)
 
+= Can you create Mobile Responsive Header/Footer using this plugin? =
+
+Yes, You can create the mobile responsive layout of your header using the plugin.  
+
+The Header-Footer Elementor plugin just gives you a container where you can completely design the header using Elementor Page Builder, So the process of creating the mobile responsive layout is exactly same as you would create a responsive layout of your page.
+
+Here is a documentation by Elementor Page builder which explains how you can create mobile responsive layouts using Elementor - <a href="https://elementor.com/introducing-mobile-editing/">https://elementor.com/introducing-mobile-editing/</a>
+This same applies when you are creating your Header/Footer using this plugin.
+
+= How Can I add support for Heade/Footer Plugin from my theme? =
+
+If you are a theme developer <a href="https://github.com/Nikschavan/header-footer-elementor/wiki/Adding-Header-Footer-Elementor-support-for-your-theme">here</a> is a quick tutorial on how you can add support for the Header Footer Elementor from your theme.
+
+If you are using a pre-made theme, The best approach would be to contact yoru theme developer and provide them link to the <a href="https://github.com/Nikschavan/header-footer-elementor/wiki/Adding-Header-Footer-Elementor-support-for-your-theme">Wiki article</a> on how they can add support for the plugin. 
+If the above is nnot possible, You can also add support for the plugin from your child theme. Just follow <a href="https://github.com/Nikschavan/header-footer-elementor/wiki/Add-support-to-Header-Footer-Elementor-from-the-Child-Theme">this article</a>
+
+
 == Screenshots ==
 
 1. Go to Appearane -> Header Footer Builder to create a new template.
-2. After the template is reade, Assign the template to be header or footer replacement.
+2. After the template is ready, assign it to be a header or footer replacement.
 
 == Changelog ==
+
+= 1.0.11 = 
+- Load the CSS footer early in the page to avoid slow rendering of CSS.
+- Change the schema.org links to be https.
+- Fix: Added correct schema markup for the footer.
+
+= 1.0.10 = 
+- Load the header layout correctly in the <body> in Elementor canvas template.
+- Load the Elementor Pro CSS/JS files in <head>.
+- Provide more filters for the helper functions.
+
+= 1.0.9 = 
+- Add Support for WPML.
+- Updated the missing strings from the translations template.
 
 = 1.0.8 = 
 - Allow filters to override the WP_Query parameters when retreiving the Header / Footer template id.

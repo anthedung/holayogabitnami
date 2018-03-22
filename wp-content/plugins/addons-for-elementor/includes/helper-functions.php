@@ -47,9 +47,15 @@ function lae_get_chosen_terms($terms_query) {
             if (empty($taxonomy) || empty($term_slug))
                 continue;
             $chosen_terms[] = get_term_by('slug', $term_slug, $taxonomy);
-            $taxonomies[] = $taxonomy;
+
+            if (!in_array($taxonomy, $taxonomies))
+                $taxonomies[] = $taxonomy;
         }
     }
+
+    // Remove duplicates
+    $taxonomies = array_unique($taxonomies);
+
     return array($chosen_terms, $taxonomies);
 }
 
@@ -89,7 +95,7 @@ function lae_get_taxonomy_info($taxonomies) {
 function lae_entry_published($format = null) {
 
     if (empty($format))
-        $format = esc_html__("M d, Y", 'livemesh-el-addons');
+        $format = get_option('date_format');
 
     $published = '<span class="published"><abbr title="' . sprintf(get_the_time(esc_html__('l, F, Y, g:i a', 'livemesh-el-addons'))) . '">' . sprintf(get_the_time($format)) . '</abbr></span>';
 

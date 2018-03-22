@@ -1,8 +1,9 @@
 <?php
 namespace Setka\Editor\Prototypes\Errors;
 
-interface ErrorRichInterface {
+interface ErrorRichInterface
+{
 
-	public function getMessageHTML();
-	public function setMessageHTML( $message );
+    public function getMessageHTML();
+    public function setMessageHTML($message);
 }

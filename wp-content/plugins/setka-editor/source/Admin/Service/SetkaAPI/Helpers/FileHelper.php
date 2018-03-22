@@ -6,12 +6,14 @@ use Setka\Editor\Admin\Service\SetkaAPI\Errors;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\Validator\Constraints;
 
-class FileHelper extends SetkaAPI\Prototypes\HelperAbstract {
+class FileHelper extends SetkaAPI\Prototypes\HelperAbstract
+{
 
-	public function buildResponseConstraints() {
-		return array(
+    public function buildResponseConstraints()
+    {
+        return array(
             new Constraints\NotBlank(),
-		    new Constraints\Collection(array(
+            new Constraints\Collection(array(
                 'fields' => array(
                     'id' => array(
                         new Constraints\NotBlank(),
@@ -28,31 +30,31 @@ class FileHelper extends SetkaAPI\Prototypes\HelperAbstract {
                     ),
                 ),
                 'allowExtraFields' => true,
-		    ))
+            ))
         );
-	}
+    }
 
-	public function handleResponse() {
-		$response = $this->getResponse();
-		$content = $response->getContent();
+    public function handleResponse()
+    {
+        $response = $this->getResponse();
+        $content  = $response->getContent();
 
-		if(!is_a($content, ParameterBag::class)) {
-			$this->getErrors()->add(new Errors\ResponseBodyInvalidError());
-			return;
-		}
+        if(!is_a($content, ParameterBag::class)) {
+            $this->getErrors()->add(new Errors\ResponseBodyInvalidError());
+            return;
+        }
 
-		$validator = $this->getApi()->getValidator();
-		$constraints = $this->buildResponseConstraints();
+        $validator   = $this->getApi()->getValidator();
+        $constraints = $this->buildResponseConstraints();
 
-		// Validate each file.
-		foreach($content as $file) {
-			try {
+        foreach($content as $file) {
+            try {
                 $results = $validator->validate($file, $constraints);
-			    $this->violationsToException($results);
+                $this->violationsToException($results);
             } catch (\Exception $exception) {
-				$this->getErrors()->add(new Errors\GetFiles\InvalidFileError());
-				return;
+                $this->getErrors()->add(new Errors\GetFiles\InvalidFileError());
+                return;
             }
-		}
-	}
+        }
+    }
 }

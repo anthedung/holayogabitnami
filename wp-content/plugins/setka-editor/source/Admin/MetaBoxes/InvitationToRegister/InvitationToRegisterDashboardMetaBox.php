@@ -1,17 +1,43 @@
 <?php
 namespace Setka\Editor\Admin\MetaBoxes\InvitationToRegister;
 
-use Setka\Editor\Admin\Prototypes\MetaBoxes\AbstractDashboardMetaBox;
+use Korobochkin\WPKit\MetaBoxes\DashboardMetaBox;
 use Setka\Editor\Plugin;
 
-class InvitationToRegisterDashboardMetaBox extends AbstractDashboardMetaBox
+/**
+ * Class InvitationToRegisterDashboardMetaBox
+ */
+class InvitationToRegisterDashboardMetaBox extends DashboardMetaBox
 {
-    public function __construct() {
-        $view = new InvitationToRegisterView();
+    /**
+     * @var string
+     */
+    protected $signUpUrl;
 
+    public function __construct()
+    {
         $this
             ->setId(Plugin::_NAME_ . '_invitation_to_registerDashboardMetaBox')
             ->setTitle(_x('Setka Editor Registration', 'MetaBox title.', Plugin::NAME))
-            ->setView($view);
+            ->setView(new InvitationToRegisterView());
+    }
+
+    /**
+     * @return string
+     */
+    public function getSignUpUrl()
+    {
+        return $this->signUpUrl;
+    }
+
+    /**
+     * @param string $signUpUrl
+     *
+     * @return $this
+     */
+    public function setSignUpUrl($signUpUrl)
+    {
+        $this->signUpUrl = $signUpUrl;
+        return $this;
     }
 }

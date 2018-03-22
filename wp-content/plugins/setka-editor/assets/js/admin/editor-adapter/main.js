@@ -41,8 +41,7 @@ setkaEditorAdapter.view = {
         Prototype: require('./view/notices/Prototype'),
 
         SetkaEditorCantFindResources: require('./view/notices/SetkaEditorCantFindResources'),
-        SetkaEditorThemeDisabled: require('./view/notices/SetkaEditorThemeDisabled'),
-        SetkaEditorSaveSnippet: require('./view/notices/SetkaEditorSaveSnippet')
+        SetkaEditorThemeDisabled: require('./view/notices/SetkaEditorThemeDisabled')
     },
 
     // Add Media button

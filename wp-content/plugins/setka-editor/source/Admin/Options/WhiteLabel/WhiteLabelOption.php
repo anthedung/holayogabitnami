@@ -10,18 +10,22 @@ use Symfony\Component\Validator\Constraints;
  *
  * @package Setka\Editor\Admin\Options\WhiteLabel
  */
-class WhiteLabelOption extends AbstractOption  {
+class WhiteLabelOption extends AbstractOption
+{
 
-	public function __construct() {
-		parent::__construct(Plugin::_NAME_ . '_white_label', '');
-		$this->setDefaultValue('0');
-	}
+    public function __construct()
+    {
+        parent::__construct(Plugin::_NAME_ . '_white_label', '');
+        $this->setDefaultValue('0');
+    }
 
-	public function buildConstraint() {
-		return new Constraints\Type(array('type' => 'bool'));
-	}
+    public function buildConstraint()
+    {
+        return new Constraints\Type(array('type' => 'bool'));
+    }
 
-	public function sanitize($instance) {
-		return $instance;
-	}
+    public function sanitize($instance)
+    {
+        return $instance;
+    }
 }

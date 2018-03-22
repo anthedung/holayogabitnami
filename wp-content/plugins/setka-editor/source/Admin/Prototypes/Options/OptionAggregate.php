@@ -3,17 +3,18 @@ namespace Setka\Editor\Admin\Prototypes\Options;
 
 use Setka\Editor\Admin\Prototypes\Options\Traits;
 
-class OptionAggregate extends AbstractOption implements AggregateNodeInterface {
+class OptionAggregate extends AbstractOption implements AggregateNodeInterface
+{
 
-	use Traits\ParentTrait;
+    use Traits\ParentTrait;
 
-	use Traits\Aggregate\ConstraintAllowExtraTrait;
+    use Traits\Aggregate\ConstraintAllowExtraTrait;
 
-	use Traits\Aggregate\NodesTrait;
+    use Traits\Aggregate\NodesTrait;
 
-	use Traits\Aggregate\SanitizeTrait;
+    use Traits\Aggregate\SanitizeTrait;
 
-	use Traits\Aggregate\DefaultValueTrait;
+    use Traits\Aggregate\DefaultValueTrait;
 
-	use Traits\Aggregate\ValueTrait;
+    use Traits\Aggregate\ValueTrait;
 }

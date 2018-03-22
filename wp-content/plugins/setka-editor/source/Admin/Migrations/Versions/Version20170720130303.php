@@ -6,30 +6,25 @@ use Setka\Editor\Admin\Service\FilesManager\FilesManagerFactory;
 use Setka\Editor\Service\Config\PluginConfig;
 use Setka\Editor\Service\SetkaAccount\Account;
 
-class Version20170720130303 implements MigrationInterface {
+class Version20170720130303 implements MigrationInterface
+{
 
-    public function up() {
-
-        // This migration only for logged in users.
-
-        if(!Account::is_logged_in()) {
-            return;
+    public function up()
+    {
+        if(!Account::isLoggedIn()) {
+            return $this;
         }
 
         if(PluginConfig::isVIP()) {
-        	// VIP env not using this type of files sync.
-        	return;
+            return $this;
         }
 
-        // Start syncing files.
         $manager = FilesManagerFactory::create();
         $manager
             ->restartSyncing()
-
-            // Just clean tasks to prevent double registering tasks
             ->disableSyncingTasks()
-
-            // Register tasks
             ->enableSyncingTasks();
+
+        return $this;
     }
 }

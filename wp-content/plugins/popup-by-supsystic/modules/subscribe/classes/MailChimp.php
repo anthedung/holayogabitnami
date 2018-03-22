@@ -347,7 +347,13 @@ class MailChimpPps
      */
     private function attachRequestPayload(&$ch, $data)
     {
-        $encoded = json_encode($data);
+		// supsystic
+		if(version_compare(phpversion(), '5.3') >= 0) {
+			$encoded = json_encode($data, JSON_FORCE_OBJECT);
+		} else {
+			$encoded = json_encode($data);
+		}
+		//////
         $this->last_request['body'] = $encoded;
         curl_setopt($ch, CURLOPT_POSTFIELDS, $encoded);
     }

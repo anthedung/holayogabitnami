@@ -10,31 +10,35 @@ use Symfony\Component\Validator\Constraints;
  *
  * Another way to disable this functionality is to define constant. See more in FilesManager.
  */
-class FileSyncOption extends Prototypes\Options\AbstractOption {
+class FileSyncOption extends Prototypes\Options\AbstractOption
+{
 
-	public function __construct() {
-		parent::__construct(Plugin::_NAME_ . '_file_sync', '');
-		$this->setDefaultValue('1');
-	}
+    public function __construct()
+    {
+        parent::__construct(Plugin::_NAME_ . '_file_sync', '');
+        $this->setDefaultValue('1');
+    }
 
-	public function buildConstraint() {
-		return array(
-			new Constraints\NotNull(),
-			new Constraints\Type(array(
-				'type' => 'string',
-			)),
-			new Constraints\Choice(array(
-				'choices' => array('0', '1'),
-				'multiple' => false,
-				'strict' => true,
-			)),
-		);
-	}
+    public function buildConstraint()
+    {
+        return array(
+            new Constraints\NotNull(),
+            new Constraints\Type(array(
+                'type' => 'string',
+            )),
+            new Constraints\Choice(array(
+                'choices' => array('0', '1'),
+                'multiple' => false,
+                'strict' => true,
+            )),
+        );
+    }
 
-	public function sanitize($instance) {
-		if($this->validateValue($instance)) {
-			return $instance;
-		}
-		return $this->getDefaultValue();
-	}
+    public function sanitize($instance)
+    {
+        if($this->validateValue($instance)) {
+            return $instance;
+        }
+        return $this->getDefaultValue();
+    }
 }

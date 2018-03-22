@@ -882,21 +882,25 @@
             border-bottom: 2px solid #ccc; }
       .lae-posts-carousel .lae-posts-carousel-item .lae-project-image .lae-image-info .lae-terms {
         display: block;
-        color: #f9f9f9; }
+        color: #f9f9f9;
+        font-size: 14px;
+        line-height: 22px;
+        opacity: 0;
+        -webkit-transition: opacity .4s ease-in-out 0s;
+        transition: opacity .4s ease-in-out 0s; }
         .lae-posts-carousel .lae-posts-carousel-item .lae-project-image .lae-image-info .lae-terms a {
           color: #ddd;
           position: relative;
           display: inline;
           zoom: 1;
           font-size: 14px;
-          line-height: 26px;
+          line-height: 22px;
           font-style: italic;
-          opacity: 0;
           -webkit-transition: all .4s ease-in-out 0s;
           transition: all .4s ease-in-out 0s; }
           .lae-posts-carousel .lae-posts-carousel-item .lae-project-image .lae-image-info .lae-terms a:hover {
             color: #fff; }
-    .lae-posts-carousel .lae-posts-carousel-item .lae-project-image:hover .lae-image-info .lae-post-title, .lae-posts-carousel .lae-posts-carousel-item .lae-project-image:hover .lae-image-info .lae-terms a {
+    .lae-posts-carousel .lae-posts-carousel-item .lae-project-image:hover .lae-image-info .lae-post-title, .lae-posts-carousel .lae-posts-carousel-item .lae-project-image:hover .lae-image-info .lae-terms {
       opacity: 1; }
   .lae-posts-carousel .lae-posts-carousel-item .lae-entry-text-wrap {
     text-align: center;
@@ -1128,21 +1132,25 @@
             border-bottom: 1px solid #ccc; }
       .lae-portfolio-wrap .lae-portfolio .lae-portfolio-item .lae-project-image .lae-image-info .lae-terms {
         display: block;
-        color: #f9f9f9; }
+        color: #f9f9f9;
+        font-size: 14px;
+        line-height: 22px;
+        opacity: 0;
+        -webkit-transition: opacity .4s ease-in-out 0s;
+        transition: opacity .4s ease-in-out 0s; }
         .lae-portfolio-wrap .lae-portfolio .lae-portfolio-item .lae-project-image .lae-image-info .lae-terms a {
           color: #ddd;
           position: relative;
           display: inline;
           zoom: 1;
           font-size: 14px;
-          line-height: 26px;
+          line-height: 22px;
           font-style: italic;
-          opacity: 0;
           -webkit-transition: all .4s ease-in-out 0s;
           transition: all .4s ease-in-out 0s; }
           .lae-portfolio-wrap .lae-portfolio .lae-portfolio-item .lae-project-image .lae-image-info .lae-terms a:hover {
             color: #fff; }
-    .lae-portfolio-wrap .lae-portfolio .lae-portfolio-item .lae-project-image:hover .lae-image-info .lae-post-title, .lae-portfolio-wrap .lae-portfolio .lae-portfolio-item .lae-project-image:hover .lae-image-info .lae-terms a {
+    .lae-portfolio-wrap .lae-portfolio .lae-portfolio-item .lae-project-image:hover .lae-image-info .lae-post-title, .lae-portfolio-wrap .lae-portfolio .lae-portfolio-item .lae-project-image:hover .lae-image-info .lae-terms {
       opacity: 1; }
   .lae-portfolio-wrap .lae-portfolio .lae-portfolio-item .lae-entry-text-wrap {
     text-align: center;

@@ -4,13 +4,14 @@ namespace Setka\Editor\Admin\Prototypes\Options;
 /**
  * Use it with OptionInterface for making options with nested values.
  */
-interface AggregateNodeInterface extends NodeInterface {
+interface AggregateNodeInterface extends NodeInterface
+{
 
-	public function getNodes();
+    public function getNodes();
 
-	public function setNodes(array $nodes);
+    public function setNodes(array $nodes);
 
-	public function addNode(NodeInterface $node);
+    public function addNode(NodeInterface $node);
 
-	public function getNode($name);
+    public function getNode($name);
 }

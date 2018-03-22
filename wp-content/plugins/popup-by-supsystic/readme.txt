@@ -1,9 +1,9 @@
-=== Popup by Supsystic ===
+﻿=== Popup by Supsystic ===
 Contributors: supsystic.com
 Donate link: https://supsystic.com/plugins/popup-plugin
 Tags: popup, marketing, optin, advertising, popover, pop-up, pop over, lightbox, contact form, builder, modal, video, youtube, social, facebook
-Tested up to: 4.9.1
-Stable tag: 1.9.15
+Tested up to: 4.9.4
+Stable tag: 1.9.23
 
 Popup by Supsystic is the best way to convert visitors into subscribers, followers & customers. Create any type of popup with popup builder templates
 
@@ -295,6 +295,40 @@ Working with adult site content, sometimes is needed to be sure kids not watchin
 * [Translate by Supsystic](https://wordpress.org/plugins/translate-by-supsystic/ "Translate by Supsystic")
 
 == Changelog ==
+
+= 1.9.23 / 20.03.2018 =
+ * Fix issue with re-adding emails to MailChimp lists error
+ * Minify frontend assets - JS scripts and CSS styles - to make it lighter
+ * Minor issues fixed
+
+= 1.9.22 / 01.03.2018 =
+ * Additional core code improvements
+ * Minor issues fixed
+
+= 1.9.21 / 20.02.2018 =
+ * Possibility to deselect all Tabs in Facebook Like PopUp
+ * Minor issues fix
+
+= 1.9.20 / 14.02.2018 =
+ * Minor issues fix
+ * Code review and improvements
+
+= 1.9.19 / 07.02.2018 =
+ * Fix Facebook Like PopUp positioning
+
+= 1.9.18 / 06.02.2018 =
+ * Adapt Facebook Like PopUp to latest Facebook API changes
+ * Additional core code improvements
+ * Minor issues fixed
+
+ = 1.9.17 / 31.01.2018 =
+ * Possibility to create Primary buttons for actions in Age Verify PopUps
+ * Added full compatibility with older PHP versions (5.2)
+ * Fix issue with latest MailChimp API (V3) and it's Groups
+ * Campaign Monitor library fix
+
+= 1.9.16 / 15.01.2018 =
+ * Minor issues fixed
 
 = 1.9.15 / 28.12.2017
  * Dotmailer subscription system integration

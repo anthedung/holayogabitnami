@@ -844,7 +844,8 @@ else {
 
                 <p>This powerful element lets you create a gallery of images or videos displayed in a multi-column grid.
                     An instance of this element can capture a portfolio of work like that of a photographer or graphic
-                    designer/artist.</p>
+                    designer/artist. <strong>Recent versions of the plugin added a nifty 'Bulk Upload' option to this addon to
+                        help choose multiple images and create image galleries instantly.</strong></p>
                 <p><img class="alignnone size-large" src="https://www.livemeshthemes.com/wp-content/uploads/plugin-doc/elementor-addons/video-gallery.jpg" alt="Video Gallery Element"></p>
                 <p>It can be used to create a gallery of videos uploaded to YouTube/Vimeo – useful for video bloggers,
                     video tutorial sites, video marketers, small businesses or websites with a major presence on
@@ -884,7 +885,10 @@ else {
                     <li><strong>Filterable</strong> – If the videos or images are tagged, the items can be made
                         filterable on the tags specified by the user just like a Portfolio Grid.
                     </li>
-                    <li><strong>Layout for the grid</strong> – Comes with Masonry and FitRows option.</li>
+                    <li><strong>Layout for the grid</strong> – Comes with Masonry and FitRows option. You can create stunning
+                    masonry style grid by choosing a wide width option for the image in the Insert Media window or in the
+                        Edit Gallery window when you choose 'Bulk Upload' option for the images. The flexibility in height
+                        of the image for masonry layout is achieved automatically by uploading an image of custom height.</li>
                     <p><img class="alignnone size-large" src="https://www.livemeshthemes.com/wp-content/uploads/plugin-doc/elementor-addons/image-gallery-pagination.jpg" alt="Image Gallery Element Pagination"></p>
                     <p><img class="alignnone size-large" src="https://www.livemeshthemes.com/wp-content/uploads/plugin-doc/elementor-addons/image-gallery-loadmore.jpg" alt="Image Gallery Element Load More Option"></p>
                     <li><strong>Pagination</strong> – Choose pagination type or choose None if no pagination is desired.
@@ -1119,6 +1123,25 @@ else {
 
             <!-- Updates panel -->
             <div id="updates-panel" class="panel-left">
+                <h3>1.5.4</h3>
+                <ul>
+                    <li>Fixed – Livemesh Grid columns can break in certain resolutions in FireFox.</li>
+                    <li>Fixed - The piechart value is not being rounded.</li>
+                    <li>Fixed - The post grid and posts carousel date format not reflecting the user preference specified in Settings page.</li>
+                </ul>
+                <h3>1.5.3</h3>
+                <ul>
+                    <li>Fixed - Next Previous buttons of carousels would not show up in certain installations due to conflicts with base slick carousel styles</li>
+                </ul>
+                <h3>1.5.2</h3>
+                <ul>
+                    <li>Fixed – Categories or taxonomy terms repeat when specific taxonomy terms/categories are chosen in query window</li>
+                </ul>
+                <h3>1.5.1</h3>
+                <ul>
+                    <li>Fixed – Some themes have trouble rendering grid columns</li>
+                    <li>Fixed - Comma shows up in category list for the image hover in grid</li>
+                </ul>
                 <h3>1.5</h3>
                 <ul>
                     <li>Upgrade – Simpler grid system based on NEAT 2.1 version</li>

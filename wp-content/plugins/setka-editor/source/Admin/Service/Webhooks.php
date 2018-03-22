@@ -8,66 +8,64 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class Webhooks {
+class Webhooks
+{
 
-	public static $actions = array(
-		'/webhook/setka-editor/v1/resources/update',
-		'/webhook/setka-editor/v1/files/update',
-		'/webhook/setka-editor/v1/company_status/update',
-		'/webhook/setka-editor/v1/token/check'
-	);
+    /**
+     * @var array
+     */
+    public static $actions = array(
+        '/webhook/setka-editor/v1/resources/update',
+        '/webhook/setka-editor/v1/files/update',
+        '/webhook/setka-editor/v1/company_status/update',
+        '/webhook/setka-editor/v1/token/check'
+    );
 
-	/**
-	 * The entry point of Webhooks. All requests to /wp-admin/admin-post.php
-	 * All system works with HTTP Foundation objects from Symfony
-	 * which is pretty cool.
-	 */
-	public static function run() {
-		foreach( self::$actions as $action ) {
-			add_action( 'admin_post_nopriv_' . $action, array( __CLASS__, 'handle_request' ) );
-		}
-	}
+    /**
+     * The entry point of Webhooks. All requests to /wp-admin/admin-post.php
+     * All system works with HTTP Foundation objects from Symfony
+     * which is pretty cool.
+     */
+    public static function run()
+    {
+        foreach(self::$actions as $action) {
+            add_action('admin_post_nopriv_' . $action, array( __CLASS__, 'handleRequest' ));
+        }
+    }
 
-	public static function handle_request() {
-		// Create request object
-		$request = Request::createFromGlobals();
+    public static function handleRequest()
+    {
+        $request = Request::createFromGlobals();
 
-		// Create response object
-		$response = new JsonResponse();
-		$responseData = new ParameterBag();
-		$responseErrors = new Errors();
+        $response       = new JsonResponse();
+        $responseData   = new ParameterBag();
+        $responseErrors = new Errors();
 
-		// API doing their stuff
-		$api = new API\V1\API( $request, $response, $responseData, $responseErrors );
-		try {
-			$api->handleRequest();
-		}
-		catch( API\V1\Exceptions\APIActionDoesntExists $exception ) {
-			/**
-			 * If action not founded this means what API has newer version then this plugin.
-			 * So probably user need to update the plugin.
-			 */
-			return;
-		}
-		catch( \Exception $exception ) {
-			// Other errors
+        $api = new API\V1\API($request, $response, $responseData, $responseErrors);
+        try {
+            $api->handleRequest();
+        }
+        catch(API\V1\Exceptions\APIActionDoesntExists $exception) {
+            /**
+             * If action not founded this means what API has newer version then this plugin.
+             * So probably user need to update the plugin.
+             */
+            return;
+        }
+        catch(\Exception $exception) {
             $responseErrors->add(ErrorFactory::createFromException($exception));
             if($response->isOk()) {
                 $response->setStatusCode($response::HTTP_BAD_REQUEST);
             }
-		}
-
-		//$api->__destruct();
-		//unset( $api, $request );
+        }
 
         // Make sure not send 200 if we have errors
         if($api->getResponseErrors()->hasErrors() && $response->isOk()) {
-		    $response->setStatusCode($response::HTTP_BAD_REQUEST);
+            $response->setStatusCode($response::HTTP_BAD_REQUEST);
         }
 
-		// Send response
-		$responseData->set('errors', $api->getResponseErrors()->allAsArray(true, true, false));
-		$response->setData($responseData->all());
-		$response->send();
-	}
+        $responseData->set('errors', $api->getResponseErrors()->allAsArray(true, true, false));
+        $response->setData($responseData->all());
+        $response->send();
+    }
 }

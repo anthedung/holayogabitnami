@@ -3,25 +3,26 @@ namespace Setka\Editor\Admin\Prototypes\Options;
 
 use Setka\Editor\Admin\Prototypes\Options\Traits;
 
-class AggregateNode implements AggregateNodeInterface {
+class AggregateNode implements AggregateNodeInterface
+{
 
-	use Traits\NameTrait;
+    use Traits\NameTrait;
 
-	use Traits\Aggregate\ValueRawTrait;
+    use Traits\Aggregate\ValueRawTrait;
 
-	use Traits\ValueTrait;
+    use Traits\ValueTrait;
 
-	use Traits\ConstraintTrait;
+    use Traits\ConstraintTrait;
 
-	use Traits\Aggregate\ConstraintAllowExtraTrait;
+    use Traits\Aggregate\ConstraintAllowExtraTrait;
 
-	use Traits\Aggregate\ValidatorTrait;
+    use Traits\Aggregate\ValidatorTrait;
 
-	use Traits\ValidateTrait;
+    use Traits\ValidateTrait;
 
-	use Traits\Aggregate\NodesTrait;
+    use Traits\Aggregate\NodesTrait;
 
-	use Traits\ParentTrait;
+    use Traits\ParentTrait;
 
-	use Traits\Aggregate\SanitizeTrait;
+    use Traits\Aggregate\SanitizeTrait;
 }

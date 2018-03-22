@@ -1,34 +1,35 @@
 <?php
 namespace Setka\Editor\Admin\Prototypes\Options;
 
-interface NodeInterface {
+interface NodeInterface
+{
 
-	/**
-	 * @return string A name of this node.
-	 */
-	public function getName();
+    /**
+     * @return string A name of this node.
+     */
+    public function getName();
 
-	public function setName($name);
+    public function setName($name);
 
-	public function getValueRaw();
+    public function getValueRaw();
 
-	public function getValue();
+    public function getValue();
 
-	public function setValue( $value );
+    public function setValue($value);
 
-	public function getConstraint();
+    public function getConstraint();
 
-	public function setConstraint($constraints);
+    public function setConstraint($constraints);
 
-	public function buildConstraint();
+    public function buildConstraint();
 
-	public function getValidator();
+    public function getValidator();
 
-	public function validate();
+    public function validate();
 
-	public function isValid();
+    public function isValid();
 
-	public function validateValue( $value );
+    public function validateValue($value);
 
-	public function sanitize($instance);
+    public function sanitize($instance);
 }

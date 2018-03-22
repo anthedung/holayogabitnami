@@ -5,14 +5,17 @@ use Setka\Editor\Admin\Migrations\Versions;
 use Setka\Editor\Admin\Options\DBVersion\DBVersionOption;
 use Setka\Editor\Plugin;
 
-class ConfigurationFactory {
+class ConfigurationFactory
+{
 
-    public static function create() {
+    public static function create()
+    {
         $dbVersionOption = new DBVersionOption();
-        $pluginVersion = Plugin::DB_VERSION;
+        $pluginVersion   = Plugin::DB_VERSION;
 
         $versions = array(
-	        Versions\Version20170720130303::class,
+            Versions\Version20170720130303::class,
+            Versions\Version20180102150532::class,
         );
 
         return new Configuration($dbVersionOption, $pluginVersion, $versions);

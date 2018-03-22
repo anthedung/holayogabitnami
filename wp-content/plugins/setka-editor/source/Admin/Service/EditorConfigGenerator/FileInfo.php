@@ -3,7 +3,8 @@ namespace Setka\Editor\Admin\Service\EditorConfigGenerator;
 
 use Setka\Editor\Admin\Service\EditorConfigGenerator\Exceptions\ParsingConfigPathException;
 
-class FileInfo {
+class FileInfo
+{
 
     /**
      * @var \WP_Post
@@ -30,14 +31,15 @@ class FileInfo {
          *
          * @see preparePaths()
          */
-        protected $subPathInfo;
+    protected $subPathInfo;
 
         /**
          * @var string Sub path to file which we want make (for creating URL)
          */
-        protected $subPathLocal;
+    protected $subPathLocal;
 
-    public function __construct(\WP_Post $post, $rootPath, $rootUrl, $subPath) {
+    public function __construct(\WP_Post $post, $rootPath, $rootUrl, $subPath)
+    {
 
         $rootUrl = untrailingslashit($rootUrl);
         $subPath = ltrim($subPath, '/');
@@ -47,15 +49,16 @@ class FileInfo {
             ->setRootUrl($rootUrl)
             ->setSubPath($subPath)
             ->preparePaths();
-
     }
 
-    public function preparePaths() {
+    public function preparePaths()
+    {
 
         $info = pathinfo($this->getSubPath());
 
-        if(!isset($info['dirname']) || !isset($info['extension']) || !isset($info['filename']))
+        if(!isset($info['dirname']) || !isset($info['extension']) || !isset($info['filename'])) {
             throw new ParsingConfigPathException();
+        }
 
         $this->subPathInfo = $info;
 
@@ -67,7 +70,8 @@ class FileInfo {
     /**
      * @return string
      */
-    public function getRootPath() {
+    public function getRootPath()
+    {
         return $this->rootPath;
     }
 
@@ -76,7 +80,8 @@ class FileInfo {
      *
      * @return $this For chain calls.
      */
-    public function setRootPath($rootPath) {
+    public function setRootPath($rootPath)
+    {
         $this->rootPath = $rootPath;
         return $this;
     }
@@ -84,7 +89,8 @@ class FileInfo {
     /**
      * @return string
      */
-    public function getSubPath() {
+    public function getSubPath()
+    {
         return $this->subPath;
     }
 
@@ -93,7 +99,8 @@ class FileInfo {
      *
      * @return $this For chain calls.
      */
-    public function setSubPath($subPath) {
+    public function setSubPath($subPath)
+    {
         $this->subPath = $subPath;
         return $this;
     }
@@ -101,7 +108,8 @@ class FileInfo {
     /**
      * @return string
      */
-    public function getSubPathLocal() {
+    public function getSubPathLocal()
+    {
         return $this->subPathLocal;
     }
 
@@ -110,7 +118,8 @@ class FileInfo {
      *
      * @return $this For chain calls.
      */
-    public function setSubPathLocal($subPathLocal) {
+    public function setSubPathLocal($subPathLocal)
+    {
         $this->subPathLocal = $subPathLocal;
         return $this;
     }
@@ -118,7 +127,8 @@ class FileInfo {
     /**
      * @return string
      */
-    public function getRootUrl() {
+    public function getRootUrl()
+    {
         return $this->rootUrl;
     }
 
@@ -127,24 +137,29 @@ class FileInfo {
      *
      * @return $this For chain calls.
      */
-    public function setRootUrl($rootUrl) {
+    public function setRootUrl($rootUrl)
+    {
         $this->rootUrl = $rootUrl;
         return $this;
     }
 
-    public function getPath() {
+    public function getPath()
+    {
         return path_join($this->getRootPath(), $this->getSubPath());
     }
 
-    public function getUrl() {
+    public function getUrl()
+    {
         return $this->getRootUrl() . '/' . $this->getSubPath();
     }
 
-    public function getPathLocal() {
+    public function getPathLocal()
+    {
         return path_join($this->getRootPath(), $this->getSubPathLocal());
     }
 
-    public function getUrlLocal() {
+    public function getUrlLocal()
+    {
         return $this->getRootUrl() . '/' . $this->getSubPathLocal();
     }
 }

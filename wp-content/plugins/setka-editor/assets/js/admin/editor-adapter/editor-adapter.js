@@ -50,8 +50,7 @@ setkaEditorAdapter.view = {
         Prototype: require('./view/notices/Prototype'),
 
         SetkaEditorCantFindResources: require('./view/notices/SetkaEditorCantFindResources'),
-        SetkaEditorThemeDisabled: require('./view/notices/SetkaEditorThemeDisabled'),
-        SetkaEditorSaveSnippet: require('./view/notices/SetkaEditorSaveSnippet')
+        SetkaEditorThemeDisabled: require('./view/notices/SetkaEditorThemeDisabled')
     },
 
     // Add Media button
@@ -101,7 +100,7 @@ setkaEditorAdapter.utils = {
     TypeKitScriptsManager: require('./utils/TypeKitScriptsManager')
 };
 
-},{"./collection/Layouts":1,"./collection/Themes":2,"./model/EditorConfig":4,"./model/EditorResources":5,"./model/Form":6,"./model/Layout":7,"./model/Theme":8,"./utils/AutoSave":9,"./utils/SaveSnippet":10,"./utils/TypeKitScriptsManager":11,"./utils/autop":12,"./utils/editor-expand/EditorExpand":13,"./view/AddMediaButton":14,"./view/AdminMenu":15,"./view/EditorDefault":16,"./view/EditorSetka":17,"./view/HTML":18,"./view/Page":19,"./view/editor-tabs/EditorTabs":20,"./view/editor-tabs/TabDefault":21,"./view/editor-tabs/TabSetka":22,"./view/form/Form":23,"./view/form/Nonce":24,"./view/form/PostId":25,"./view/form/Settings":26,"./view/notices/Prototype":27,"./view/notices/SetkaEditorCantFindResources":28,"./view/notices/SetkaEditorSaveSnippet":29,"./view/notices/SetkaEditorThemeDisabled":30,"./view/pointers/DisabledTabsPointer":31,"./view/poststuff/PostStuff":32,"./view/poststuff/post-body/PostBody":33,"./view/screen-meta/EditorExpand":34,"./view/scripts/TypeKitScript":35}],4:[function(require,module,exports){
+},{"./collection/Layouts":1,"./collection/Themes":2,"./model/EditorConfig":4,"./model/EditorResources":5,"./model/Form":6,"./model/Layout":7,"./model/Theme":8,"./utils/AutoSave":9,"./utils/SaveSnippet":10,"./utils/TypeKitScriptsManager":11,"./utils/autop":12,"./utils/editor-expand/EditorExpand":13,"./view/AddMediaButton":14,"./view/AdminMenu":15,"./view/EditorDefault":16,"./view/EditorSetka":17,"./view/HTML":18,"./view/Page":19,"./view/editor-tabs/EditorTabs":20,"./view/editor-tabs/TabDefault":21,"./view/editor-tabs/TabSetka":22,"./view/form/Form":23,"./view/form/Nonce":24,"./view/form/PostId":25,"./view/form/Settings":26,"./view/notices/Prototype":27,"./view/notices/SetkaEditorCantFindResources":28,"./view/notices/SetkaEditorThemeDisabled":29,"./view/pointers/DisabledTabsPointer":30,"./view/poststuff/PostStuff":31,"./view/poststuff/post-body/PostBody":32,"./view/screen-meta/EditorExpand":33,"./view/scripts/TypeKitScript":34}],4:[function(require,module,exports){
 module.exports = Backbone.Model.extend({
 
 });
@@ -1081,8 +1080,7 @@ module.exports = Backbone.View.extend({
         // Notices
         this.views.notices = {
             setkaEditorCantFindResources: new adapter.view.notices.SetkaEditorCantFindResources(),
-            setkaEditorThemeDisabled:     new adapter.view.notices.SetkaEditorThemeDisabled(),
-            setkaEditorSaveSnippet:       new adapter.view.notices.SetkaEditorSaveSnippet()
+            setkaEditorThemeDisabled:     new adapter.view.notices.SetkaEditorThemeDisabled()
         };
 
         this.views.postStuff = new adapter.view.postStuff.PostStuff({
@@ -1607,99 +1605,6 @@ module.exports = Backbone.View.extend({
 
 },{}],29:[function(require,module,exports){
 var
-    adapter    = window.setkaEditorAdapter,
-    NoticePrototype = require('./Prototype');
-    //translations = window.setkaEditorAdapterL10n;
-
-module.exports = NoticePrototype.extend({
-
-    //el: '#' + setkaEditorAdapterL10n.names.css + '-notice-' + 'setka-editor-save-snippet',
-
-    DOM: {},
-
-    initialize: function() {
-        _.bindAll(this, 'onDone', 'onFail');
-        //_.bindAll(this, 'onStart', 'onDone', 'onFail');
-        //this.setupDOM();
-        this.addEvents();
-    },
-
-    /*setupDOM: function() {
-        //this.DOM.save    = this.$el.find('#' + this.$el.attr('id') + '-save');
-        //this.DOM.error   = this.$el.find('#' + this.$el.attr('id') + '-error');
-        //this.DOM.success = this.$el.find('#' + this.$el.attr('id') + '-success');
-    },*/
-
-    addEvents: function() {
-        //Backbone.on('setka:editor:adapter:editors:setka:snippet:start', this.onStart);
-        Backbone.on('setka:editor:adapter:editors:setka:snippet:done', this.onDone);
-        Backbone.on('setka:editor:adapter:editors:setka:snippet:fail', this.onFail);
-    },
-
-    /*hideMessages: function() {
-        _.each(this.DOM, function(value, key, list){
-            value.addClass('hidden');
-        });
-    },*/
-
-    /*showMessage: function(message) {
-        message.removeClass('hidden');
-    },*/
-
-    /*show: function() {
-        this.$el.removeClass('hidden');
-    },*/
-
-    /*onStart: function() {
-        this.hideMessages();
-        this.setStatusInfo();
-        this.showMessage(this.DOM.save);
-        this.show();
-    },*/
-
-    onDone: function(snippet, response) {
-        //console.log(snippet, response);
-        //this.hideMessages();
-
-        // We have errors
-        if(_.has(response, 'errors') && !_.isEmpty(response.errors)) {
-            //this.setStatusError();
-            //this.showMessage(this.DOM.error);
-            var message = '';
-            _.each(response.errors, function(element, index, list) {
-                if(!_.isEmpty(message))
-                    message += '\n';
-                message += element.message;
-            });
-            window.alert(message);
-        } // else { // no errors
-            //this.setStatusSuccess();
-            //this.showMessage(this.DOM.success);
-        //}
-
-        //this.show();
-    },
-
-    onFail: function(snippet, jqXHR, textStatus, errorThrown) {
-        window.alert(translations.view.notices.setkaEditorSaveSnippet.cantConnectToWordPress);
-        //console.log(snippet, jqXHR, textStatus, errorThrown);
-        //this.hideMessages();
-        //this.setStatusError();
-        //this.showMessage(this.DOM.error);
-        //this.show();
-
-        /**
-         * Possible issues:
-         *  Webserver not running.
-         *  Connection timeout (WordPress is so slow)
-         *  WordPress fails with PHP fatal error.
-         */
-    }
-
-});
-
-},{"./Prototype":27}],30:[function(require,module,exports){
-var
     translations = window.setkaEditorAdapterL10n;
 
 module.exports = Backbone.View.extend({
@@ -1733,7 +1638,7 @@ module.exports = Backbone.View.extend({
     }
 });
 
-},{}],31:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 var
     $ = jQuery,
     translations = window.setkaEditorAdapterL10n;
@@ -1761,7 +1666,7 @@ module.exports = Backbone.View.extend({
 
 });
 
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 var
     adapter = window.setkaEditorAdapter,
     translations = setkaEditorAdapterL10n;
@@ -1800,7 +1705,7 @@ module.exports = Backbone.View.extend({
 
 });
 
-},{}],33:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 var
     $ = jQuery;
 
@@ -1845,7 +1750,7 @@ module.exports = Backbone.View.extend({
 
 });
 
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 
 module.exports = Backbone.View.extend({
 
@@ -1884,7 +1789,7 @@ module.exports = Backbone.View.extend({
 
 });
 
-},{}],35:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 var
     translations = window.setkaEditorAdapterL10n;
 

@@ -121,6 +121,17 @@ class Pt_Elementor_Post_Timeline extends Widget_Base {
 
 			]
 		);
+		
+		
+		$this->add_control(
+			'post_period',
+			[
+				'label' => __( 'Post Period', 'elementor' ),
+				'type' => Controls_Manager::SELECT,
+				'options' => pt_get_post_period_options(),
+				'default' => 'none',
+			]
+		);
 
 		$this->end_controls_section();
 

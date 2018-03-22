@@ -144,7 +144,7 @@ if( isset($_GET['pro']) && $_GET['pro'] == 1 ):?>
             <div class="changelog">
                 <article>
                     <strong>CHANGELOG</strong>
-                    <h4>V5.12 - 17 October 2016</h4>
+                    <h4>V5.12 - 2018</h4>
                     <ul class="changelog_list">
                         <li class="add"><div class="two">Add</div>Disabled Metabox, if you have many problems with this. (This option requires PHP 5.3+ stable)</li>
                         <li class="improve"><div class="two">Improve</div>Cleans 'transient' for each time data is saved: With a few problems to update data cache is avoided.</li>

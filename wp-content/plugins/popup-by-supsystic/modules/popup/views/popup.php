@@ -345,7 +345,7 @@ class popupViewPps extends viewPps {
 			'tabs' => array(
 				'label' => __('Tabs to render', PPS_LANG_CODE), 
 				'html' => 'selectlist', 
-				'def' => array('timeline'),
+				//'def' => array('timeline'),	//no default value for now - let it be empty
 				'options' => array('timeline' => __('Timeline', PPS_LANG_CODE), 'events' => __('Events', PPS_LANG_CODE), 'messages' => __('Messages', PPS_LANG_CODE)),
 				'desc' => __('Tabs to render i.e. timeline, events, messages. You can select several tabs here.', PPS_LANG_CODE)),
 			'hide_cover' => array(
@@ -796,7 +796,7 @@ class popupViewPps extends viewPps {
 		  js.src = "//connect.facebook.net/'. utilsPps::getLangCode(). '/sdk.js#xfbml=1&version=v2.5&appId=1612081092370131";
 		  fjs.parentNode.insertBefore(js, fjs);
 		}(document, \'script\', \'facebook-jssdk\'));</script>';
-		$res .= '<div class="fb-like-box"';
+		$res .= '<div class="fb-page fb_iframe_widget"';
 		$fbLikeOpts = $this->getFbLikeOpts();
 		foreach($fbLikeOpts as $fKey => $fData) {
 			$dataKey = 'data-'. str_replace('_', '-', $fKey);

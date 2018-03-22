@@ -1,23 +1,25 @@
 <?php
 namespace Setka\Editor\Admin\MetaBoxes\InvitationToRegister;
 
+use Korobochkin\WPKit\MetaBoxes\MetaBoxInterface;
+use Korobochkin\WPKit\MetaBoxes\MetaBoxTwigView;
 use Setka\Editor\Admin;
-use Setka\Editor\Admin\Prototypes\MetaBoxes\MetaBoxInterface;
-use Setka\Editor\Admin\Prototypes\MetaBoxes\TwigMetaBoxView;
 use Setka\Editor\Plugin;
 
-class InvitationToRegisterView extends TwigMetaBoxView
+/**
+ * Class InvitationToRegisterView
+ */
+class InvitationToRegisterView extends MetaBoxTwigView
 {
     /**
      * @inheritdoc
      */
     public function render(MetaBoxInterface $metaBox)
     {
-        if(isset(Admin\Pages\Settings\Loader::$pages[Plugin::NAME])) {
-            $url = Admin\Pages\Settings\Loader::$pages[Plugin::NAME]->getURL();
-        } else {
-            $url = '';
-        }
+        /**
+         * @var $metaBox InvitationToRegisterDashboardMetaBox|InvitationToRegisterMetaBox
+         */
+        $url = $metaBox->getSignUpUrl();
 
         $content = sprintf(
             /* translators: %1$s - plugin settings page where you can create a new account. */
@@ -25,6 +27,6 @@ class InvitationToRegisterView extends TwigMetaBoxView
             esc_url($url)
         );
 
-        echo '<p>' . $content . '</p>';
+        echo '<p>' . $content . '</p>'; // WPCS: XSS ok.
     }
 }

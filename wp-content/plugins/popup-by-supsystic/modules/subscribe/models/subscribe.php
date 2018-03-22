@@ -8,6 +8,7 @@ class subscribeModelPps extends modelPps {
 	
 	private $_alreadySubscribedSuccess = false;
 	private $_useMailchimp3Version = true;
+	private $_mailPoetV3Engine = null;
 	
 	public function __construct() {
 		$this->_setTbl('subscribers');
@@ -825,7 +826,11 @@ class subscribeModelPps extends modelPps {
 									$this->pushError ( $res['error'] );
 									return false;
 								} elseif($this->_useMailchimp3Version && isset($res['status']) && $res['status'] == 400) {
-									$this->pushError ( $res['detail'] );
+									if($res['title'] == 'Member Exists') {
+										$this->pushError($popup['params']['tpl']['sub_txt_exists_email'], 'email');
+									} else {
+										$this->pushError ( $res['detail'] );
+									}
 									return false;
 								}
 							}
@@ -884,11 +889,23 @@ class subscribeModelPps extends modelPps {
 	public function alreadySubscribedSuccess() {
 		return $this->_alreadySubscribedSuccess;
 	}
+	private function _getMailPoetV3Engine() {
+		if(version_compare(phpversion(), '5.3') >= 0) {
+			if(!$this->_mailPoetV3Engine) {
+				if(!class_exists('mailPoetV3Pps')) {
+					require_once($this->getModule()->getModDir(). 'classes'. DS. 'mailPoetV3.php');
+				}
+				$this->_mailPoetV3Engine = new mailPoetV3Pps();
+			}
+			return $this->_mailPoetV3Engine;
+		}
+		return false;
+	}
 	public function getMailPoetVer() {
 		if(class_exists('WYSIJA')) {
 			return 2;
 		}
-		if(@class_exists('\MailPoet\API\API')) {
+		if(@class_exists('\MailPoet\API\API') && $this->_getMailPoetV3Engine()) {
 			return 3;
 		}
 		return false;
@@ -902,10 +919,13 @@ class subscribeModelPps extends modelPps {
 					$lists = WYSIJA::get('list', 'model')->get(array('name', 'list_id'), array('is_enabled' => 1));
 					break;
 				case 3:
-					$lists = \MailPoet\API\API::MP('v1')->getLists();
-					if(!empty($lists)) {
-						foreach($lists as $i => $l) {
-							$lists[ $i ]['list_id'] = $l['id'];	// For back compatibility, really - it should be done in mailpoet, but - here we are:)
+					$this->_getMailPoetV3Engine();
+					if($this->_mailPoetV3Engine) {
+						$lists = $this->_mailPoetV3Engine->getLists();
+						if(!empty($lists)) {
+							foreach($lists as $i => $l) {
+								$lists[ $i ]['list_id'] = $l['id'];	// For back compatibility, really - it should be done in mailpoet, but - here we are:)
+							}
 						}
 					}
 					break;
@@ -921,8 +941,11 @@ class subscribeModelPps extends modelPps {
 					$wisijaConfigModel = WYSIJA::get('config', 'model');
 					return (bool) $wisijaConfigModel->getValue('confirm_dbleoptin');
 				case 3:
-					$signup_confirmation = \MailPoet\Models\Setting::getValue('signup_confirmation');
-					return ($signup_confirmation && (bool)$signup_confirmation['enabled']);
+					$this->_getMailPoetV3Engine();
+					if($this->_mailPoetV3Engine) {
+						$signup_confirmation = $this->_mailPoetV3Engine->signupConfirm();
+						return ($signup_confirmation && (bool)$signup_confirmation['enabled']);
+					}
 			}
 		}
 		return false;
@@ -994,15 +1017,21 @@ class subscribeModelPps extends modelPps {
 								unset($userData['lastname']);
 							}
 							try {
-								$subscriber = \MailPoet\API\API::MP('v1')->addSubscriber($userData, array( $popup['params']['tpl']['sub_mailpoet_list'] ), $options);
-								if($subscriber) {
-									if($validateIp) {
-										$this->_checkOftenAccess(array('only_add' => true));
+								$this->_getMailPoetV3Engine();
+								if($this->_mailPoetV3Engine) {
+									$subscriber = $this->_mailPoetV3Engine->subscribe($userData, array( $popup['params']['tpl']['sub_mailpoet_list'] ), $options);
+									if($subscriber) {
+										if($validateIp) {
+											$this->_checkOftenAccess(array('only_add' => true));
+										}
+										return true;
+									} else {
+										$this->pushError(__('Can not create subscriber in MailPoet', PPS_LANG_CODE));
 									}
-									return true;
-								} else {
-									$this->pushError(__('Can not create subscriber in MailPoet', PPS_LANG_CODE));
-								}
+								} else									
+									throw new Exception ('Mail POet V3 is not supported on this server');
+									
+								
 							} catch(Exception $e) {
 								$this->pushError( $e->getMessage() );
 							}

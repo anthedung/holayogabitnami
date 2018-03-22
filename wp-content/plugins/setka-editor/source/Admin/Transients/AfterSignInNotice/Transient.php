@@ -9,10 +9,12 @@ use Setka\Editor\Plugin;
  *
  * @since 0.2.0
  */
-class Transient extends Transients\Transient {
+class Transient extends Transients\Transient
+{
 
-	public function __construct() {
-		$this->setName( Plugin::_NAME_ . '_after_sign_in_notice' );
-		$this->setExpiration( 30 );
-	}
+    public function __construct()
+    {
+        $this->setName(Plugin::_NAME_ . '_after_sign_in_notice');
+        $this->setExpiration(30);
+    }
 }

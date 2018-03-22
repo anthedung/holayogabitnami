@@ -7,14 +7,16 @@ use Setka\Editor\Admin\Service\FilesManager\FilesManager;
 use Setka\Editor\Admin\Service\FilesManager\FilesManagerFactory;
 use WP_CLI as Console;
 
-class FilesSyncCommand extends \WP_CLI_Command {
+class FilesSyncCommand extends \WP_CLI_Command
+{
 
     /**
      * @var FilesManager
      */
     protected $manager;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->manager = FilesManagerFactory::create();
@@ -26,7 +28,8 @@ class FilesSyncCommand extends \WP_CLI_Command {
      *
      * @when after_wp_load
      */
-    public function restart() {
+    public function restart()
+    {
 
         $this->manager->restartSyncing();
 
@@ -56,7 +59,8 @@ class FilesSyncCommand extends \WP_CLI_Command {
      *
      * @alias on
      */
-    public function enable() {
+    public function enable()
+    {
 
         $this->restart();
 
@@ -74,7 +78,8 @@ class FilesSyncCommand extends \WP_CLI_Command {
      *
      * @alias off
      */
-    public function disable() {
+    public function disable()
+    {
         $this->manager
             ->disableLocalUsage()
             ->disableSyncingTasks();

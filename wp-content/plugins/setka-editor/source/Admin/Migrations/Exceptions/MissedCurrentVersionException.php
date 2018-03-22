@@ -1,6 +1,7 @@
 <?php
 namespace Setka\Editor\Admin\Migrations\Exceptions;
 
-class MissedCurrentVersionException extends \Exception {
+class MissedCurrentVersionException extends \Exception
+{
 
 }

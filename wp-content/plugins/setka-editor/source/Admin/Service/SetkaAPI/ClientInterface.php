@@ -1,7 +1,8 @@
 <?php
 namespace Setka\Editor\Admin\Service\SetkaAPI;
 
-interface ClientInterface {
+interface ClientInterface
+{
 
     /**
      * @return string

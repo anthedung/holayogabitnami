@@ -48,7 +48,7 @@
 	define('PPS_EOL', "\n");    
     
     define('PPS_PLUGIN_INSTALLED', true);
-    define('PPS_VERSION', '1.9.15');
+    define('PPS_VERSION', '1.9.23');
     define('PPS_USER', 'user');
     
     define('PPS_CLASS_PREFIX', 'ppsc');     
@@ -77,6 +77,10 @@
 	 * Plugin name
 	 */
 	define('PPS_WP_PLUGIN_NAME', 'PopUp by Supsystic');
+	/**
+	 * Allow minification
+	 */
+	define('PPS_MINIFY_ASSETS', true);
 	/**
 	 * Custom defined for plugin
 	 */

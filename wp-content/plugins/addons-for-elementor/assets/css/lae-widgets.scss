@@ -1043,15 +1043,18 @@ $theme_color: #f94213;
         .lae-terms {
           display: block;
           color: #f9f9f9;
+          font-size: 14px;
+          line-height: 22px;
+          opacity: 0;
+          transition: opacity .4s ease-in-out 0s;
           a {
             color: #ddd;
             position: relative;
             display: inline;
             zoom: 1;
             font-size: 14px;
-            line-height: 26px;
+            line-height: 22px;
             font-style: italic;
-            opacity: 0;
             transition: all .4s ease-in-out 0s;
             &:hover {
               color: #fff;
@@ -1061,7 +1064,7 @@ $theme_color: #f94213;
         }
       &:hover {
         .lae-image-info {
-          .lae-post-title, .lae-terms a {
+          .lae-post-title, .lae-terms {
             opacity: 1;
             }
           }
@@ -1307,15 +1310,18 @@ $theme_color: #f94213;
           .lae-terms {
             display: block;
             color: #f9f9f9;
+            font-size: 14px;
+            line-height: 22px;
+            opacity: 0;
+            transition: opacity .4s ease-in-out 0s;
             a {
               color: #ddd;
               position: relative;
               display: inline;
               zoom: 1;
               font-size: 14px;
-              line-height: 26px;
+              line-height: 22px;
               font-style: italic;
-              opacity: 0;
               transition: all .4s ease-in-out 0s;
               &:hover {
                 color: #fff;
@@ -1325,7 +1331,7 @@ $theme_color: #f94213;
           }
         &:hover {
           .lae-image-info {
-            .lae-post-title, .lae-terms a {
+            .lae-post-title, .lae-terms {
               opacity: 1;
               }
             }

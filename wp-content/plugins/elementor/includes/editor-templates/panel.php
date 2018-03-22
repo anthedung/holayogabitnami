@@ -58,9 +58,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<i class="fa fa-cog" aria-hidden="true"></i>
 		<span class="elementor-screen-only"><?php esc_html_e( 'Document Settings', 'elementor' ); ?></span>
 	</div>
-	<div id="elementor-panel-footer-responsive" class="elementor-panel-footer-tool tooltip-target" data-tooltip="<?php esc_attr_e( 'Responsive Mode', 'elementor' ); ?>">
-		<i class="eicon-device-desktop" aria-hidden="true"></i>
-		<span class="elementor-screen-only"><?php esc_html_e( 'Responsive Mode', 'elementor' ); ?></span>
+	<div id="elementor-panel-footer-responsive" class="elementor-panel-footer-tool">
+		<i class="eicon-device-desktop tooltip-target" aria-hidden="true" data-tooltip="<?php esc_attr_e( 'Responsive Mode', 'elementor' ); ?>"></i>
+		<span class="elementor-screen-only">
+			<?php esc_html_e( 'Responsive Mode', 'elementor' ); ?>
+		</span>
 		<div class="elementor-panel-footer-sub-menu-wrapper">
 			<div class="elementor-panel-footer-sub-menu">
 				<div class="elementor-panel-footer-sub-menu-item" data-device-mode="desktop">
@@ -92,7 +94,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</span>
 	</div>
 	<div id="elementor-panel-saver-publish" class="elementor-panel-footer-tool">
-		<button id="elementor-panel-saver-button-publish" class="elementor-button elementor-button-success">
+		<button id="elementor-panel-saver-button-publish" class="elementor-button elementor-button-success elementor-saver-disabled">
 			<span class="elementor-state-icon">
 				<i class="fa fa-spin fa-circle-o-notch" aria-hidden="true"></i>
 			</span>
@@ -102,7 +104,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</button>
 	</div>
 	<div id="elementor-panel-saver-save-options" class="elementor-panel-footer-tool" >
-		<button id="elementor-panel-saver-button-save-options" class="elementor-button elementor-button-success tooltip-target" data-tooltip="<?php esc_attr_e( 'Save Options', 'elementor' ); ?>">
+		<button id="elementor-panel-saver-button-save-options" class="elementor-button elementor-button-success tooltip-target elementor-saver-disabled" data-tooltip="<?php esc_attr_e( 'Save Options', 'elementor' ); ?>">
 			<i class="fa fa-caret-up" aria-hidden="true"></i>
 			<span class="elementor-screen-only"><?php esc_html_e( 'Save Options', 'elementor' ); ?></span>
 		</button>
@@ -116,7 +118,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</span>
 			</p>
 			<div class="elementor-panel-footer-sub-menu">
-				<div id="elementor-panel-saver-menu-save-draft" class="elementor-panel-footer-sub-menu-item">
+				<div id="elementor-panel-saver-menu-save-draft" class="elementor-panel-footer-sub-menu-item elementor-saver-disabled">
 					<i class="elementor-icon fa fa-save" aria-hidden="true"></i>
 					<span class="elementor-title"><?php esc_html_e( 'Save Draft', 'elementor' ); ?></span>
 				</div>
@@ -181,14 +183,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$scheme_fields_keys = Group_Control_Typography::get_scheme_fields_keys();
 
 		$typography_group = Plugin::$instance->controls_manager->get_control_groups( 'typography' );
-
 		$typography_fields = $typography_group->get_fields();
 
 		$scheme_fields = array_intersect_key( $typography_fields, array_flip( $scheme_fields_keys ) );
-
-		$system_fonts = Fonts::get_fonts_by_groups( [ Fonts::SYSTEM ] );
-
-		$google_fonts = Fonts::get_fonts_by_groups( [ Fonts::GOOGLE, Fonts::EARLYACCESS ] );
 
 		foreach ( $scheme_fields as $option_name => $option ) :
 		?>
@@ -198,27 +195,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php if ( 'select' === $option['type'] ) : ?>
 						<select name="<?php echo $option_name; ?>" class="elementor-panel-scheme-typography-item-field">
 							<?php foreach ( $option['options'] as $field_key => $field_value ) : ?>
-								<option value="<?php echo $field_key; ?>"><?php echo $field_value; ?></option>
+								<option value="<?php echo esc_attr( $field_key ); ?>"><?php echo $field_value; ?></option>
 							<?php endforeach; ?>
 						</select>
 					<?php elseif ( 'font' === $option['type'] ) : ?>
-						<select name="<?php echo $option_name; ?>" class="elementor-panel-scheme-typography-item-field">
+						<select name="<?php echo esc_attr( $option_name ); ?>" class="elementor-panel-scheme-typography-item-field">
 							<option value=""><?php esc_html_e( 'Default', 'elementor' ); ?></option>
-
-							<optgroup label="<?php esc_html_e( 'System', 'elementor' ); ?>">
-								<?php foreach ( $system_fonts as $font_title => $font_type ) : ?>
-									<option value="<?php echo esc_attr( $font_title ); ?>"><?php echo $font_title; ?></option>
-								<?php endforeach; ?>
-							</optgroup>
-
-							<optgroup label="<?php esc_html_e( 'Google', 'elementor' ); ?>">
-								<?php foreach ( $google_fonts as $font_title => $font_type ) : ?>
-									<option value="<?php echo esc_attr( $font_title ); ?>"><?php echo $font_title; ?></option>
-								<?php endforeach; ?>
-							</optgroup>
+							<?php foreach ( Fonts::get_font_groups() as $group_type => $group_label ) : ?>
+								<optgroup label="<?php echo esc_attr( $group_label ); ?>">
+									<?php foreach ( Fonts::get_fonts_by_groups( [ $group_type ] ) as $font_title => $font_type ) : ?>
+										<option value="<?php echo esc_attr( $font_title ); ?>"><?php echo $font_title; ?></option>
+									<?php endforeach; ?>
+								</optgroup>
+							<?php endforeach; ?>
 						</select>
 					<?php elseif ( 'text' === $option['type'] ) : ?>
-						<input name="<?php echo $option_name; ?>" class="elementor-panel-scheme-typography-item-field" />
+						<input name="<?php echo esc_attr( $option_name ); ?>" class="elementor-panel-scheme-typography-item-field" />
 					<?php endif; ?>
 				</div>
 			</div>

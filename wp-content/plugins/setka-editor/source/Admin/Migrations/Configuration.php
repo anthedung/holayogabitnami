@@ -6,7 +6,8 @@ use Setka\Editor\Admin\Migrations\Exceptions\MissedCurrentVersionException;
 use Setka\Editor\Admin\Migrations\Exceptions\MissedRequiredVersionException;
 use Setka\Editor\Admin\Prototypes\Options\OptionInterface;
 
-class Configuration {
+class Configuration
+{
 
     /**
      * @var array List of versions.
@@ -35,7 +36,8 @@ class Configuration {
      * @param $requiredVersion int The version of current code.
      * @param $versionClasses array List of version classes.
      */
-    public function __construct(OptionInterface $currentVersion, $requiredVersion, $versionClasses) {
+    public function __construct(OptionInterface $currentVersion, $requiredVersion, $versionClasses)
+    {
         $this->currentVersionOption = $currentVersion;
         $this->requiredVersion      = $requiredVersion;
         $this->versionClasses       = $versionClasses;
@@ -44,20 +46,20 @@ class Configuration {
     /**
      * Migrations will run if necessary.
      *
+     * @throws \Exception
+     *
      * @return $this For chain calls.
      */
-    public function migrateAsNecessary() {
-        // Check should we run update or not
-        if(!$this->shouldWeRunMigrations())
+    public function migrateAsNecessary()
+    {
+        if(!$this->shouldWeRunMigrations()) {
             return $this;
+        }
 
-        // Get list of versions
         $this->versions = $this->buildMigrationClasses();
 
-        // Validate versions
         $this->validateVersions();
 
-        // Run migrations
         $this->migrate();
 
         return $this;
@@ -70,22 +72,27 @@ class Configuration {
      *
      * @return $this For chain calls.
      */
-    public function migrate() {
+    public function migrate()
+    {
         $currentVersion = $this->currentVersionOption->getValue();
 
         reset($this->versions);
 
         // Upgrade mode
         if($currentVersion < $this->requiredVersion) {
-            for($i = $currentVersion; $i < $this->requiredVersion; next($this->versions)) {
-                $i = key($this->versions);
+            foreach ($this->versions as $versionIndex => $versionClass) {
+                if($versionIndex <= $currentVersion) {
+                    continue;
+                }
 
-                // Initialize Migration and run it.
-                $this->versions[$i] = new $this->versions[$i]();
-                $this->versions[$i]->up();
+                if(!is_object($versionClass)) {
+                    $this->versions[$versionIndex] = new $versionClass();
+                }
+
+                $this->versions[$versionIndex]->up();
 
                 // Save migration index after execute it.
-                $this->currentVersionOption->updateValue($i);
+                $this->currentVersionOption->updateValue($versionIndex);
             }
         }
 
@@ -97,11 +104,13 @@ class Configuration {
      *
      * @return bool True if versions is not equals, false otherwise.
      */
-    public function shouldWeRunMigrations() {
+    public function shouldWeRunMigrations()
+    {
         $currentVersion = $this->currentVersionOption->getValue();
 
-        if($currentVersion !== $this->requiredVersion)
+        if($currentVersion !== $this->requiredVersion) {
             return true;
+        }
 
         return false;
     }
@@ -113,12 +122,13 @@ class Configuration {
      *
      * @throws MigrationNameException if Migration class have invalid name.
      */
-    protected function buildMigrationClasses() {
+    protected function buildMigrationClasses()
+    {
         $migrations = array();
 
         foreach($this->versionClasses as $version) {
             $result = preg_match('/Version(\d{1,})$/', $version, $matches);
-            if($result === 1) {
+            if(1 === $result) {
                 $migrations[$matches[1]] = $version;
             } else {
                 throw new MigrationNameException();
@@ -136,20 +146,23 @@ class Configuration {
      * @throws MissedCurrentVersionException If current version not found in versions list.
      * @throws MissedRequiredVersionException If required version not found in versions list.
      */
-    public function validateVersions() {
-
+    public function validateVersions()
+    {
         $currentVersion = $this->currentVersionOption->getValue();
 
-        if($currentVersion === 0)
+        if(0 === $currentVersion) {
             return $this;
+        }
 
         // Unknown current version
-        if(!isset($this->versions[$currentVersion]))
+        if(!isset($this->versions[$currentVersion])) {
             throw new MissedCurrentVersionException();
+        }
 
         // Unknown required version
-        if(!isset($this->versions[$this->requiredVersion]))
+        if(!isset($this->versions[$this->requiredVersion])) {
             throw new MissedRequiredVersionException();
+        }
 
         return $this;
     }

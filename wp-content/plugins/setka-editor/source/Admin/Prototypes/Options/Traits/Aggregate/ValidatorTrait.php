@@ -1,9 +1,11 @@
 <?php
 namespace Setka\Editor\Admin\Prototypes\Options\Traits\Aggregate;
 
-trait ValidatorTrait {
+trait ValidatorTrait
+{
 
-	public function getValidator() {
-		return $this->getParent()->getValidator();
-	}
+    public function getValidator()
+    {
+        return $this->getParent()->getValidator();
+    }
 }

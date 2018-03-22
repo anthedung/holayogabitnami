@@ -1,32 +1,35 @@
 <?php
 namespace Setka\Editor\Admin\Prototypes\Options\Traits\Aggregate;
 
-trait ValueTrait {
+trait ValueTrait
+{
 
-	public function getValue() {
+    public function getValue()
+    {
 
-		/**
-		 * @var $this \Setka\Editor\Admin\Prototypes\Options\NodeInterface
-		 */
-		if(isset($this->value)) {
-			return $this->value;
-		}
+        /**
+         * @var $this \Setka\Editor\Admin\Prototypes\Options\NodeInterface
+         */
+        if(isset($this->value)) {
+            return $this->value;
+        }
 
-		$raw = $this->getValueRaw();
-		$parent = $this->getParent();
+        $raw    = $this->getValueRaw();
+        $parent = $this->getParent();
 
-		if($parent && !is_null($raw)) {
-			return $raw;
-		} else {
-			if($raw) {
-				return $raw;
-			}
-		}
+        if($parent && !is_null($raw)) {
+            return $raw;
+        } else {
+            if($raw) {
+                return $raw;
+            }
+        }
 
-		return $this->getDefaultValue();
-	}
+        return $this->getDefaultValue();
+    }
 
-	public function setValue($value) {
-		$this->value = $value;
-	}
+    public function setValue($value)
+    {
+        $this->value = $value;
+    }
 }

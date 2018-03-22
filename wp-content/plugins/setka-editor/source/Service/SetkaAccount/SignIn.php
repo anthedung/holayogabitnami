@@ -9,157 +9,162 @@ use Setka\Editor\Admin\Options;
 use Setka\Editor\Service\Config\PluginConfig;
 use Symfony\Component\HttpFoundation\Response;
 
-class SignIn {
+class SignIn
+{
 
-	/**
-	 * This function used for auth via Settings pages (WordPress automatically update and save Token).
-	 *
-	 * @param $token string New token to use.
-	 * @param $update_token bool Should this function insert this token to DB or not. By default token updated in DB
-	 * by WordPress (runned from Settings page). But if you are doing auth from script you should pass true (default).
-	 *
-	 * @return \Setka\Editor\Admin\Service\SetkaAPI\Prototypes\ActionInterface[]
-	 */
-	public static function sign_in_by_token( $token, $update_token = true ) {
+    /**
+     * This function used for auth via Settings pages (WordPress automatically update and save Token).
+     *
+     * @param $token string New token to use.
+     * @param $update_token bool Should this function insert this token to DB or not. By default token updated in DB
+     * by WordPress (runned from Settings page). But if you are doing auth from script you should pass true (default).
+     *
+     * @return \Setka\Editor\Admin\Service\SetkaAPI\Prototypes\ActionInterface[]
+     */
+    public static function signInByToken($token, $update_token = true)
+    {
 
-		$responses = self::send_auth_requests($token);
+        $responses = self::sendAuthRequests($token);
 
-		foreach($responses as $response) {
-			/**
-			 * @var $response \Setka\Editor\Admin\Service\SetkaAPI\Prototypes\ActionAbstract
-			 */
-			if($response->getErrors()->hasErrors()) {
-				return $responses;
-			}
-		}
-		unset($response);
+        foreach($responses as $response) {
+            /**
+             * @var $response \Setka\Editor\Admin\Service\SetkaAPI\Prototypes\ActionAbstract
+             */
+            if($response->getErrors()->hasErrors()) {
+                return $responses;
+            }
+        }
+        unset($response);
 
-		// Setup new account settings
-		if($update_token) {
-			self::setup_token($token);
-		}
+        // Setup new account settings
+        if($update_token) {
+            self::setupToken($token);
+        }
 
-		self::setup_new_account($responses[Actions\GetCurrentThemeAction::class], $responses[Actions\GetCompanyStatusAction::class]);
+        self::setupNewAccount($responses[Actions\GetCurrentThemeAction::class], $responses[Actions\GetCompanyStatusAction::class]);
 
-		return $responses;
-	}
+        return $responses;
+    }
 
-	/**
-	 * Send auth requests and return actions with validated responses.
-	 *
-	 * @param $token string Company token (license key).
-	 *
-	 * @return array Executed actions
-	 */
-	public static function send_auth_requests($token) {
-		// API (request token details on Setka Server via API)
-		$api = SetkaAPI\APIFactory::create();
-		$api->setAuthCredits(new SetkaAPI\AuthCredits($token));
+    /**
+     * Send auth requests and return actions with validated responses.
+     *
+     * @param $token string Company token (license key).
+     *
+     * @return array Executed actions
+     */
+    public static function sendAuthRequests($token)
+    {
+        // API (request token details on Setka Server via API)
+        $api = SetkaAPI\APIFactory::create();
+        $api->setAuthCredits(new SetkaAPI\AuthCredits($token));
 
-		// Theme files
-		$currentTheme = new Actions\GetCurrentThemeAction();
-		$api->request($currentTheme);
+        // Theme files
+        $currentTheme = new Actions\GetCurrentThemeAction();
+        $api->request($currentTheme);
 
-		// Request for details of subscription
-		$companyStatus = new Actions\GetCompanyStatusAction();
-		$api->request($companyStatus);
+        // Request for details of subscription
+        $companyStatus = new Actions\GetCompanyStatusAction();
+        $api->request($companyStatus);
 
-		return array(
-			Actions\GetCurrentThemeAction::class  => $currentTheme,
-			Actions\GetCompanyStatusAction::class => $companyStatus,
-		);
-	}
+        return array(
+            Actions\GetCurrentThemeAction::class  => $currentTheme,
+            Actions\GetCompanyStatusAction::class => $companyStatus,
+        );
+    }
 
-	private static function setup_token( $token ) {
-		$option = new Options\Token\Option();
-		return $option->updateValue($token);
-	}
+    private static function setupToken($token)
+    {
+        $option = new Options\Token\Option();
+        return $option->updateValue($token);
+    }
 
-	private static function setup_new_account(Actions\GetCurrentThemeAction $currentTheme, Actions\GetCompanyStatusAction $companyStatus) {
+    private static function setupNewAccount(Actions\GetCurrentThemeAction $currentTheme, Actions\GetCompanyStatusAction $companyStatus)
+    {
 
-		// Subscription info
+        // Subscription info
 
-		$_option = new Options\SubscriptionPaymentStatus\Option();
-		$_option->updateValue( $companyStatus->getResponse()->content->get('payment_status') );
+        $_option = new Options\SubscriptionPaymentStatus\Option();
+        $_option->updateValue($companyStatus->getResponse()->content->get('payment_status'));
 
-		$_option = new Options\SubscriptionStatus\Option();
-		$_option->updateValue( $companyStatus->getResponse()->content->get('status') );
+        $_option = new Options\SubscriptionStatus\Option();
+        $_option->updateValue($companyStatus->getResponse()->content->get('status'));
 
-		$activeUntil = new Options\SubscriptionActiveUntil\Option();
-		// Try to sync account on expiration date.
-		$syncAccountTask = new Cron\Tasks\SyncAccount\SyncAccountTask();
-		// Delete all previously events.
-		$syncAccountTask->unRegisterHook();
-		if( $companyStatus->getResponse()->isOk() ) {
-			$activeUntil->updateValue( $companyStatus->getResponse()->content->get('active_until') );
+        $activeUntil = new Options\SubscriptionActiveUntil\Option();
+        // Try to sync account on expiration date.
+        $syncAccountTask = new Cron\SyncAccountCronEvent();
+        // Delete all previously events.
+        $syncAccountTask->unScheduleAll();
+        if($companyStatus->getResponse()->isOk()) {
+            $activeUntil->updateValue($companyStatus->getResponse()->content->get('active_until'));
 
-			$datetime = \DateTime::createFromFormat(\DateTime::ISO8601, $activeUntil->getValue());
-			if($datetime) {
-				// Setup new event.
-				$syncAccountTask->setTimestamp($datetime->getTimestamp());
-				$syncAccountTask->register();
-			}
-		} else {
-			$activeUntil->delete();
-		}
+            $datetime = \DateTime::createFromFormat(\DateTime::ISO8601, $activeUntil->getValue());
+            if($datetime) {
+                // Setup new event.
+                $syncAccountTask->setTimestamp($datetime->getTimestamp());
+                $syncAccountTask->schedule();
+            }
+        } else {
+            $activeUntil->delete();
+        }
 
-		// -------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------
 
-		$_option = new Options\SetkaPostCreated\Option();
-		$_option->delete();
+        $_option = new Options\SetkaPostCreated\Option();
+        $_option->delete();
 
-		// -------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------
 
-		// Theme info
+        // Theme info
 
-		foreach( $currentTheme->getResponse()->content->get('theme_files') as $file ) {
-			switch( $file['filetype'] ) {
-				case 'css':
-					$_option = new Options\ThemeResourceCSS\Option();
-					$_option->updateValue( $file['url'] );
-					break;
+        foreach($currentTheme->getResponse()->content->get('theme_files') as $file) {
+            switch($file['filetype']) {
+                case 'css':
+                    $_option = new Options\ThemeResourceCSS\Option();
+                    $_option->updateValue($file['url']);
+                    break;
 
-				case 'json':
-					$_option = new Options\ThemeResourceJS\Option();
-					$_option->updateValue( $file['url'] );
-					break;
-			}
-		}
-		unset( $file, $_option );
+                case 'json':
+                    $_option = new Options\ThemeResourceJS\Option();
+                    $_option->updateValue($file['url']);
+                    break;
+            }
+        }
+        unset($file, $_option);
 
-		$_option_css = new Options\EditorCSS\Option();
-		$_option_js = new Options\EditorJS\Option();
-		if( $currentTheme->getResponse()->isOk() ) {
-			foreach( $currentTheme->getResponse()->content->get('content_editor_files') as $file ) {
-				if( 'css' === $file['filetype'] ) {
-					$_option_css->updateValue( $file['url'] );
-				} elseif( 'js' === $file['filetype'] ) {
-					$_option_js->updateValue( $file['url'] );
-				}
-			}
-		}
-		elseif( $currentTheme->getResponse()->getStatusCode() === Response::HTTP_FORBIDDEN ) {
-			$_option_js->delete();
-			$_option_css->delete();
-		}
-		unset( $file, $_option_css, $_option_js );
+        $_option_css = new Options\EditorCSS\Option();
+        $_option_js  = new Options\EditorJS\Option();
+        if($currentTheme->getResponse()->isOk()) {
+            foreach($currentTheme->getResponse()->content->get('content_editor_files') as $file) {
+                if('css' === $file['filetype']) {
+                    $_option_css->updateValue($file['url']);
+                } elseif('js' === $file['filetype']) {
+                    $_option_js->updateValue($file['url']);
+                }
+            }
+        }
+        elseif($currentTheme->getResponse()->getStatusCode() === Response::HTTP_FORBIDDEN) {
+            $_option_js->delete();
+            $_option_css->delete();
+        }
+        unset($file, $_option_css, $_option_js);
 
-		$editorVersion = new Options\EditorVersion\Option();
-		$editorVersion->updateValue( $currentTheme->getResponse()->content->get('content_editor_version') );
-		unset( $editorVersion );
+        $editorVersion = new Options\EditorVersion\Option();
+        $editorVersion->updateValue($currentTheme->getResponse()->content->get('content_editor_version'));
+        unset($editorVersion);
 
-		// -------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------
 
-		// Plugins
-		$_option = new Options\ThemePluginsJS\Option();
-		if( $currentTheme->getResponse()->content->has('plugins') ) {
-			$plugins = $currentTheme->getResponse()->content->get('plugins');
-			$_option->updateValue( $plugins[0]['url'] );
-		}
-		else {
-			$_option->delete();
-		}
-		unset( $_option, $plugins );
+        // Plugins
+        $_option = new Options\ThemePluginsJS\Option();
+        if($currentTheme->getResponse()->content->has('plugins')) {
+            $plugins = $currentTheme->getResponse()->content->get('plugins');
+            $_option->updateValue($plugins[0]['url']);
+        }
+        else {
+            $_option->delete();
+        }
+        unset($_option, $plugins);
 
         // Public Token
         $publicTokenOption = new Options\PublicToken\PublicTokenOption();
@@ -168,30 +173,35 @@ class SignIn {
         $_option = new Options\PlanFeatures\PlanFeaturesOption();
         $_option->updateValue($companyStatus->getResponse()->content->get('features'));
 
-		// -------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------
 
-		// Report about successfully signed in
-		$user_signed_up = new Cron\Tasks\UserSignedUp\Task();
-		$user_signed_up->register();
-
-		// -------------------------------------------------------------------------------------------------------------
-
-        $updateAnonymousAccountTask = new Cron\Tasks\UpdateAnonymousAccountTask();
-        $updateAnonymousAccountTask->unRegister();
+        // Report about successfully signed in
+        $user_signed_up = new Cron\UserSignedUpCronEvent();
+        $user_signed_up->unScheduleAll();
+        $user_signed_up->schedule();
 
         // -------------------------------------------------------------------------------------------------------------
 
-		if(!PluginConfig::isVIP()) {
-			// Tasks for Files syncing
-	        $manager = FilesManagerFactory::create();
-	        $manager
-	            ->restartSyncing()
-	            ->enableSyncingTasks();
-		}
-	}
+        $updateAnonymousAccountTask = new Cron\UpdateAnonymousAccountCronEvent();
+        $updateAnonymousAccountTask->unScheduleAll();
 
-	public static function signInAnonymous() {
-        $api = SetkaAPI\APIFactory::create();
+        // -------------------------------------------------------------------------------------------------------------
+
+        $manager = FilesManagerFactory::create();
+        if(!PluginConfig::isVIP()) {
+            // Tasks for Files syncing
+            $manager
+                ->restartSyncing()
+                ->enableSyncingTasks();
+        } else {
+            $manager
+                ->disableSyncingTasks();
+        }
+    }
+
+    public static function signInAnonymous()
+    {
+        $api          = SetkaAPI\APIFactory::create();
         $currentTheme = new Actions\GetCurrentThemeAnonymouslyAction();
 
         $api->request($currentTheme);
@@ -201,41 +211,41 @@ class SignIn {
         }
 
         foreach($currentTheme->getResponse()->content->get('theme_files') as $file) {
-            switch( $file['filetype'] ) {
+            switch($file['filetype']) {
                 case 'css':
                     $themeResourceCSSOption = new Options\ThemeResourceCSS\Option();
-                    $themeResourceCSSOption->updateValue( $file['url'] );
+                    $themeResourceCSSOption->updateValue($file['url']);
                     break;
 
                 case 'json':
                     $themeResourceJSOption = new Options\ThemeResourceJS\Option();
-                    $themeResourceJSOption->updateValue( $file['url'] );
+                    $themeResourceJSOption->updateValue($file['url']);
                     break;
             }
         }
 
         $editorCSSOption = new Options\EditorCSS\Option();
         $editorJSOption  = new Options\EditorJS\Option();
-        if( $currentTheme->getResponse()->isOk() ) {
-            foreach( $currentTheme->getResponse()->content->get('content_editor_files') as $file ) {
-                if( 'css' === $file['filetype'] ) {
-                    $editorCSSOption->updateValue( $file['url'] );
-                } elseif( 'js' === $file['filetype'] ) {
-                    $editorJSOption->updateValue( $file['url'] );
+        if($currentTheme->getResponse()->isOk()) {
+            foreach($currentTheme->getResponse()->content->get('content_editor_files') as $file) {
+                if('css' === $file['filetype']) {
+                    $editorCSSOption->updateValue($file['url']);
+                } elseif('js' === $file['filetype']) {
+                    $editorJSOption->updateValue($file['url']);
                 }
             }
         }
 
         $editorVersionOption = new Options\EditorVersion\Option();
-        $editorVersionOption->updateValue( $currentTheme->getResponse()->content->get('content_editor_version') );
+        $editorVersionOption->updateValue($currentTheme->getResponse()->content->get('content_editor_version'));
 
         // -------------------------------------------------------------------------------------------------------------
 
         // Plugins
         $themePluginsJSOption = new Options\ThemePluginsJS\Option();
-        if( $currentTheme->getResponse()->content->has('plugins') ) {
+        if($currentTheme->getResponse()->content->has('plugins')) {
             $plugins = $currentTheme->getResponse()->content->get('plugins');
-            $themePluginsJSOption->updateValue( $plugins[0]['url'] );
+            $themePluginsJSOption->updateValue($plugins[0]['url']);
         } else {
             $themePluginsJSOption->delete();
         }
@@ -244,7 +254,8 @@ class SignIn {
         $subscriptionStatusOption = new Options\SubscriptionStatus\Option();
         $subscriptionStatusOption->updateValue('running');
 
-        $updateAnonymousAccountTask = new Cron\Tasks\UpdateAnonymousAccountTask();
-        $updateAnonymousAccountTask->register();
+        $updateAnonymousAccountTask = new Cron\UpdateAnonymousAccountCronEvent();
+        $updateAnonymousAccountTask->unScheduleAll();
+        $updateAnonymousAccountTask->schedule();
     }
 }

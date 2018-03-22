@@ -1,7 +1,8 @@
 <?php
 namespace Setka\Editor\Entries;
 
-class SetkaEditorFilePostType {
+class SetkaEditorFilePostType
+{
 
-	const NAME = 'setka_editor_file';
+    const NAME = 'setka_editor_file';
 }

@@ -15,50 +15,51 @@ use Symfony\Component\Validator\Constraints;
  * @apiError (Authentication) 401 If token not presented in request or not identical to WordPress token.
  * @apiError (Authentication) 503 If token not entered in WordPress settings.
  */
-class Helper extends AbstractHelper {
+class Helper extends AbstractHelper
+{
 
-	public function handleRequest() {
-		$request  = $this->getRequest();
-		$response = $this->getResponse();
-		$api = $this->getApi();
+    public function handleRequest()
+    {
+        $request  = $this->getRequest();
+        $response = $this->getResponse();
+        $api      = $this->getApi();
 
-		// Token presented in request
-		if( !$request->request->has('token') ) {
-			$response->setStatusCode( Response::HTTP_UNAUTHORIZED );
-			$api->addError( new Errors\MissedTokenAttributeError() );
-			return;
-		}
+        if(!$request->request->has('token')) {
+            $response->setStatusCode(Response::HTTP_UNAUTHORIZED);
+            $api->addError(new Errors\MissedTokenAttributeError());
+            return;
+        }
 
-		// Checkout local token if they not exists we can't auth request
-		$token = new Options\Token\Option();
-		if( ! $token->isValid() ) {
-			$response->setStatusCode( Response::HTTP_UNAUTHORIZED );
-			$api->addError( new Errors\Helpers\Auth\UnauthorizedError() );
-			return;
-		}
-		unset($token);
+        $token = new Options\Token\Option();
+        if(! $token->isValid()) {
+            $response->setStatusCode(Response::HTTP_UNAUTHORIZED);
+            $api->addError(new Errors\Helpers\Auth\UnauthorizedError());
+            return;
+        }
+        unset($token);
 
-		$violationList =
-			$this->getApi()->getValidator()
-				->validate( $request->request->get('token'), $this->getConstraint() );
+        $violationList =
+            $this->getApi()->getValidator()
+                ->validate($request->request->get('token'), $this->getConstraint());
 
-		if( count( $violationList ) === 0 ) {
-			$this->getResponseData()->set('status', 'The token is valid.');
-			return;
-		}
+        if(count($violationList) === 0) {
+            $this->getResponseData()->set('status', 'The token is valid.');
+            return;
+        }
 
-		$response->setStatusCode( Response::HTTP_UNAUTHORIZED );
-		$api->addError( new Errors\Helpers\Auth\AuthenticationError() );
-	}
+        $response->setStatusCode(Response::HTTP_UNAUTHORIZED);
+        $api->addError(new Errors\Helpers\Auth\AuthenticationError());
+    }
 
-	public function getConstraint() {
-		$token = new Options\Token\Option();
+    public function getConstraint()
+    {
+        $token = new Options\Token\Option();
 
-		return array(
-			new Constraints\NotBlank(),
-			new Constraints\IdenticalTo(array(
-				'value' => $token->getValue()
-			))
-		);
-	}
+        return array(
+            new Constraints\NotBlank(),
+            new Constraints\IdenticalTo(array(
+                'value' => $token->getValue()
+            ))
+        );
+    }
 }

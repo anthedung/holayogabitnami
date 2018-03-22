@@ -5,7 +5,7 @@ Contributors: livemesh
 Tags: elementor, elementor addons, elementor extensions, elementor modules, page builder, portfolio, carousel, posts grid
 Requires at least: 4.5
 Tested up to: 4.9
-Stable Tag: 1.5
+Stable Tag: 1.5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,21 @@ Pls install and activate the <a href="https://wordpress.org/plugins/portfolio-po
 5. The Addons for Elementor plugin documentation.
 
 == Changelog ==
+
+= 1.5.4 =
+* Fixed – Livemesh Grid columns can break in certain resolutions in FireFox.
+* Fixed - The piechart value is not being rounded.
+* Fixed - The post grid and posts carousel date format not reflecting the user preference specified in Settings page.
+
+= 1.5.3 =
+* Fixed - Next Previous buttons of carousels would not show up in certain installations due to conflicts with base slick carousel styles
+
+= 1.5.2 =
+* Fixed – Categories or taxonomy terms repeat when specific taxonomy terms/categories are chosen in query window
+
+= 1.5.1 =
+* Fixed – Some themes have trouble rendering grid columns
+* Fixed - Comma shows up in category list for the image hover in grid
 
 = 1.5 =
 * Upgrade – Simpler grid system based on NEAT 2.1 version

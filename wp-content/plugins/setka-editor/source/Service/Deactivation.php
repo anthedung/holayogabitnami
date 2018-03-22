@@ -1,11 +1,13 @@
 <?php
 namespace Setka\Editor\Service;
 
-class Deactivation {
+class Deactivation
+{
 
-    public static function run() {
+    public static function run()
+    {
         register_uninstall_hook(
-            PathsAndUrls::getPlugin()->get_path(),
+            PathsAndUrls::getPlugin()->getFile(),
             array('\Setka\Editor\Service\Uninstall', 'run')
         );
     }

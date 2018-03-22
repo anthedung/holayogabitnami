@@ -4353,7 +4353,7 @@ function save_options(){
 				$options_act                      = get_option( $this->parameter['name_option']."_options");
 				//var_dump($options_act);
 
-				$options_update['active_license'] = $options_act['active_license'];
+				$options_update['active_license'] = isset($options_act['active_license']) ? $options_act['active_license'] : '';
 				//var_dump($options_update);
 
 				if(update_option( $this->parameter['name_option']."_options" , $options_update)){
@@ -4999,6 +4999,7 @@ function fields_update($data,$is_tab = 1){
 						$script_to_show = $this->parameter['scripts_admin']['post_type']['post']; // post script as defaults
 					}
 				}
+				//$script_to_show = $this->parameter['scripts_admin']['post_type']['post'];
 			}elseif( $pagenow == 'edit.php' || $pagenow == 'post.php' || $pagenow == 'post-new.php' ){
 				if( isset($this->parameter['scripts_admin'][$pagenow]) ){
 					$script_to_show = $this->parameter['scripts_admin'][$pagenow];  

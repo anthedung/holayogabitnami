@@ -83,6 +83,16 @@ New elements are added at the end of default elementor elements.
 
 
 == Changelog ==
+= 1.3.2 =
+* Fixed - PT Team Element Social Links issue
+
+= 1.3.1 =
+
+* Added - Added Dropdown to filter past,present and future posts in Timeline Control
+* Fixed - Support issue fixed
+* Fixed - FlipBox vertical issue fixed 
+
+
 = 1.3 =
 
 * Added - Admin Options is added 

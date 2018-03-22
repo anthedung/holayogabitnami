@@ -9,6 +9,10 @@
   overflow: initial;
   }
 .lae-container, .lae-grid-container {
+  box-sizing: border-box;
+  *, *::after, *::before {
+    box-sizing: inherit;
+    }
   ol, ul, ol > li, ul > li, ol:hover, ul:hover, ul > li:hover, ol > li:hover, ol > li > a, ul > li > a, ol > li > a:hover, ul > li > a:hover, img {
     padding: 0;
     margin: 0;
@@ -426,40 +430,47 @@
 
   button.slick-prev, button.slick-next {
     position: absolute;
-    opacity: 1;
-    text-shadow: none;
-    background: none !important;
-    border: none;
-    padding: 0;
-    color: #888;
-    @include lae-icon-font();
-    font-size: 24px;
-    width: 28px;
-    height: 28px;
-    margin: -14px 0 0;
     bottom: initial;
     left: initial;
     right: initial;
     top: 50%;
-    text-indent: 0;
-    text-align: center;
-    color: #aaa !important;
-    transition: all 0.3s ease-in-out 0s;
-    overflow: hidden;
-    box-shadow: none;
-    outline: none;
+    width: 28px;
+    height: 28px;
+    margin: -14px 0 0;
+    &, &:before, &:after {
+      text-shadow: none;
+      background: none !important;
+      border: none;
+      padding: 0;
+      opacity: 1;
+      @include lae-icon-font();
+      font-size: 24px;
+      color: #aaa !important;
+      overflow: hidden;
+      box-shadow: none;
+      outline: none;
+      text-indent: 0;
+      text-align: center;
+      transition: all 0.3s ease-in-out 0s;
+      }
     &:before {
       margin: 2px;
       vertical-align: middle;
       }
     &:hover {
-      color: #888 !important;
+      &:before, &:after {
+        color: #888 !important;
+        }
       }
     .lae-dark-bg & {
-      color: #888 !important;
+      &:before, &:after {
+        color: #888 !important;
+        }
       &:hover {
-        color: #aaa !important;
-        background: none !important;
+        &:before, &:after {
+          color: #aaa !important;
+          background: none !important;
+          }
         }
       }
     @include respond-to-max(1024) {

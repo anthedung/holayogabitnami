@@ -29,12 +29,50 @@ function pt_get_post_data( $args ) {
 		'post_parent'      => '',
 		'author'       => '',
 		'author_name'      => '',
-		'post_status'      => 'publish',
+		'post_status'      =>  array('pending','future','publish'),
 		'suppress_filters' => true,
 	);
-
+	
+	if($args['post_period'] == 'future'){
+		$today = getdate();
+		$defaults['date_query'] = array(
+				array(
+					'after' => array(
+						'year'  => $today['year'],
+						'month' => $today['mon'],
+						'day'   => $today['mday'],
+					),
+				),
+			
+		);
+	} elseif($args['post_period'] == 'past'){
+		$today = getdate();
+		$defaults['date_query'] = array(
+				array(
+					'before' => array(
+						'year'  => $today['year'],
+						'month' => $today['mon'],
+						'day'   => $today['mday'],
+					),
+				),
+			
+		);
+	} elseif($args['post_period'] == 'present'){
+		$today = getdate();
+		$defaults['date_query'] = array(
+				array(
+					'year'  => $today['year'],
+					'month' => $today['mon'],
+					'day'   => $today['mday'],
+				),			
+		);
+	} else {
+		unset($args['post_period']);
+	}
+	unset($args['post_period']);
+	
 	$atts = wp_parse_args( $args,$defaults );
-
+	
 	$posts = get_posts( $atts );
 
 	return $posts;
@@ -76,6 +114,19 @@ function pt_get_post_orderby_options() {
 
 	return $orderby;
 }
+/**
+	 * Define Post Period Display settings.
+	 */
+function pt_get_post_period_options() {
+	$postperiod = array(
+		'none' => '',
+		'past' => 'Past',
+		'present' => 'Present',
+		'future' => 'Future',
+	);
+
+	return $postperiod;
+}
 	/**
 	 * Post Setting
 	 *
@@ -92,6 +143,7 @@ function pt_get_post_settings( $settings ) {
 	$post_args['offset'] = $settings['post_offset'];
 	$post_args['orderby'] = $settings['orderby'];
 	$post_args['order'] = $settings['order'];
+	$post_args['post_period'] = $settings['post_period'];
 
 	return $post_args;
 }

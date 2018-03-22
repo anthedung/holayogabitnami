@@ -42,7 +42,7 @@
 		</label><br />
 		<label class="ppsPageGlobalDelayShell supsystic-tooltip-right" title="<?php _e('If this option will be enabled - time, entered above, will start counting from first page load, and if page will be reloaded (user will visit other site page for example) - it will be still counting from point, where it stopped on prev. page', PPS_LANG_CODE)?>">
 			<?php echo htmlPps::checkbox('params[main][enb_page_load_global_delay]', array('checked' => htmlPps::checkedOpt($this->popup['params']['main'], 'enb_page_load_global_delay')))?>
-			<?php _e('Count time from first site load', PPS_LANG_CODE)?>
+			<?php _e('Count time from the first site load', PPS_LANG_CODE)?>
 		</label>
 	</div><br />
 	<label class="ppsPopupMainOptLbl" data-name="User click on the page">

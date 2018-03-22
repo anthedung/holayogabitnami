@@ -13,12 +13,13 @@
  */
 function hfe_header_enabled() {
 	$header_id = Header_Footer_Elementor::get_settings( 'type_header', '' );
+	$status    = false;
 
 	if ( '' !== $header_id ) {
-		return true;
+		$status = true;
 	}
 
-	return false;
+	return apply_filters( 'hfe_header_enabled', $status );
 }
 
 /**
@@ -29,12 +30,13 @@ function hfe_header_enabled() {
  */
 function hfe_footer_enabled() {
 	$footer_id = Header_Footer_Elementor::get_settings( 'type_footer', '' );
+	$status    = false;
 
 	if ( '' !== $footer_id ) {
-		return true;
+		$status = true;
 	}
 
-	return false;
+	return apply_filters( 'hfe_footer_enabled', $status );
 }
 
 /**
@@ -46,11 +48,11 @@ function hfe_footer_enabled() {
 function get_hfe_header_id() {
 	$header_id = Header_Footer_Elementor::get_settings( 'type_header', '' );
 
-	if ( '' !== $header_id ) {
-		return $header_id;
+	if ( '' === $header_id ) {
+		$header_id = false;
 	}
 
-	return false;
+	return apply_filters( 'get_hfe_header_id', $header_id );
 }
 
 /**
@@ -62,11 +64,11 @@ function get_hfe_header_id() {
 function get_hfe_footer_id() {
 	$footer_id = Header_Footer_Elementor::get_settings( 'type_footer', '' );
 
-	if ( '' !== $footer_id ) {
-		return $footer_id;
+	if ( '' === $footer_id ) {
+		$footer_id = false;
 	}
 
-	return false;
+	return apply_filters( 'get_hfe_footer_id', $footer_id );
 }
 
 /**
@@ -76,12 +78,12 @@ function get_hfe_footer_id() {
  */
 function hfe_render_header() {
 
-	if ( false == apply_filters( 'enable_hfe_render_header', '__return_true' ) ) {
+	if ( false == apply_filters( 'enable_hfe_render_header', true ) ) {
 		return;
 	}
 
 	?>
-		<header id="masthead" itemscope="itemscope" itemtype="http://schema.org/WPHeader">
+		<header id="masthead" itemscope="itemscope" itemtype="https://schema.org/WPHeader">
 			<p class="main-title bhf-hidden" itemprop="headline"><a href="<?php echo bloginfo( 'url' ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
 			<?php Header_Footer_Elementor::get_header_content(); ?>
 		</header>
@@ -97,12 +99,12 @@ function hfe_render_header() {
  */
 function hfe_render_footer() {
 
-	if ( false == apply_filters( 'enable_hfe_render_footer', '__return_true' ) ) {
+	if ( false == apply_filters( 'enable_hfe_render_footer', true ) ) {
 		return;
 	}
 
 	?>
-		<footer itemscope="itemscope" itemtype="http://schema.org/WPFooter">
+		<footer itemtype="https://schema.org/WPFooter" itemscope="itemscope" id="colophon" role="contentinfo">
 			<?php Header_Footer_Elementor::get_footer_content(); ?>
 		</footer>
 	<?php

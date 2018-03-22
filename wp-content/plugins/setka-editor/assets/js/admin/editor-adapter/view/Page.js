@@ -75,8 +75,7 @@ module.exports = Backbone.View.extend({
         // Notices
         this.views.notices = {
             setkaEditorCantFindResources: new adapter.view.notices.SetkaEditorCantFindResources(),
-            setkaEditorThemeDisabled:     new adapter.view.notices.SetkaEditorThemeDisabled(),
-            setkaEditorSaveSnippet:       new adapter.view.notices.SetkaEditorSaveSnippet()
+            setkaEditorThemeDisabled:     new adapter.view.notices.SetkaEditorThemeDisabled()
         };
 
         this.views.postStuff = new adapter.view.postStuff.PostStuff({

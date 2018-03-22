@@ -1,6 +1,7 @@
 <?php
 namespace Setka\Editor\Admin\Service\FilesManager\Exceptions;
 
-class DeletingAttemptsDownloadsMetaException extends \Exception {
+class DeletingAttemptsDownloadsMetaException extends \Exception
+{
 
 }

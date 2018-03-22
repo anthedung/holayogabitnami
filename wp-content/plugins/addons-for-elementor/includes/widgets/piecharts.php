@@ -256,9 +256,9 @@ class LAE_Piecharts_Widget extends Widget_Base {
                 <div class="lae-piechart <?php echo $column_style; ?>">
 
                     <div class="lae-percentage" <?php echo $bar_color; ?> <?php echo $track_color; ?>
-                         data-percent="<?php echo intval($piechart['percentage_value']); ?>">
+                         data-percent="<?php echo round($piechart['percentage_value']); ?>">
 
-                        <span><?php echo intval($piechart['percentage_value']); ?><sup>%</sup></span>
+                        <span><?php echo round($piechart['percentage_value']); ?><sup>%</sup></span>
 
                     </div>
 

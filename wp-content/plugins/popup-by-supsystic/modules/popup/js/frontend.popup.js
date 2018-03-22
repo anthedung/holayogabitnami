@@ -459,6 +459,23 @@ function _ppsPopupGetActionDone( popup ) {
 	var actionsKey = 'pps_actions_'+ popup.id
 	,	actions = getCookiePps( actionsKey );
 	if(actions) {
+		if(popup.type == 'age_verify' && actions.age_verify && popup.params.opts_attrs.btns_number) {
+			// Count action done for Age Berify types only if primary was clicked
+			// if there are button, marked as primary in admin are.
+			// If there are no such - it will be counted as Done for any button
+			var primaryBtnExists = false;
+			for(var i = 0; i < popup.params.opts_attrs.btns_number; i++) {
+				if(popup.params.tpl['is_btn_primary_'+ i]) {
+					if(i == actions.age_verify) {
+						return true;
+					}
+					primaryBtnExists = true;
+				}
+			}
+			// Do not break anything in current users workflow
+			if(primaryBtnExists)
+				return false;
+		}
 		// TODO: make priority check here - if subscribe enabled and user just shared popup - return false
 		return true;
 	}
@@ -473,12 +490,16 @@ function _ppsPopupSetActionDone( popup, action, smType, params ) {
 	params = params || {};
 	if(isNumericPps( popup ))
 		popup = ppsGetPopupById( popup );
-	smType = smType ? smType : '';
+	smType = smType !== null ? smType : '';
 	var actionsKey = 'pps_actions_'+ popup.id
 	,	actions = getCookiePps( actionsKey );
 	if(!actions)
 		actions = {};
-	actions[ action ] = 1;	// Save only flags for now
+	// Save btn ID for age verify popups
+	if(action == 'age_verify') {
+		actions[ action ] = smType;
+	} else
+		actions[ action ] = 1;	// Save only flags for now
 	var saveCookieTime = parseInt(popup.params.main.show_to_until_make_action_days);
 	saveCookieTime = isNaN(saveCookieTime) ? 30 : saveCookieTime;
 	if(!saveCookieTime)
@@ -1089,7 +1110,7 @@ function ppsBindPopupActions(popup) {
 			}
 		});
 	}
-	if($shell.find('.fb-like-box').size()) {
+	if($shell.find('.fb_iframe_widget').size()) {
 		_ppsBindFbLikeBtnAction(popup);
 	}
 	/*For age verification templates*/
@@ -1124,11 +1145,18 @@ function _ppsBindFbLikeBtnAction(popup) {
 		_ppsPopupSetActionDone(popup, 'fb_like');
 	});
 	FB.Event.subscribe('xfbml.render', function(response) {
-		if(popup.render_with_fb_load) {	// If it need to be rendered
-			ppsCheckShowPopup( popup );
-		} else {	// else - just re-position it
-			_ppsPositionPopup({popup: popup});
-		}
+		setTimeout(function(){
+			// Just don't know what to say.....
+			setTimeout(function(){
+				_ppsPositionPopup({popup: popup});
+			}, 1000);
+			if(popup.render_with_fb_load) {	// If it need to be rendered
+				ppsCheckShowPopup( popup );
+				_ppsPositionPopup({popup: popup});
+			} else {	// else - just re-position it
+				_ppsPositionPopup({popup: popup});
+			}
+		}, 1000);
 	});
 }
 function ppsPopupSubscribeSuccess(popup, params) {

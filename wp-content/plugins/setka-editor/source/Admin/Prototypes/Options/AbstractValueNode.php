@@ -1,23 +1,24 @@
 <?php
 namespace Setka\Editor\Admin\Prototypes\Options;
 
-abstract class AbstractValueNode implements ValueNodeInterface {
+abstract class AbstractValueNode implements ValueNodeInterface
+{
 
-	use Traits\NameTrait;
+    use Traits\NameTrait;
 
-	use Traits\Aggregate\ValueRawTrait;
+    use Traits\Aggregate\ValueRawTrait;
 
-	use Traits\DefaultValueTrait;
+    use Traits\DefaultValueTrait;
 
-	use Traits\ConstraintTrait;
+    use Traits\ConstraintTrait;
 
-	use Traits\ValidatorTrait;
+    use Traits\ValidatorTrait;
 
-	use Traits\ValidateTrait;
+    use Traits\ValidateTrait;
 
-	use Traits\ParentTrait;
+    use Traits\ParentTrait;
 
-	use Traits\Aggregate\ValueTrait;
+    use Traits\Aggregate\ValueTrait;
 
-	abstract public function sanitize( $instance );
+    abstract public function sanitize($instance);
 }

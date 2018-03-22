@@ -1,19 +1,20 @@
 <?php
 namespace Setka\Editor\Entries;
 
-class PostStatuses {
+class PostStatuses
+{
 
-	const PUBLISH = 'publish';
+    const PUBLISH = 'publish';
 
-	const DRAFT = 'draft';
+    const DRAFT = 'draft';
 
-	const PENDING = 'pending';
+    const PENDING = 'pending';
 
-	const FUTURE = 'future';
+    const FUTURE = 'future';
 
-	const ANY = 'any';
+    const ANY = 'any';
 
-	const TRASH = 'trash';
+    const TRASH = 'trash';
 
-	const ARCHIVE = 'archive';
+    const ARCHIVE = 'archive';
 }

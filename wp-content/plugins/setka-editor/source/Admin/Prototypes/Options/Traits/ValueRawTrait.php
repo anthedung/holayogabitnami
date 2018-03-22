@@ -1,12 +1,14 @@
 <?php
 namespace Setka\Editor\Admin\Prototypes\Options\Traits;
 
-trait ValueRawTrait {
+trait ValueRawTrait
+{
 
-	public function getValueRaw() {
-		/**
-		 * @var $this \Setka\Editor\Admin\Prototypes\Options\NodeInterface
-		 */
-		return get_option($this->getName());
-	}
+    public function getValueRaw()
+    {
+        /**
+         * @var $this \Setka\Editor\Admin\Prototypes\Options\NodeInterface
+         */
+        return get_option($this->getName());
+    }
 }

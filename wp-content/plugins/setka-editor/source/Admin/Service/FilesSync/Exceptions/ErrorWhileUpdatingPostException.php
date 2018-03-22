@@ -1,6 +1,7 @@
 <?php
 namespace Setka\Editor\Admin\Service\FilesSync\Exceptions;
 
-class ErrorWhileUpdatingPostException extends \Exception {
+class ErrorWhileUpdatingPostException extends \Exception
+{
 
 }

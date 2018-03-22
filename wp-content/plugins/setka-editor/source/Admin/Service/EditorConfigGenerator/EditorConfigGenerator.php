@@ -12,7 +12,8 @@ use Setka\Editor\Admin\Service\EditorConfigGenerator\Exceptions\WritingConfigFil
 use Setka\Editor\Admin\Service\FilesSync\FilesystemInterface;
 use Setka\Editor\Entries\Meta\FileSubPathMeta;
 
-class EditorConfigGenerator {
+class EditorConfigGenerator
+{
 
     /**
      * @var FilesystemInterface
@@ -76,11 +77,12 @@ class EditorConfigGenerator {
         ThemeResourceCSSLocalOption $themeResourceCSSLocalOption
     ) {
         $this->filesystem = $filesystem;
-        $this->rootPath = $rootPath;
-        $this->rootUrl = trailingslashit($rootUrl);
+        $this->rootPath   = $rootPath;
+        $this->rootUrl    = trailingslashit($rootUrl);
 
-        if(!$queryJSON->have_posts() || !$queryCSS->have_posts())
+        if(!$queryJSON->have_posts() || !$queryCSS->have_posts()) {
             throw new ConfigFileEntryException();
+        }
 
         $queryJSON->the_post();
         $post = get_post();
@@ -107,9 +109,9 @@ class EditorConfigGenerator {
         unset($post);
         wp_reset_postdata();
 
-        $this->fileSubPathMeta = $fileSubPathMeta;
-        $this->useLocalFilesOption = $useLocalFilesOption;
-        $this->themeResourceJSLocalOption = $themeResourceJSLocalOption;
+        $this->fileSubPathMeta             = $fileSubPathMeta;
+        $this->useLocalFilesOption         = $useLocalFilesOption;
+        $this->themeResourceJSLocalOption  = $themeResourceJSLocalOption;
         $this->themeResourceCSSLocalOption = $themeResourceCSSLocalOption;
     }
 
@@ -120,26 +122,12 @@ class EditorConfigGenerator {
      *
      * @return $this For chain calls.
      */
-    public function generate() {
-
-        // Check if need something to do (local files mode disabled)
-
-        // Load json into PHP
+    public function generate()
+    {
         $this->loadJSON();
-
-        // Replace all urls in JSON
         $this->replaceUrls();
-
-        // Save JSON into file
         $this->saveJSON();
-
-        // Mark JSON entry as updated
-
-        // Deregister all cron tasks for downloading files
-
-        // Enable local files usage (possibly this need to be created in other method)
         $this->enableLocalUsage();
-
         return $this;
     }
 
@@ -150,19 +138,22 @@ class EditorConfigGenerator {
      * @throws DecodingJSONException If JSON file is broken.
      * @throws ReadingConfigFileException If filesystem can't read the file content.
      */
-    protected function loadJSON() {
+    protected function loadJSON()
+    {
         $fs = $this->getFilesystem();
 
         $fileContent = $fs->getFilesystem()
                           ->get_contents($this->themeResourceJSONFileInfo->getPath());
 
-        if(!is_string($fileContent))
+        if(!is_string($fileContent)) {
             throw new ReadingConfigFileException();
+        }
 
         $json = json_decode($fileContent, true);
 
-        if(json_last_error() !== JSON_ERROR_NONE)
+        if(json_last_error() !== JSON_ERROR_NONE) {
             throw new DecodingJSONException();
+        }
 
         $this->config = $json;
 
@@ -176,7 +167,8 @@ class EditorConfigGenerator {
      *
      * @return $this For chain calls.
      */
-    protected function replaceUrls() {
+    protected function replaceUrls()
+    {
         array_walk_recursive($this->config, array($this, 'replaceUrlsHandler'));
         return $this;
     }
@@ -187,54 +179,52 @@ class EditorConfigGenerator {
      * @param $item string|int The name of array cell.
      * @param $key mixed The value of array cell.
      */
-    public function replaceUrlsHandler(&$item, $key) {
+    public function replaceUrlsHandler(&$item, $key)
+    {
 
         // A hack for single file.
-        if('public_js_url' === $key)
+        if('public_js_url' === $key) {
             return;
+        }
 
         // Urls have only string type
 
-        if(!is_string($item) || empty($item))
+        if(!is_string($item) || empty($item)) {
             return;
-
-
-        // Don't modify private properties.
+        }
 
         $startsWith = substr($key, 0, 1);
 
-        if(!$startsWith)
+        if(!$startsWith) {
             return;
+        }
 
-        if('_' === $startsWith)
+        if('_' === $startsWith) {
             return;
+        }
 
         unset($startsWith);
 
 
         // Search for _url at the end of key.
-
         $endsWith = substr($key, -3);
-
-        // False or empty string
-        if(!$endsWith)
+        if(!$endsWith) {
             return;
-
-        // Not url
-        if('url' !== $endsWith)
+        }
+        if('url' !== $endsWith) {
             return;
+        }
 
-        // Replace url
-
-	    // Since we supporting only PHP > 5.5.9 parse_url() works pretty similar
-	    // on all versions above and there is no need to use wp_parse_url()
-	    // which is created for support older PHP versions.
+        // Since we supporting only PHP > 5.5.9 parse_url() works pretty similar
+        // on all versions above and there is no need to use wp_parse_url()
+        // which is created for support older PHP versions.
         $scheme = parse_url($item, PHP_URL_SCHEME);
-        $host = parse_url($item, PHP_URL_HOST);
-        $path = parse_url($item, PHP_URL_PATH);
+        $host   = parse_url($item, PHP_URL_HOST);
+        $path   = parse_url($item, PHP_URL_PATH);
 
-        if(!$scheme || !$host || !$path)
+        if(!$scheme || !$host || !$path) {
             return;
+        }
 
         $item = $this->getRootUrl() . ltrim($path, '/');
     }
@@ -246,18 +236,21 @@ class EditorConfigGenerator {
      * @throws EncodingJSONException If cant encode config into JSON string.
      * @throws WritingConfigFileException If filesystem can't write string into file.
      */
-    protected function saveJSON() {
-        $fs = $this->getFilesystem();
+    protected function saveJSON()
+    {
+        $fs   = $this->getFilesystem();
         $json = wp_json_encode($this->config);
 
-        if(!$json)
+        if(!$json) {
             throw new EncodingJSONException();
+        }
 
         $result = $fs->getFilesystem()
                      ->put_contents($this->themeResourceJSONFileInfo->getPathLocal(), $json);
 
-        if(!$result)
+        if(!$result) {
             throw new WritingConfigFileException();
+        }
 
         return $this;
     }
@@ -267,7 +260,8 @@ class EditorConfigGenerator {
      *
      * @return $this For chain calls.
      */
-    protected function enableLocalUsage() {
+    protected function enableLocalUsage()
+    {
         $this->themeResourceJSLocalOption
             ->updateValue($this->themeResourceJSONFileInfo->getUrlLocal());
 
@@ -283,21 +277,24 @@ class EditorConfigGenerator {
     /**
      * @return FilesystemInterface
      */
-    public function getFilesystem() {
+    public function getFilesystem()
+    {
         return $this->filesystem;
     }
 
     /**
      * @return string
      */
-    public function getRootPath() {
+    public function getRootPath()
+    {
         return $this->rootPath;
     }
 
     /**
      * @return string
      */
-    public function getRootUrl() {
+    public function getRootUrl()
+    {
         return $this->rootUrl;
     }
 }

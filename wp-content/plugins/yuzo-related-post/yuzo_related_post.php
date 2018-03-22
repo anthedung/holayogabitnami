@@ -4,7 +4,7 @@ Plugin Name: Related Posts
 Plugin URI: https://wordpress.org/plugins/yuzo-related-post/
 Description: Related posts so easy and fast
 Tags: related posts,related post,related content,popular posts,last post, most views, widget,related page,content,associate page, associate post
-Version: 5.12.71
+Version: 5.12.73
 Author: iLen
 Author URI: http://ilentheme.com
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd =_s-xclick&hosted_button_id=MSRAUBMB5BZFU
@@ -127,6 +127,7 @@ class yuzo_related_post extends yuzo_related_post_make{
 			if( isset($yuzo_options->disabled_counter) && $yuzo_options->disabled_counter ){
 
 				null;
+
 			}else{
 
 				add_shortcode( 'yuzo_views' , array( &$this,'yuzo_shortcode' ) );
@@ -135,10 +136,16 @@ class yuzo_related_post extends yuzo_related_post_make{
 			add_shortcode( 'yuzo_related', array( &$this,'yuzo_shortcode_related' ) );
 
 
-			if( isset($yuzo_options->automatically_append) &&  $yuzo_options->automatically_append =='1' ){
+			if( (isset($yuzo_options->automatically_append) &&  $yuzo_options->automatically_append =='1') ){
 
-				add_action('the_content',array( &$this,'create_post_related'),10 );
+				// Hook priority
+				if( !isset($yuzo_options->hook_priority) || !$yuzo_options->hook_priority ){
+					$yuzo_options->hook_priority = 10;
+				}
+				add_action('the_content',array( &$this,'create_post_related'), $yuzo_options->hook_priority );
+
 			}
+			add_filter('the_content_feed',   array($this, 'create_post_related'), 600);
 
 			// add scripts & styles
 			add_action( 'wp_enqueue_scripts', array( &$this,'script_and_style_front' ) );
@@ -166,6 +173,13 @@ function create_post_related( $content = '' ){
 	global $post,$yuzo_options,$wp_query,$if_utils;  
 	$orig_post = $post;
 
+	// validate feed init
+	if( is_feed() && current_filter() == 'the_content' ){
+		return $content;
+	}elseif( is_feed() && current_filter() == 'the_content_feed' && !(isset($yuzo_options->show_feed) && $yuzo_options->show_feed) ){
+		return $content;
+	}
+
 
 	// verify
 	if( self::only_specific_post() == false ) return $content;
@@ -180,11 +194,13 @@ function create_post_related( $content = '' ){
 	$cacheTime      = 20; // minutes
 	$rebuilt_query  = isset($yuzo_options->transient) && $yuzo_options->transient?false:true; //false;
 
+
+	//var_dump(is_feed() && $yuzo_options->show_feed);
 	if( ( is_archive() || is_search() ) && ( isset($yuzo_options->no_show_archive_page) && $yuzo_options->no_show_archive_page ) ){ return $content; };
 
 	$meta_yuzo = get_post_meta( $post->ID, $this->parameter['name_option']."_metabox" );
 
- 	// validate if Yuzo is disabled in the post
+	// validate if Yuzo is disabled in the post
 	if( isset($meta_yuzo[0]['yuzo_disabled_related']) && $meta_yuzo[0]['yuzo_disabled_related'] ){
 		return $content;
 	}
@@ -201,9 +217,9 @@ function create_post_related( $content = '' ){
 	}
 
 	// validate show in feed or no
-	if( is_feed() && (( ! isset($yuzo_options->show_feed) || ! $yuzo_options->show_feed)) ){
+	/*if( is_feed() && (( ! isset($yuzo_options->show_feed) || ! $yuzo_options->show_feed)) ){
 		return $content;
-	}
+	}*/
 
 
 	// if active Only home page
@@ -230,7 +246,7 @@ function create_post_related( $content = '' ){
 	$_html = "<!-- Begin Yuzo -->";
 	$_html .= "<div class='yuzo_related_post style-$yuzo_options->style'  data-version='{$this->parameter["version"]}'>";
 	if( $wp_query->post_count != 0 ){ // if have result in loop post
-
+		$_html .= "<!-- with result -->";
 		$__in_post   = null; // for array
 		$post_in     = null;
 		$post_not_in = null;
@@ -1057,7 +1073,7 @@ function create_post_related( $content = '' ){
 		}
 
 	}else{
-	  
+	  	$_html .= "<!-- without result -->";
 		if( $yuzo_options->display_random  ){
 
 			$args = array(

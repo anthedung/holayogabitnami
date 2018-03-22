@@ -66,9 +66,9 @@ class templatesPps extends modulePps {
 		static $loaded = false;
 		if(!$loaded) {
 			framePps::_()->addScript('jquery');
-
-			framePps::_()->addScript('commonPps', PPS_JS_PATH. 'common.js');
-			framePps::_()->addScript('corePps', PPS_JS_PATH. 'core.js');
+			$suf = PPS_MINIFY_ASSETS ? '.min' : '';
+			framePps::_()->addScript('commonPps', PPS_JS_PATH. 'common'. $suf. '.js');
+			framePps::_()->addScript('corePps', PPS_JS_PATH. 'core'. $suf. '.js');
 
 			$ajaxurl = admin_url('admin-ajax.php');
 			$jsData = array(

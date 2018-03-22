@@ -1,78 +1,81 @@
 <?php
 namespace Setka\Editor\Service\SetkaAccount;
 
-use Setka\Editor\Admin\Cron\Tasks;
+use Korobochkin\WPKit\Cron\CronEventInterface;
+use Setka\Editor\Admin\Cron;
 use Setka\Editor\Admin\Options;
-use Setka\Editor\Admin\Prototypes\Cron\TaskInterface;
 use Setka\Editor\Admin\Prototypes\Options\OptionInterface;
 use Setka\Editor\Admin\Service\FilesManager\FilesManagerFactory;
 
-class SignOut {
+class SignOut
+{
 
-	public static function sign_out() {
+    public static function signOutAction()
+    {
 
-		/**
-		 * @var $options OptionInterface[]
-		 */
-		$options = array();
+        /**
+         * @var $options OptionInterface[]
+         */
+        $options = array();
 
-		$options[] = new Options\EditorCSS\Option();
-		$options[] = new Options\EditorJS\Option();
-		$options[] = new Options\EditorVersion\Option();
-		$options[] = new Options\Files\FilesOption();
-		$options[] = new Options\Files\FileSyncFailureOption();
-		$options[] = new Options\Files\FileSyncStageOption();
+        $options[] = new Options\EditorCSS\Option();
+        $options[] = new Options\EditorJS\Option();
+        $options[] = new Options\EditorVersion\Option();
+        $options[] = new Options\Files\FilesOption();
+        $options[] = new Options\Files\FileSyncFailureOption();
+        $options[] = new Options\Files\FileSyncStageOption();
         $options[] = new Options\Files\UseLocalFilesOption();
-		$options[] = new Options\PlanFeatures\PlanFeaturesOption();
-		$options[] = new Options\PublicToken\PublicTokenOption();
-		$options[] = new Options\SetkaPostCreated\Option();
+        $options[] = new Options\PlanFeatures\PlanFeaturesOption();
+        $options[] = new Options\PublicToken\PublicTokenOption();
+        $options[] = new Options\SetkaPostCreated\Option();
 
-		$options[] = new Options\SubscriptionActiveUntil\Option();
-		$options[] = new Options\SubscriptionPaymentStatus\Option();
-		$options[] = new Options\SubscriptionStatus\Option();
+        $options[] = new Options\SubscriptionActiveUntil\Option();
+        $options[] = new Options\SubscriptionPaymentStatus\Option();
+        $options[] = new Options\SubscriptionStatus\Option();
 
-		$options[] = new Options\ThemePluginsJS\Option();
-		$options[] = new Options\ThemeResourceCSS\Option();
-		$options[] = new Options\ThemeResourceCSSLocal\ThemeResourceCSSLocalOption();
-		$options[] = new Options\ThemeResourceJS\Option();
-		$options[] = new Options\ThemeResourceJSLocal\ThemeResourceJSLocalOption();
+        $options[] = new Options\ThemePluginsJS\Option();
+        $options[] = new Options\ThemeResourceCSS\Option();
+        $options[] = new Options\ThemeResourceCSSLocal\ThemeResourceCSSLocalOption();
+        $options[] = new Options\ThemeResourceJS\Option();
+        $options[] = new Options\ThemeResourceJSLocal\ThemeResourceJSLocalOption();
 
-		$options[] = new Options\Token\Option();
-		$options[] = new Options\WhiteLabel\WhiteLabelOption();
+        $options[] = new Options\Token\Option();
+        $options[] = new Options\WhiteLabel\WhiteLabelOption();
 
-		foreach($options as $option) {
-			$option->delete();
-		}
+        foreach($options as $option) {
+            $option->delete();
+        }
 
-		unset($options, $option);
+        unset($options, $option);
 
-		/**
-		 * @var $tasks TaskInterface[]
-		 */
-		$tasks = array();
+        /**
+         * @var $tasks CronEventInterface[]
+         */
+        $tasks = array();
 
-		// Files tasks
-		$tasks[] = new Tasks\Files\FilesManagerTask();
-		$tasks[] = new Tasks\Files\FilesQueueTask();
-		$tasks[] = new Tasks\Files\SendFilesStatTask();
+        // Files tasks
+        $tasks[] = new Cron\Files\FilesManagerCronEvent();
+        $tasks[] = new Cron\Files\FilesQueueCronEvent();
+        $tasks[] = new Cron\Files\SendFilesStatCronEvent();
 
-		$tasks[] = new Tasks\SetkaPostCreated\Task();
+        $tasks[] = new Cron\SetkaPostCreatedCronEvent();
 
-		$tasks[] = new Tasks\SyncAccount\SyncAccountTask();
+        $tasks[] = new Cron\SyncAccountCronEvent();
 
-		$tasks[] = new Tasks\UserSignedUp\Task();
+        $tasks[] = new Cron\UserSignedUpCronEvent();
+        $tasks[] = new Cron\UpdateAnonymousAccountCronEvent();
 
-		foreach($tasks as $task) {
-			$task->unRegisterHook();
-		}
+        foreach($tasks as $task) {
+            $task->unScheduleAll();
+        }
 
-		unset($tasks, $task);
+        unset($tasks, $task);
 
-		try {
+        try {
             $filesManager = FilesManagerFactory::create();
             $filesManager->markAllFilesAsArchived();
         } catch (\Exception $exception) {
-		    // Do nothing since we are deleting our plugin.
+            // Do nothing since we are deleting our plugin.
         }
-	}
+    }
 }

@@ -79,84 +79,77 @@ use Setka\Editor\API\V1;
  *
  * @apiError (Action) 400 If request not contain `data` and `token` fields.
  */
-class Action extends AbstractAction {
+class Action extends AbstractAction
+{
 
-	public function __construct(V1\API $api) {
-		parent::__construct($api);
-		$this->setEndpoint('resources/update');
-	}
+    public function __construct(V1\API $api)
+    {
+        parent::__construct($api);
+        $this->setEndpoint('resources/update');
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function handleRequest() {
-		$request = $this->getRequest();
-		$response = $this->getResponse();
-		$api = $this->getApi();
+    /**
+     * {@inheritdoc}
+     */
+    public function handleRequest()
+    {
+        $request  = $this->getRequest();
+        $response = $this->getResponse();
+        $api      = $this->getApi();
 
-		// Only POST requests allowed in this action.
-		if( $request->getMethod() !== $request::METHOD_POST ) {
-			$response->setStatusCode( $response::HTTP_BAD_REQUEST );
-			$api->addError( new Errors\HttpMethodError() );
-			return;
-		}
+        if($request->getMethod() !== $request::METHOD_POST) {
+            $response->setStatusCode($response::HTTP_BAD_REQUEST);
+            $api->addError(new Errors\HttpMethodError());
+            return;
+        }
 
-		// We need a [data] and token key here
-		if( !$request->request->has('data') ) {
-			$response->setStatusCode( $response::HTTP_BAD_REQUEST );
-			$api->addError( new Errors\MissedDataAttributeError() );
-			return;
-		}
+        if(!$request->request->has('data')) {
+            $response->setStatusCode($response::HTTP_BAD_REQUEST);
+            $api->addError(new Errors\MissedDataAttributeError());
+            return;
+        }
 
-		if(!is_array($request->request->get('data'))) {
-			$response->setStatusCode( $response::HTTP_BAD_REQUEST );
-			$api->addError(new Errors\RequestDataError());
-			return;
-		}
+        if(!is_array($request->request->get('data'))) {
+            $response->setStatusCode($response::HTTP_BAD_REQUEST);
+            $api->addError(new Errors\RequestDataError());
+            return;
+        }
 
-		// Validate token
-		$token_helper = new Helpers\Auth\Helper( $this->getApi() );
-		$token_helper->handleRequest();
-		$token_helper->__destruct();
-		unset( $token_helper );
-		// Token not valid
-		if( !$response->isOk() ) {
-			return;
-		}
+        $token_helper = new Helpers\Auth\Helper($this->getApi());
+        $token_helper->handleRequest();
+        $token_helper->__destruct();
+        unset($token_helper);
+        if(!$response->isOk()) {
+            return;
+        }
 
-		// Theme files
-		$theme_files_helper = new Helpers\ThemeFilesHelper( $this->getApi() );
-		$theme_files_helper->handleRequest();
-		$theme_files_helper->__destruct();
-		unset( $theme_files_helper );
+        $theme_files_helper = new Helpers\ThemeFilesHelper($this->getApi());
+        $theme_files_helper->handleRequest();
+        $theme_files_helper->__destruct();
+        unset($theme_files_helper);
 
-		// Theme files not valid
-		if( !$response->isOk() ) {
-			return;
-		}
+        if(!$response->isOk()) {
+            return;
+        }
 
-		// Theme Plugins
-		$theme_plugins_helper = new Helpers\ThemePluginsHelper( $this->getApi() );
-		$theme_plugins_helper->handleRequest();
-		$theme_plugins_helper->__destruct();
-		unset( $theme_plugins_helper );
+        $theme_plugins_helper = new Helpers\ThemePluginsHelper($this->getApi());
+        $theme_plugins_helper->handleRequest();
+        $theme_plugins_helper->__destruct();
+        unset($theme_plugins_helper);
 
-		// Theme plugins not valid
-		if( !$response->isOk() ) {
-			return;
-		}
+        if(!$response->isOk()) {
+            return;
+        }
 
-		// Editor files
-		$editor_files_helper = new Helpers\ContentEditorFilesHelper( $this->getApi() );
-		$editor_files_helper->handleRequest();
-		$editor_files_helper->__destruct();
-		unset( $editor_files_helper );
+        $editor_files_helper = new Helpers\ContentEditorFilesHelper($this->getApi());
+        $editor_files_helper->handleRequest();
+        $editor_files_helper->__destruct();
+        unset($editor_files_helper);
 
-		if( !$response->isOk() ) {
-			return;
-		}
+        if(!$response->isOk()) {
+            return;
+        }
 
-        // Public token
         if($request->request->get('data')->has('public_token')) {
             $publicTokenOption = new Options\PublicToken\PublicTokenOption();
             $publicTokenOption->setValue($request->request->get('data')->get('public_token'));
@@ -171,59 +164,57 @@ class Action extends AbstractAction {
             return;
         }
 
-        if( !$response->isOk() ) {
+        if(!$response->isOk()) {
             return;
         }
 
-		// Enabling CDN files and run syncing
+        // Enable CDN files and run syncing
         $manager = FilesManagerFactory::create();
         $manager->restartSyncing();
 
-		// Update theme files
-		foreach( $request->request->get('data')->get('theme_files') as $file ) {
-			switch( $file['filetype'] ) {
-				case 'css':
-					$_option = new Options\ThemeResourceCSS\Option();
-					$_option->updateValue( $file['url'] );
-					break;
-				case 'json':
-					$_option = new Options\ThemeResourceJS\Option();
-					$_option->updateValue( $file['url'] );
-					break;
-			}
-			unset( $_option );
-		}
+        foreach($request->request->get('data')->get('theme_files') as $file) {
+            switch($file['filetype']) {
+                case 'css':
+                    $_option = new Options\ThemeResourceCSS\Option();
+                    $_option->updateValue($file['url']);
+                    break;
+                case 'json':
+                    $_option = new Options\ThemeResourceJS\Option();
+                    $_option->updateValue($file['url']);
+                    break;
+            }
+            unset($_option);
+        }
 
-		// Update editor files
-		foreach( $request->request->get('data')->get('content_editor_files') as $file ) {
-			switch( $file['filetype'] ) {
-				case 'css':
-					$_option = new Options\EditorCSS\Option();
-					$_option->updateValue( $file['url'] );
-					break;
-				case 'js':
-					$_option = new Options\EditorJS\Option();
-					$_option->updateValue( $file['url'] );
-					break;
-			}
-			unset( $_option );
-		}
+        foreach($request->request->get('data')->get('content_editor_files') as $file) {
+            switch($file['filetype']) {
+                case 'css':
+                    $_option = new Options\EditorCSS\Option();
+                    $_option->updateValue($file['url']);
+                    break;
+                case 'js':
+                    $_option = new Options\EditorJS\Option();
+                    $_option->updateValue($file['url']);
+                    break;
+            }
+            unset($_option);
+        }
 
-		// Update editor version
-		$editorVersion = new Options\EditorVersion\Option();
-		$editorVersion->updateValue( $request->request->get('data')->get('content_editor_version') );
-		unset( $editorVersion );
+        $editorVersion = new Options\EditorVersion\Option();
+        $editorVersion->updateValue($request->request->get('data')->get('content_editor_version'));
+        unset($editorVersion);
 
-		// Update theme plugin files
-		$_option = new Options\ThemePluginsJS\Option();
-		$plugins = $request->request->get('data')->get('plugins');
-		$_option->updateValue( $plugins[0]['url'] );
-		unset( $_option, $plugins );
+        $_option = new Options\ThemePluginsJS\Option();
+        $plugins = $request->request->get('data')->get('plugins');
+        $_option->updateValue($plugins[0]['url']);
+        unset($_option, $plugins);
 
         $publicTokenOption->flush();
 
-		$response->setStatusCode( $response::HTTP_OK );
-	}
+        $response->setStatusCode($response::HTTP_OK);
+    }
 
-	public function getConstraint() {}
+    public function getConstraint()
+    {
+    }
 }

@@ -3,9 +3,11 @@ namespace Setka\Editor\Admin\Service;
 
 use Setka\Editor\Admin\Migrations\ConfigurationFactory;
 
-class Migrations {
+class Migrations
+{
 
-    public static function run() {
+    public static function run()
+    {
         try {
             $configuration = ConfigurationFactory::create();
             $configuration->migrateAsNecessary();

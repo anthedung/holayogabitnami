@@ -87,7 +87,6 @@ class Widget_Image extends Widget_Base {
 			Group_Control_Image_Size::get_type(),
 			[
 				'name' => 'image', // Actually its `image_size`.
-				'label' => __( 'Image Size', 'elementor' ),
 				'default' => 'large',
 			]
 		);
@@ -111,7 +110,6 @@ class Widget_Image extends Widget_Base {
 						'icon' => 'fa fa-align-right',
 					],
 				],
-				'default' => 'center',
 				'selectors' => [
 					'{{WRAPPER}}' => 'text-align: {{VALUE}};',
 				],
@@ -197,7 +195,6 @@ class Widget_Image extends Widget_Base {
 				'label' => __( 'Size (%)', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
-					'size' => 100,
 					'unit' => '%',
 				],
 				'tablet_default' => [
@@ -224,9 +221,6 @@ class Widget_Image extends Widget_Base {
 			[
 				'label' => __( 'Opacity (%)', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
-				'default' => [
-					'size' => 1,
-				],
 				'range' => [
 					'px' => [
 						'max' => 1,
@@ -252,7 +246,6 @@ class Widget_Image extends Widget_Base {
 			Group_Control_Border::get_type(),
 			[
 				'name' => 'image_border',
-				'label' => __( 'Image Border', 'elementor' ),
 				'selector' => '{{WRAPPER}} .elementor-image img',
 				'separator' => 'before',
 			]

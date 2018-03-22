@@ -7,89 +7,90 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\Validator\Constraints;
 use Setka\Editor\Admin\Options\EditorVersion\Option as EditorVersion;
 
-class ContentEditorFilesHelper extends SetkaAPI\Prototypes\HelperAbstract {
+class ContentEditorFilesHelper extends SetkaAPI\Prototypes\HelperAbstract
+{
 
-	public function buildResponseConstraints() {
-		return array(
-			new Constraints\NotBlank(),
-			new Constraints\Collection(array(
-				'fields' => array(
-					'id' => array(
-						new Constraints\NotBlank(),
-						new Constraints\Type(array(
-							'type' => 'numeric',
-						)),
-					),
-					'url' => array(
-						new Constraints\NotBlank(),
-						new Constraints\Url(),
-					),
-					'filetype' => array(
-						new Constraints\NotBlank(),
-						new Constraints\Choice(array(
-							'choices' => array('css', 'js'),
-							'strict' => true,
-						)),
-					),
-				),
-				'allowExtraFields' => true,
-			)),
-		);
-	}
+    public function buildResponseConstraints()
+    {
+        return array(
+            new Constraints\NotBlank(),
+            new Constraints\Collection(array(
+                'fields' => array(
+                    'id' => array(
+                        new Constraints\NotBlank(),
+                        new Constraints\Type(array(
+                            'type' => 'numeric',
+                        )),
+                    ),
+                    'url' => array(
+                        new Constraints\NotBlank(),
+                        new Constraints\Url(),
+                    ),
+                    'filetype' => array(
+                        new Constraints\NotBlank(),
+                        new Constraints\Choice(array(
+                            'choices' => array('css', 'js'),
+                            'strict' => true,
+                        )),
+                    ),
+                ),
+                'allowExtraFields' => true,
+            )),
+        );
+    }
 
-	public function handleResponse() {
-		$response = $this->getResponse();
-		$validator = $this->getApi()->getValidator();
-		$errors = $this->getErrors();
-		$content = $response->getContent();
+    public function handleResponse()
+    {
+        $response  = $this->getResponse();
+        $validator = $this->getApi()->getValidator();
+        $errors    = $this->getErrors();
+        $content   = $response->getContent();
 
-		// Editor Version
-		try {
-	    	$editorVersion = new EditorVersion();
-            $results = $validator->validate(
+        try {
+            $editorVersion = new EditorVersion();
+            $results       = $validator->validate(
                 $content->get('content_editor_version'),
                 $editorVersion->getConstraint()
             );
             $this->violationsToException($results);
         } catch (\Exception $exception) {
-		    $errors->add(new Errors\ResponseBodyInvalidError());
-		    return;
+            $errors->add(new Errors\ResponseBodyInvalidError());
+            return;
         }
         unset($editorVersion, $results);
 
-		// Editor CSS, JS
         $editorFiles = $content->get('content_editor_files');
         if(!is_array($editorFiles) || empty($editorFiles)) {
             $errors->add(new Errors\ResponseBodyInvalidError());
             return;
         }
 
-		$css = $js = false;
+        $css         = $js = false;
         $constraints = $this->getResponseConstraints();
-		foreach($editorFiles as $file) {
-		    try {
-		        $results = $validator->validate($file, $constraints);
+        foreach($editorFiles as $file) {
+            try {
+                $results = $validator->validate($file, $constraints);
                 $this->violationsToException($results);
             } catch (\Exception $exception) {
-                $errors->add( new Errors\ResponseBodyInvalidError() );
+                $errors->add(new Errors\ResponseBodyInvalidError());
                 return;
             }
-			switch($file['filetype']) {
-				case 'css':
-					$css = true;
-					break;
-				case 'js':
-					$js = true;
-					break;
-				default:
-					break;
-			}
-		}
+            switch($file['filetype']) {
+                case 'css':
+                    $css = true;
+                    break;
+                case 'js':
+                    $js = true;
+                    break;
+                default:
+                    break;
+            }
+        }
 
-		// Fine. Required CSS & JS presented in API response
-		if($css && $js)
-			return;
+        if($css && $js) {
+            return;
+        }
 
-		$this->getErrors()->add( new Errors\ResponseBodyInvalidError() );
-	}
+        $this->getErrors()->add(new Errors\ResponseBodyInvalidError());
+    }
 }

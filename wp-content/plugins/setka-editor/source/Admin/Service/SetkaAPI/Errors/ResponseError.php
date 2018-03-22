@@ -4,9 +4,11 @@ namespace Setka\Editor\Admin\Service\SetkaAPI\Errors;
 use Setka\Editor\Plugin;
 use Setka\Editor\Prototypes\Errors\Error;
 
-class ResponseError extends Error {
+class ResponseError extends Error
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->setCode(Plugin::_NAME_ . '_setka_api_server_response');
 
         $message = sprintf(

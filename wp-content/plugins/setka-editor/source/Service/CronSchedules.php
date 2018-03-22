@@ -3,14 +3,22 @@ namespace Setka\Editor\Service;
 
 use Setka\Editor\Plugin;
 
-class CronSchedules {
+/**
+ * Class CronSchedules
+ */
+class CronSchedules
+{
+    /**
+     * @param $schedules array List of cron schedules.
+     * @return array Updated list of cron schedules.
+     */
+    public function addSchedules($schedules)
+    {
+        $schedules[Plugin::_NAME_ . '_every_minute'] = array(
+            'interval'  => MINUTE_IN_SECONDS,
+            'display'   => __('Every minute (60 seconds)', Plugin::NAME)
+        );
 
-	public static function addSchedules($schedules) {
-		$schedules[Plugin::_NAME_ . '_every_minute'] = array(
-			'interval' 	=> MINUTE_IN_SECONDS,
-			'display' 	=> __('Every minute (60 seconds)', Plugin::NAME)
-		);
-
-		return $schedules;
-	}
+        return $schedules;
+    }
 }

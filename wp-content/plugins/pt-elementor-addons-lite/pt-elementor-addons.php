@@ -3,7 +3,7 @@
  * Plugin Name: PT Elementor Addons Lite
  * Description: Elements bundle for Elementor Plugin for WordPress. <a href="https://www.paramthemes.com">Get Premium version</a>.
  * Plugin URI:  https://www.paramthemes.com
- * Version:     1.3
+ * Version:     1.3.2
  *
  * @package PT Elementor Addons
  * Author:      paramthemes

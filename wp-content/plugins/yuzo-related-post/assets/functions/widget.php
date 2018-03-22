@@ -1983,8 +1983,13 @@ function yuzo_get_views($id = NULL) {
 
 
 }
-add_action( 'widgets_init', create_function('', 'return register_widget("yuzo_pro_widget");') ); 
+//add_action( 'widgets_init', create_function('', 'return register_widget("yuzo_pro_widget");') ); 
 //global $widget_yuzo;
 //$widget_yuzo = new yuzo_widget;
+function yregister_widget() {
+	register_widget("yuzo_pro_widget");
+}
+add_action( 'widgets_init', 'yregister_widget' );
+//add_action( 'widgets_init', create_function('', 'return register_widget("yuzo_widget");') ); 
 
 ?>

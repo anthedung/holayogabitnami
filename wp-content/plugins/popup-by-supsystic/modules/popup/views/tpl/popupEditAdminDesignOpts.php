@@ -131,8 +131,12 @@
 							? $this->popup['params']['tpl']['fb_like_opts'][ $fKey ] 
 							: (isset($fData['def']) ? $fData['def'] : '');
 					}
+					$htmlParams['attrs'] = '';
 					if($fKey == 'href') {
 						$htmlParams['attrs'] = 'style="width: 100%"';
+					}
+					if(in_array($html, array('selectlist'))) {
+						$htmlParams['attrs'] = 'class="chosen" data-placeholder="'. __('Select Tabs to Render', PPS_LANG_CODE). '"';
 					}
 				?>
 				<tr>

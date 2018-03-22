@@ -1,7 +1,8 @@
 <?php
 namespace Setka\Editor\Admin\Service\SetkaAPI;
 
-abstract class AbstractClient implements ClientInterface {
+abstract class AbstractClient implements ClientInterface
+{
 
     /**
      * @var string
@@ -21,14 +22,16 @@ abstract class AbstractClient implements ClientInterface {
     /**
      * @inheritdoc
      */
-    public function getUrl() {
+    public function getUrl()
+    {
         return $this->url;
     }
 
     /**
      * @inheritdoc
      */
-    public function setUrl($url) {
+    public function setUrl($url)
+    {
         $this->url = $url;
         return $this;
     }
@@ -36,14 +39,16 @@ abstract class AbstractClient implements ClientInterface {
     /**
      * @inheritdoc
      */
-    public function getDetails() {
+    public function getDetails()
+    {
         return $this->details;
     }
 
     /**
      * @inheritdoc
      */
-    public function setDetails($details) {
+    public function setDetails($details)
+    {
         $this->details = $details;
         return $this;
     }
@@ -51,14 +56,16 @@ abstract class AbstractClient implements ClientInterface {
     /**
      * @inheritdoc
      */
-    public function getResult() {
+    public function getResult()
+    {
         return $this->result;
     }
 
     /**
      * @inheritdoc
      */
-    public function setResult($result) {
+    public function setResult($result)
+    {
         $this->result = $result;
         return $this;
     }

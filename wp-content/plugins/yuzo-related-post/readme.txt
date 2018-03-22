@@ -6,9 +6,9 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Author URI: http://ilentheme.com
 Author: iLen
 Requires at least: 4.0
-Tested up to: 4.9.1
-Stable tag: 5.12.69
-Version: 5.12.71
+Tested up to: 4.9.4
+Stable tag: 5.12.72
+Version: 5.12.73
 License: GPLv2
 
 Related posts a so easy and fast
@@ -61,6 +61,14 @@ Gives shape and life to your post with 'Yuzo related post' ;)
 
 
 == Changelog ==
+= 5.12.73 =
+* Add: <code>Hook priority</code> It helps to place Yuzo Related Post in different positions within the content, this works ONLY when you have the <code>Automatically append to the post content</code> activated. <i>Example: 50</i>
+* Fixed: When it was deactivated to show the related post in an automatic way and you had the option to show in feed, it did not show. Now this is corrected.
+
+= 5.12.72 =
+* Improve: Now the related post is shown in the feed, so you have disabled the option 'Automatically show related post'
+* Fixed: Minor changes in free version
+
 = 5.12.71 =
 * Add: <code>Title tag</code> (widget), Choose the title tag according to your SEO approach
 * Improve: Now you can filter by private post within the Metabox
