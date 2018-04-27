@@ -8,7 +8,7 @@ Author: iLen
 Requires at least: 4.0
 Tested up to: 4.9.4
 Stable tag: 5.12.72
-Version: 5.12.73
+Version: 5.12.74
 License: GPLv2
 
 Related posts a so easy and fast
@@ -61,6 +61,10 @@ Gives shape and life to your post with 'Yuzo related post' ;)
 
 
 == Changelog ==
+= 5.12.74 =
+* Fixed: The algorithm of the tags in the widgets was corrected
+* Fixed: Minor changes in free version
+
 = 5.12.73 =
 * Add: <code>Hook priority</code> It helps to place Yuzo Related Post in different positions within the content, this works ONLY when you have the <code>Automatically append to the post content</code> activated. <i>Example: 50</i>
 * Fixed: When it was deactivated to show the related post in an automatic way and you had the option to show in feed, it did not show. Now this is corrected.

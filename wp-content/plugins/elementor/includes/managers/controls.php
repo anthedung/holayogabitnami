@@ -1,7 +1,9 @@
 <?php
 namespace Elementor;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 /**
  * Elementor controls manager class.
@@ -48,6 +50,8 @@ class Controls_Manager {
 	const TAB = 'tab';
 	/** This control is documented in includes/controls/tabs.php */
 	const TABS = 'tabs';
+	/** This control is documented in includes/controls/divider.php */
+	const DIVIDER = 'divider';
 
 	/** This control is documented in includes/controls/color.php */
 	const COLOR = 'color';
@@ -93,13 +97,11 @@ class Controls_Manager {
 	const ANIMATION = 'animation';
 	/** This control is documented in includes/controls/hover-animation.php */
 	const HOVER_ANIMATION = 'hover_animation';
-	/** This control is documented in includes/controls/order.php */
-	const ORDER = 'order';
 
 	/**
-	 * @deprecated 1.5.4 In favor of Control_Switcher.
+	 * @deprecated 2.0.0
 	 */
-	const CHECKBOX = 'checkbox';
+	const ORDER = 'order';
 
 	/**
 	 * Controls.
@@ -192,17 +194,18 @@ class Controls_Manager {
 	}
 
 	/**
-	 * Get tab.
+	 * Add tab.
 	 *
-	 * Retrieve the tab of the current control.
+	 * This method adds a new tab to the current control.
 	 *
 	 * @since 1.6.0
 	 * @access public
 	 * @static
 	 *
-	 * @return array Control tabs.
+	 * @param string $tab_name  Tab name.
+	 * @param string $tab_label Tab label.
 	 */
-	public static function add_tab( $tab_name, $tab_title ) {
+	public static function add_tab( $tab_name, $tab_label ) {
 		if ( ! self::$tabs ) {
 			self::init_tabs();
 		}
@@ -211,7 +214,7 @@ class Controls_Manager {
 			return;
 		}
 
-		self::$tabs[ $tab_name ] = $tab_title;
+		self::$tabs[ $tab_name ] = $tab_label;
 	}
 
 	/**
@@ -247,6 +250,7 @@ class Controls_Manager {
 			self::SECTION,
 			self::TAB,
 			self::TABS,
+			self::DIVIDER,
 
 			self::COLOR,
 			self::MEDIA,
@@ -271,9 +275,8 @@ class Controls_Manager {
 			self::TEXT_SHADOW,
 			self::ANIMATION,
 			self::HOVER_ANIMATION,
-			self::ORDER,
 
-			self::CHECKBOX,
+			self::ORDER,
 		];
 
 		foreach ( $available_controls as $control_id ) {
@@ -368,7 +371,7 @@ class Controls_Manager {
 	/**
 	 * Get control.
 	 *
-	 * Retrieve the specific control from the current controls instance.
+	 * Retrieve a specific control from the current controls instance.
 	 *
 	 * @since 1.0.0
 	 * @access public
@@ -395,7 +398,7 @@ class Controls_Manager {
 	 *    Control data.
 	 *
 	 *    @type array $name Control data.
- 	 * }
+	 * }
 	 */
 	public function get_controls_data() {
 		$controls_data = [];
@@ -495,10 +498,10 @@ class Controls_Manager {
 	 * @since 1.0.0
 	 * @access public
 	 *
-	 * @param Controls_Stack $element Element stack.
+	 * @param Controls_Stack $controls_stack Controls stack.
 	 */
-	public function open_stack( Controls_Stack $element ) {
-		$stack_id = $element->get_unique_name();
+	public function open_stack( Controls_Stack $controls_stack ) {
+		$stack_id = $controls_stack->get_unique_name();
 
 		$this->stacks[ $stack_id ] = [
 			'tabs' => [],
@@ -517,14 +520,14 @@ class Controls_Manager {
 	 * @param Controls_Stack $element      Element stack.
 	 * @param string         $control_id   Control ID.
 	 * @param array          $control_data Control data.
-	 * @param array          $options      Optional. Control aditional options.
+	 * @param array          $options      Optional. Control additional options.
 	 *                                     Default is an empty array.
 	 *
 	 * @return bool True if control added, False otherwise.
 	 */
 	public function add_control_to_stack( Controls_Stack $element, $control_id, $control_data, $options = [] ) {
 		if ( ! is_array( $options ) ) {
-			_deprecated_argument( __FUNCTION__, '1.7.0', 'Use `[ \'overwrite\' => ' . var_export( $options, true ) . ' ]` instead.' );
+			_deprecated_argument( __FUNCTION__, '1.7.0', sprintf( 'Use `[ \'overwrite\' => %s ]` instead.', var_export( $options, true ) ) );
 
 			$options = [
 				'overwrite' => $options,
@@ -550,7 +553,7 @@ class Controls_Manager {
 		$control_type_instance = $this->get_control( $control_data['type'] );
 
 		if ( ! $control_type_instance ) {
-			_doing_it_wrong( __CLASS__ . '::' . __FUNCTION__, 'Control type `' . $control_data['type'] . '` not found`', '1.0.0' );
+			_doing_it_wrong( sprintf( '%1$s::%2$s', __CLASS__, __FUNCTION__ ), sprintf( 'Control type "%s" not found.', $control_data['type'] ), '1.0.0' );
 			return false;
 		}
 
@@ -567,7 +570,7 @@ class Controls_Manager {
 		$stack_id = $element->get_unique_name();
 
 		if ( ! $options['overwrite'] && isset( $this->stacks[ $stack_id ]['controls'][ $control_id ] ) ) {
-			_doing_it_wrong( __CLASS__ . '::' . __FUNCTION__, 'Cannot redeclare control with same name. - ' . $control_id, '1.0.0' );
+			_doing_it_wrong( sprintf( '%1$s::%2$s', __CLASS__, __FUNCTION__ ), sprintf( 'Cannot redeclare control with same name "%s".', $control_id ), '1.0.0' );
 
 			return false;
 		}
@@ -606,7 +609,7 @@ class Controls_Manager {
 	 * @param string $stack_id   Stack ID.
 	 * @param string $control_id The ID of the control to remove.
 	 *
-	 * @return bool True if the stack was removed, False otherwise.
+	 * @return bool|\WP_Error True if the stack was removed, False otherwise.
 	 */
 	public function remove_control_from_stack( $stack_id, $control_id ) {
 		if ( is_array( $control_id ) ) {
@@ -662,7 +665,7 @@ class Controls_Manager {
 	 * @param Controls_Stack $element      Element stack.
 	 * @param string         $control_id   Control ID.
 	 * @param array          $control_data Control data.
-	 * @param array          $options      Optional. Control aditional options.
+	 * @param array          $options      Optional. Control additional options.
 	 *                                     Default is an empty array.
 	 *
 	 * @return bool True if control updated, False otherwise.
@@ -680,7 +683,9 @@ class Controls_Manager {
 			$control_data = array_merge( $old_control_data, $control_data );
 		}
 
-		return $this->add_control_to_stack( $element, $control_id, $control_data, [ 'overwrite' => true ] );
+		return $this->add_control_to_stack( $element, $control_id, $control_data, [
+			'overwrite' => true,
+		] );
 	}
 
 	/**
@@ -744,22 +749,23 @@ class Controls_Manager {
 	 * @access public
 	 *
 	 * @param Element_Base $element The element.
+	 * @param string $tab The panel tab.
 	 */
-	public function add_custom_css_controls( $element ) {
+	public function add_custom_css_controls( $element, $tab = self::TAB_ADVANCED ) {
 		$element->start_controls_section(
 			'section_custom_css_pro',
 			[
 				'label' => __( 'Custom CSS', 'elementor' ),
-				'tab'   => Controls_Manager::TAB_ADVANCED,
+				'tab' => $tab,
 			]
 		);
 
 		$element->add_control(
 			'custom_css_pro',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => '<div class="elementor-panel-nerd-box">
-						<i class="elementor-panel-nerd-box-icon eicon-hypster" aria-hidden="true"></i>
+				'type' => self::RAW_HTML,
+				'raw' => '<div class="elementor-panel-nerd-box">' .
+						'<i class="elementor-panel-nerd-box-icon eicon-hypster" aria-hidden="true"></i>
 						<div class="elementor-panel-nerd-box-title">' .
 							__( 'Meet Our Custom CSS', 'elementor' ) .
 						'</div>

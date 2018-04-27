@@ -1096,15 +1096,15 @@ function widget($args,$instance){
 			}
 
 
-
+			 
 
 			$args_sql		= array(
-								  'posts_per_page'      => isset($yuzo_option_widget->number_post)?$yuzo_option_widget->number_post:0,
+								  'showposts'      		=> isset($yuzo_option_widget->number_post)?$yuzo_option_widget->number_post:0,
 								  'post_status'         => 'publish',
 								  'ignore_sticky_posts' => 1,
 								  'orderby'             => $string_order_by,
 								  'order'               => $string_order,
-								  'cat'				  	=> $string_categories_to_show,
+								  'cat'				  	=> $string_cate,
 								  'tag__in'             => $tag_ids,
 								  //'category__in'        => $string_cate,
 								  //'category__not_in'    => $array_no_category,
@@ -1392,6 +1392,7 @@ function widget($args,$instance){
 
 	}
 	//echo $the_query_yuzo->request;
+	//print_r( $args_sql );
 	
 	
 	// The Loop

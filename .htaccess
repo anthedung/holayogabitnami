@@ -95,26 +95,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
 </IfModule>
 
-
-# TN - BEGIN Cache-Control Headers - added by An The Dung
-#<ifModule mod_headers.c>
-<filesMatch "\.(ico|jpe?g|png|gif|swf)$">
-Header set Cache-Control "public"
-</filesMatch>
-<filesMatch "\.(css)$">
-Header set Cache-Control "public"
-</filesMatch>
-<filesMatch "\.(js)$">
-Header set Cache-Control "private"
-</filesMatch>
-<filesMatch "\.(x?html?|php)$">
-Header set Cache-Control "private, must-revalidate"
-</filesMatch>
-#</ifModule>
-# TN - END Cache-Control Headers
-<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
-Header set Cache-Control "max-age=290304000, public"
-</FilesMatch>
-
-
 # END WordPress

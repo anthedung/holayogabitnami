@@ -4933,7 +4933,7 @@ function fields_update($data,$is_tab = 1){
 			wp_enqueue_script('ilentheme-script-admin', (isset($this->parameter['url_framework'])?$this->parameter['url_framework']:'') . '/core.js', array( 'jquery','jquery-ui-core','jquery-ui-tabs','wp-color-picker' ,'jquery-ui-accordion','jquery-ui-autocomplete','jquery-ui-sortable' ), $this->parameter['version'], true );
 			// Enqueue Scripts WP
 			if(function_exists( 'wp_enqueue_media' )){
-				wp_enqueue_media();
+				//wp_enqueue_media();
 			}else{
 				wp_enqueue_script('media-upload'); // else put this
 				wp_enqueue_script('media-models');

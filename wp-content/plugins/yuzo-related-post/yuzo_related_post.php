@@ -4,7 +4,7 @@ Plugin Name: Related Posts
 Plugin URI: https://wordpress.org/plugins/yuzo-related-post/
 Description: Related posts so easy and fast
 Tags: related posts,related post,related content,popular posts,last post, most views, widget,related page,content,associate page, associate post
-Version: 5.12.73
+Version: 5.12.74
 Author: iLen
 Author URI: http://ilentheme.com
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd =_s-xclick&hosted_button_id=MSRAUBMB5BZFU
@@ -694,6 +694,8 @@ function create_post_related( $content = '' ){
 			$the_query_yuzo = new WP_Query( null );
 			//$the_query_yuzo = $the_query_yuzo;
 		}
+		//echo $the_query_yuzo->request;
+		//print_r( $args );
 
 		$my_array_views = array();
 		$metabox_add_post_first = 1;
@@ -1077,11 +1079,11 @@ function create_post_related( $content = '' ){
 		if( $yuzo_options->display_random  ){
 
 			$args = array(
-					'posts_per_page'   => (int)$yuzo_options->display_post,
-					'post_type'        => (array)$yuzo_options->post_type,
-					'post_status'      => 'publish',
+					'posts_per_page'       => (int)$yuzo_options->display_post,
+					'post_type'            => (array)$yuzo_options->post_type,
+					'post_status'          => 'publish',
 					'ignore_sticky_posts ' => 1,
-					'orderby'          => 'rand'
+					'orderby'              => 'rand'
 				   );
 
 			$metabox_add_post_first = 0;
