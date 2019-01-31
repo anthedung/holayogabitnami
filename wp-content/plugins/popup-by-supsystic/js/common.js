@@ -27,7 +27,7 @@ jQuery.fn.tagName = function() {
     return this.get(0).tagName;
 }
 jQuery.fn.exists = function(){
-    return (jQuery(this).size() > 0 ? true : false);
+    return (jQuery(this).length > 0 ? true : false);
 }
 function isNumber(val) {
     return /^\d+/.test(val);
@@ -142,7 +142,7 @@ function toeReload(url) {
 }
 jQuery.fn.toeRebuildSelect = function(data, useIdAsValue, val) {
     if(jQuery(this).tagName() == 'SELECT' && typeof(data) == 'object') {
-        if(jQuery(data).size() > 0) {
+        if(jQuery(data).length > 0) {
             if(typeof(val) == 'undefined')
                 val = false;
             if(jQuery(this).children('option').length) {
@@ -342,7 +342,7 @@ function toeListablePps(params) {
 			var newRow = exampleRow.clone();
 			for(var key in list[i]) {
 				var element = newRow.find('.'+ key);
-				if(element.size()) {
+				if(element.length) {
 					var valueTo = element.attr('valueTo');
 					if(valueTo) {
 						var newValue = list[i][key];

@@ -3,7 +3,7 @@ Contributors: paramthemes,v2websolutions
 Tags: elementor, elements, widgets,Contact Form 7 Element, Ninja Form Element, wpForm Element, page builder, builder, visual editor, wordpress page builder
 Donate link: https://www.paypal.me/HastimalShah
 Requires at least: 4.5
-Tested up to: 4.9.1
+Tested up to: 4.9.5
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: https://opensource.org/licenses/GPL-2.0 
@@ -83,6 +83,13 @@ New elements are added at the end of default elementor elements.
 
 
 == Changelog ==
+= 1.3.4 =
+* Added - Overlay Effect to FlipBox
+* Added - Activate Validation for Elementor
+
+= 1.3.3 =
+* Added - Subscribe Form in Backend Settings
+
 = 1.3.2 =
 * Fixed - PT Team Element Social Links issue
 

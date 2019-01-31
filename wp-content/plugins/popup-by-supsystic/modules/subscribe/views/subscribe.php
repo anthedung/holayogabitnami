@@ -63,6 +63,7 @@ class subscribeViewPps extends viewPps {
 		$res .= htmlPps::hidden('mod', array('value' => 'subscribe'));
 		$res .= htmlPps::hidden('action', array('value' => 'subscribe'));
 		$res .= htmlPps::hidden('id', array('value' => $popup['id']));
+		//$res .= htmlPps::hidden('from_url', array('value' => uriPps::getFullUrl()));
 		$res .= htmlPps::hidden('_wpnonce', array('value' => wp_create_nonce('subscribe-'. $popup['id'])));
 		if(!in_array($popup['original_id'], array(31))) {	// For those templates - put message up to the form
 			$res .= '<div class="ppsSubMsg"></div>';
@@ -82,10 +83,11 @@ class subscribeViewPps extends viewPps {
 	public function generateFormEndCommon($popup) {
 		return $this->_generateFormEndCommon($popup);
 	}
-	public function displaySuccessPage($popup, $res, $forReg = false) {
+	public function displaySuccessPage($popup, $res, $forReg = false, $subscribedUrl = '') {
 		$this->assign('popup', $popup);
 		$this->assign('res', $res);
 		$this->assign('forReg', $forReg);
+		$this->assign('redirectUrl', $subscribedUrl);
 		parent::display('subSuccessPage');
 	}
 }

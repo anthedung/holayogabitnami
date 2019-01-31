@@ -3,16 +3,16 @@
  * Plugin Name: Email Subscribers & Newsletters
  * Plugin URI: https://www.icegram.com/
  * Description: Add subscription forms on website, send HTML newsletters & automatically notify subscribers about new blog posts once it is published.
- * Version: 3.4.6
+ * Version: 3.5.17
  * Author: Icegram
  * Author URI: https://www.icegram.com/
- * Requires at least: 3.4
- * Tested up to: 4.9.1
+ * Requires at least: 3.9
+ * Tested up to: 4.9.8
  * Text Domain: email-subscribers
  * Domain Path: /languages/
  * License: GPLv3
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
- * Copyright (c) 2016, 2017 Icegram
+ * Copyright (c) 2016-2018 Icegram
  */
 
 if ( preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF']) ) {
@@ -74,7 +74,25 @@ add_action('edit_form_after_editor' , array( 'es_cls_registerhook', 'es_add_keyw
 add_filter('parent_file',  array( 'es_cls_registerhook','es_highlight'));
 //add style
 add_action('admin_footer',  array( 'es_cls_registerhook','es_add_admin_css'));
+//add widget
+add_filter( 'wp_loaded', array(  'es_cls_default' , 'es_default_widget' ) );
 
+$active_plugins = (array) get_option('active_plugins', array());
+if (is_multisite()) {
+		$active_plugins = array_merge($active_plugins, get_site_option('active_sitewide_plugins', array()));
+}
+if (is_admin() && !( in_array('email-subscribers-premium/email-subscribers-premium.php', $active_plugins) || array_key_exists('email-subscribers-premium/email-subscribers-premium.php', $active_plugins) ) ) {
+	//es-pro-upsale
+	add_action( 'admin_head-edit.php', array( 'es_cls_registerhook', 'add_readymade_template_link' ) );
+	// add_action( 'es_after_reset_button_newsletter', array( 'es_cls_registerhook', 'add_test_send_newsletter_link' ) );
+	add_action( 'es_after_optin_settings', array( 'es_cls_registerhook', 'add_captcha_link' ) );
+	add_action( 'es_beside_select_notification', array( 'es_cls_registerhook', 'add_readymade_template_link' ) );
+	add_action( 'es_beside_optin_textarea', array( 'es_cls_registerhook', 'add_optin_optout_link' ) );
+	add_action( 'es_beside_unsubscribe_textarea', array( 'es_cls_registerhook', 'add_optin_optout_link' ) );
+	add_action( 'es_after_cron_setting', array( 'es_cls_registerhook', 'add_cron_service' ) );
+	add_action( 'es_after_email_sent_option', array( 'es_cls_registerhook', 'add_cron_service' ) );
+	add_action( 'edit_form_advanced', array( 'es_cls_registerhook', 'add_spam_score_utm_link' ) );
+}
 // To store current date and version in db with each update
 add_action( 'upgrader_process_complete', 'es_update_current_version_and_date', 10, 2 );
 function es_update_current_version_and_date( $upgrader_object, $options ) {

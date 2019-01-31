@@ -85,8 +85,8 @@ jQuery.fn.sendFormPps = function(params) {
 	if(params.btn) {
 		jQuery(params.btn).attr('disabled', 'disabled');
 		// Font awesome usage
-		params.btnIconElement = jQuery(params.btn).find('.fa').size() ? jQuery(params.btn).find('.fa') : jQuery(params.btn);
-		if(jQuery(params.btn).find('.fa').size()) {
+		params.btnIconElement = jQuery(params.btn).find('.fa').length ? jQuery(params.btn).find('.fa') : jQuery(params.btn);
+		if(jQuery(params.btn).find('.fa').length) {
 			params.btnIconElement
 				.data('prev-class', params.btnIconElement.attr('class'))
 				.attr('class', 'fa fa-spinner fa-spin');
@@ -248,7 +248,7 @@ function toeOptTimeoutHideDescriptionPps() {
  */
 function toeOptShowDescriptionPps(description, x, y, moveToLeft) {
     if(typeof(description) != 'undefined' && description != '') {
-        if(!jQuery('#ppsOptDescription').size()) {
+        if(!jQuery('#ppsOptDescription').length) {
             jQuery('body').append('<div id="ppsOptDescription"></div>');
         }
 		if(moveToLeft)

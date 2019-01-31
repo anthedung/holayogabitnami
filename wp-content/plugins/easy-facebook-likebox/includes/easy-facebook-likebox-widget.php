@@ -123,7 +123,7 @@ class Easy_Facebook_Like_Box_Widget extends WP_Widget {
 		$defaults = array(
 						  'title'		=> '',
 						  'fb_appid'	=>	'',
-						  'fanpage_url' => 'https://www.facebook.com/jwebsol',
+						  'fanpage_url' => 'https://www.facebook.com/maltathemes',
 						  'box_width'	=>	250,
 						  'box_height' 	=>  '',
 						  'colorscheme' =>  'light',

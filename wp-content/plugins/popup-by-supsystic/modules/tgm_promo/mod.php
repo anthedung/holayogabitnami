@@ -3,13 +3,13 @@ class tgm_promoPps extends modulePps {
 	public function init() {
 		parent::init();
 		// Closed for now
-		if(is_admin()) {
+		/*if(is_admin()) {
 			require_once($this->getModDir(). 'classes'. DS. 'class-tgm-plugin-activation.php');
 			add_action('tgmpa_register', array($this, 'registerPromo'));
-		}
+		}*/
 	}
 	
-	public function registerPromo() {
+	/*public function registerPromo() {
 		// For new users only
 		if(!installerPps::isNewUser())
 			return;
@@ -43,5 +43,5 @@ class tgm_promoPps extends modulePps {
 		);
 
 		tgmpa( $plugins, $config );
-	}
+	}*/
 }

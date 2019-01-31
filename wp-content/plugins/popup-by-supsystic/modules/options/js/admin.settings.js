@@ -11,7 +11,7 @@ jQuery(document).ready(function(){
 	});
 	/*Connected options: some options need to be visible  only if in other options selected special value (e.g. if send engine SMTP - show SMTP options)*/
 	var $connectOpts = jQuery('#ppsSettingsForm').find('[data-connect]');
-	if($connectOpts && $connectOpts.size()) {
+	if($connectOpts && $connectOpts.length) {
 		var $connectedTo = {};
 		$connectOpts.each(function(){
 			var connectToData = jQuery(this).data('connect').split(':')

@@ -1,138 +1,124 @@
 ﻿// For Shortcode
-function es_submit_pages(e, url) {
+jQuery.fn.bindFirst = function(name, fn) {
+	// bind as you normally would
+	// don't want to miss out on any jQuery magic
+	this.bind(name, fn);
+	var events = this.data('events') || jQuery._data(this[0], 'events');
+	var handlers = events[name];
+	// take out the handler we just inserted from the end
+	var handler = handlers.splice(handlers.length - 1)[0];
+	// move it at the beginning
+	handlers.splice(0, 0, handler);
+};
 
-	// Finding the active Form - from where the button is clicked
-	e = e || window.event;
-	var target = e.target || e.srcElement;
-	var es_shortcode_form = target.parentElement;
-	
-	while ( es_shortcode_form.nodeName !== 'FORM' ) {
-		es_shortcode_form = es_shortcode_form.parentElement;
-	}
+//ES
+var ES = function() {}
 
-	if ( typeof es_shortcode_form !== 'undefined' && es_shortcode_form !== '' ) {
-		var es_email = es_shortcode_form.querySelector( "input[name=es_txt_email_pg]" );
-		var es_name  = es_shortcode_form.querySelector( "input[name=es_txt_name_pg]" );
-		var es_group = es_shortcode_form.querySelector( "input[name=es_txt_group_pg]" );
+ES.prototype = {
 
-		if ( es_email.value == "" ) {
-			alert(es_widget_page_notices.es_email_notice);
-			es_email.focus();
-			return false;    
-		}
+	init : function(form){
+		jQuery(form).bindFirst('submit', function(e) {
+			window.es.addSubscriber(e, jQuery(e.target));
+		}); // submit Event
+	},
 
-		if ( es_email.value!="" && ( es_email.value.indexOf("@",0) == -1 || es_email.value.indexOf(".",0) == -1 ) ) {
-			alert(es_widget_page_notices.es_incorrect_email);
-			es_email.focus();
-			es_email.select();
-			return false;
-		}
-
-		var es_msg = es_shortcode_form.querySelector("#es_msg_pg") || '';
-		es_msg.innerHTML = es_widget_page_notices.es_load_more;
-
-		var date_now = "";
-		var mynumber = Math.random();
-		var str= "es_email="+ encodeURIComponent(es_email.value) + "&es_name=" + encodeURIComponent(es_name.value) + "&es_group=" + encodeURIComponent(es_group.value) + "&timestamp=" + encodeURIComponent(date_now) + "&action=" + encodeURIComponent(mynumber);
-
-		es_submit_requests(url+'/?es=subscribe', str, es_shortcode_form); // Passing the form to the submit request
-	}
-
-}
-
-var http_req = false;
-function es_submit_requests(url, parameters, es_shortcode_form) {
-	http_req = false;
-	if (window.XMLHttpRequest) {
-		http_req = new XMLHttpRequest();
-		if (http_req.overrideMimeType) {
-			http_req.overrideMimeType('text/html');
-		}
-	} else if (window.ActiveXObject) {
-		try {
-			http_req = new ActiveXObject("Msxml2.XMLHTTP");
-		} catch (e) {
-			try {
-				http_req = new ActiveXObject("Microsoft.XMLHTTP");
-			} catch (e) {
-				
+	addSubscriber : function(e, form) {
+		var form = form || undefined;
+		e.preventDefault();
+		if(typeof(form) !== 'undefined'){
+			var fm_parent = form.closest('.es_shortcode_form');
+			var formData = {};
+			var formData = window.es.prepareFormData(e, form, formData);
+			formData['es'] = 'subscribe';
+			formData['action'] = 'es_add_subscriber';
+			if(jQuery(form).find('.es_required_field').val()){
+				es_msg_text = es_widget_page_notices.es_success_message;
+			    jQuery(form).find('.es_msg span').text(es_msg_text).show();
+				return;
 			}
+			var action_url = es_widget_page_notices.es_ajax_url;
+			jQuery(form).trigger( 'addSubscriber.es', [formData] );
+			jQuery(form).removeClass('es_form_success');
+			jQuery.ajax({
+				type: 'POST',
+				url: action_url,
+				data: formData,
+				dataType: 'json',
+				success: function(response) {
+					window.es.handleResponse(response, form);
+				},
+				error: function(err) {
+					console.log(err, 'error');
+				},
+			});
 		}
-	}
-	if (!http_req) {
-		alert(es_widget_page_notices.es_ajax_error);
-		return false;
-	}
+	},
 
-	http_req.onreadystatechange = function(){eemail_submitresults(es_shortcode_form)}; // Passing the form to the submit request
-	http_req.open('POST', url, true);
-	http_req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	// http_req.setRequestHeader("Content-length", parameters.length);
-	// http_req.setRequestHeader("Connection", "close");
-	http_req.send(parameters);
+	handleResponse : function(response, form){
+		if( response && typeof response.error !== 'undefined' && response.error === "" ) {
+			es_msg_text = es_widget_page_notices.es_try_later;
+		} else if ( response && response.error === 'unexpected-error' ) {
+			es_msg_text = es_widget_page_notices.es_error;
+		} else if ( response && response.error === 'invalid-email' ) {
+			es_msg_text = es_widget_page_notices.es_invalid_email;
+		} else if ( response && response.success === 'already-exist' ) {
+			es_msg_text = es_widget_page_notices.es_email_exists;
+		} else if ( response && response.error === 'no-email-address' ) {
+            es_msg_text = es_widget_page_notices.es_email_notice;
+        } else if ( response && response.error === 'rate-limit' ) {
+            es_msg_text = es_widget_page_notices.es_rate_limit_notice;
+		} else if( response.success && response.success === 'subscribed-pending-doubleoptin' ) {
+			es_msg_text = es_widget_page_notices.es_success_notice;
+			jQuery(form)[0].reset();
+			jQuery(form).addClass('es_form_success');
+		} else if( response && response.success === 'subscribed-successfully' ) {
+			es_msg_text = es_widget_page_notices.es_success_message;
+			jQuery(form)[0].reset();
+			jQuery(form).addClass('es_form_success');
+		}
+		var esSuccessEvent = { 
+								detail: { 
+											es_response : "error", 
+											msg: '' 
+										}, 
+								bubbles: true, 
+								cancelable: true 
+							} ;
+
+		esSuccessEvent.detail.es_response = 'success';
+		esSuccessEvent.detail.msg = es_msg_text;
+		jQuery(form).find('.es_msg span').text(es_msg_text).show();
+		jQuery(form).trigger('es_response', [ esSuccessEvent ]);
+	},
+
+	prepareFormData: function (e, form, formData){
+		jQuery.each((jQuery(form).serializeArray() || {}), function(i, field){
+				formData['esfpx_'+ field.name] = field.value;
+		});
+		return formData;
+	},
+
+};
+
+if(typeof window.es === 'undefined') {
+	window.es = new ES();
 }
 
-function eemail_submitresults(es_shortcode_form) {
-	if (http_req.readyState == 4) {
-		if (http_req.status == 200) {
-		 	if (http_req.readyState==4 || http_req.readyState=="complete") {
-				if (typeof es_shortcode_form !== 'undefined') {
-					var es_email = es_shortcode_form.querySelector("input[name=es_txt_email_pg]");
-					var es_name  = es_shortcode_form.querySelector("input[name=es_txt_name_pg]");
-					var es_msg   = es_shortcode_form.querySelector("#es_msg_pg") || '';
-					var es_msg_text = '';
-					var esSuccessEvent = new CustomEvent("es_response", { 
-																			detail: { 
-																						es_response : "error", 
-																						msg: '' 
-																					}, 
-																			bubbles: true, 
-																			cancelable: true 
-																		} );
+jQuery(document).ready(function() {
+	// TODO :: check this later incase of undefined
+	jQuery('.es_shortcode_form').each(function(i, v){
+		window.es.init(v);
+	});
+	jQuery('.es_widget_form').each(function(i, v){
+		window.es.init(v);
+	});
+});
 
-					if ((http_req.responseText).trim() == "subscribed-successfully") {
-						es_msg_text = es_widget_page_notices.es_success_message;
-						esSuccessEvent.detail.es_response = 'success';
-						es_email.value = "";
-						es_name.value = "";
-					} else if((http_req.responseText).trim() == "subscribed-pending-doubleoptin") {
-						alert(es_widget_page_notices.es_success_notice);
-						esSuccessEvent.detail.es_response = 'success';
-						es_msg_text = es_widget_page_notices.es_success_message;
-						es_email.value = "";
-						es_name.value = "";
-					} else if((http_req.responseText).trim() == "already-exist") {
-						es_msg_text = es_widget_page_notices.es_email_exists;
-					} else if((http_req.responseText).trim() == "unexpected-error") {
-						es_msg_text = es_widget_page_notices.es_error;
-					} else if((http_req.responseText).trim() == "invalid-email") {
-						es_msg_text = es_widget_page_notices.es_invalid_email;
-					} else {
-						es_msg_text = es_widget_page_notices.es_try_later;
-					}
-					es_msg.innerHTML = es_msg_text;
-					esSuccessEvent.detail.msg = es_msg_text;
-					es_shortcode_form.dispatchEvent(esSuccessEvent); // Trigger ES-Success Event
-				}
-			}
-		} else {
-			alert(es_widget_page_notices.es_problem_request);
-		}
+// Compatibility of ES with IG
+jQuery( window ).on( "init.icegram", function(e, ig) {
+	if(typeof ig !== 'undefined' && typeof ig.messages !== 'undefined' ) {
+		jQuery('.es_shortcode_form').each(function(i, v){
+			window.es.init(v);
+		});
 	}
-}
-
-//Polyfill for ie
-(function () {
-	if ( typeof window.CustomEvent === "function" ) return false;
-
-	function CustomEvent ( event, params ) {
-		params = params || { bubbles: false, cancelable: false, detail: undefined };
-		var evt = document.createEvent( 'CustomEvent' );
-		evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
-		return evt;
-	}
-
-	CustomEvent.prototype = window.Event.prototype;
-
-	window.CustomEvent = CustomEvent;
-})();
+});

@@ -29,6 +29,18 @@ msgstr ""
 msgid "Like box pup up settings"
 msgstr ""
 
+#: ../admin/easy-facebook-likebox-admin.php:190
+msgid "Clear Cache"
+msgstr ""
+
+#: ../admin/easy-facebook-likebox-admin.php:190
+msgid "Cached Pages"
+msgstr ""
+
+#: ../admin/easy-facebook-likebox-admin.php:190
+msgid "Delete"
+msgstr ""
+
 #: ../admin/easy-facebook-likebox-admin.php:191
 msgid "Support us by liking our fan page and/or consider some dontaion!"
 msgstr ""

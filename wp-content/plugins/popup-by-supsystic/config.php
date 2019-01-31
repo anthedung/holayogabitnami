@@ -48,7 +48,7 @@
 	define('PPS_EOL', "\n");    
     
     define('PPS_PLUGIN_INSTALLED', true);
-    define('PPS_VERSION', '1.9.23');
+    define('PPS_VERSION', '1.9.44');
     define('PPS_USER', 'user');
     
     define('PPS_CLASS_PREFIX', 'ppsc');     

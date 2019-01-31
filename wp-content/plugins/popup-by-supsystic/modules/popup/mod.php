@@ -64,8 +64,9 @@ class popupPps extends modulePps {
 	public function checkPopupShow() {
 		global $wp_query;
 		$currentPageId = (int) get_the_ID();
-		
+
 		$isHome = function_exists('is_front_page') ? is_front_page() : is_home();
+		$isShop = function_exists('is_shop') && is_shop();
 		/*show_pages = 1 -> All, 2 -> show on selected, 3 -> do not show on selected*/
 		/*show_on = 1 -> Page load, 2 -> click on page, 3 -> click on certain element (shortcode)*/
 		$condition = "original_id != 0 AND active = 1 AND (show_pages = 1";
@@ -73,12 +74,12 @@ class popupPps extends modulePps {
 		$isOnlyOnePage = count($wp_query->posts) == 1;
 		// WooCommerce substitute real Page ID: it will make current $wp_query list woo products
 		// but our users can select "shop" page - like page where PopUp need to be triggered
-		if(!$currentPageId 
-			&& function_exists('is_shop') 
-			&& function_exists('woocommerce_get_page_id')
-			&& is_shop()
-		) {
-			$currentPageId = woocommerce_get_page_id('shop');
+		if($isShop) {
+			if(function_exists('wc_get_page_id')) {
+				$currentPageId = wc_get_page_id('shop');
+			} else if(function_exists('woocommerce_get_page_id')) {
+				$currentPageId = woocommerce_get_page_id('shop');
+			}
 			$havePostsListing = true;
 			$isOnlyOnePage = true;
 		}
@@ -101,8 +102,9 @@ class popupPps extends modulePps {
 			if($isHome && $wp_query && is_object($wp_query) && $wp_query->query && isset($wp_query->query['paged']) && (int) $wp_query->query['paged'] > 1) {
 				$isHome = false;
 			}
-			if($isHome)
+			if($isHome && !$isShop) {
 				$currentPageId = PPS_HOME_PAGE_ID;
+			}
 			$condition .= " OR (show_pages = 2 AND id IN (SELECT popup_id FROM @__popup_show_pages WHERE post_id = $currentPageId AND not_show = 0))
 				OR (show_pages = 3 AND id NOT IN (SELECT popup_id FROM @__popup_show_pages WHERE post_id = $currentPageId AND not_show = 1))";
 			if(!$isHome) {
@@ -133,6 +135,7 @@ class popupPps extends modulePps {
 				if(is_object($post) && isset($post->post_content)) {
 					if((preg_match_all('/\[\s*'. PPS_SHORTCODE_CLICK. '.+id\s*\=.*(?P<POPUP_ID>\d+)\]/iUs', $post->post_content, $matches) 
 						|| preg_match_all('/ppsShowPopup\s*\(\s*(?P<POPUP_ID>\d+)\s*\)\s*;*/iUs', $post->post_content, $matches)
+						|| preg_match_all('/ppsShowPopUpOnClick\s*\(\s*(?P<POPUP_ID>\d+)\s*\,\s*this/iUs', $post->post_content, $matches)
 						|| preg_match_all('/\"\#ppsShowPopUp_(?P<POPUP_ID>\d+)\"/iUs', $post->post_content, $matches)
 						|| preg_match_all('/ppsCheckShowPopup\s*\(\s*(?P<POPUP_ID>\d+)\s*\)\s*;*/iUs', $post->post_content, $matches)
 						) && isset($matches['POPUP_ID'])
@@ -154,8 +157,13 @@ class popupPps extends modulePps {
 		/*if($this->getModel()->abDeactivated()) {
 			$condition .= ' AND ab_id = 0';
 		}*/
-		$popups = dispatcherPps::applyFilters('popupListFilterBeforeRender', $this->_beforeRender( $this->getModel()->addWhere( $condition )->getFromTbl() ));
- 		if(!empty($popups)) {
+		//Debug mode for load any popup on current popup page
+//		if(!empty($_GET['popup'])) {
+//			$popups = dispatcherPps::applyFilters('popupListFilterBeforeRender', $this->_beforeRender( array($this->getModel()->getById($_GET['popup'])) ));
+//		} else {
+			$popups = dispatcherPps::applyFilters('popupListFilterBeforeRender', $this->_beforeRender( $this->getModel()->addWhere( $condition )->getFromTbl() ));
+//		}
+		if(!empty($popups)) {
 			$popups = dispatcherPps::applyFilters('popupListBeforeRender', $popups);
 			$this->renderList( $popups );
 		}
@@ -212,9 +220,11 @@ class popupPps extends modulePps {
 						$postType = get_post_type();
 					}
 					$hideShowRevert = isset($p['params']['main']['hide_for_post_types_show']) && (int) $p['params']['main']['hide_for_post_types_show'];
-					if(((!$hideShowRevert && count($wp_query->posts) === 1 && in_array($postType, $p['params']['main']['hide_for_post_types'])) 
-						|| ($hideShowRevert && (!in_array($postType, $p['params']['main']['hide_for_post_types']) || count($wp_query->posts) !== 1))
-					)) {
+					if(isset($wp_query->posts)
+						&& is_array($wp_query->posts)
+						&& ((!$hideShowRevert && count($wp_query->posts) === 1 && in_array($postType, $p['params']['main']['hide_for_post_types']))
+							|| ($hideShowRevert && (!in_array($postType, $p['params']['main']['hide_for_post_types']) || count($wp_query->posts) !== 1))
+						)) {
 						unset($popups[ $i ]);
 						$dataRemoved = true;
 					}
@@ -222,6 +232,13 @@ class popupPps extends modulePps {
 				if(isset($p['params']['main']['hide_for_logged_in']) 
 					&& !empty($p['params']['main']['hide_for_logged_in'])
 					&& $isUserLoggedIn
+				) {	// Check if we need to hide it from logged-in users
+					unset($popups[ $i ]);
+					$dataRemoved = true;
+				}
+				if(isset($p['params']['main']['show_for_logged_in']) 
+					&& !empty($p['params']['main']['show_for_logged_in'])
+					&& !$isUserLoggedIn
 				) {	// Check if we need to hide it from logged-in users
 					unset($popups[ $i ]);
 					$dataRemoved = true;
@@ -314,7 +331,8 @@ class popupPps extends modulePps {
 			'sub_sga_id', 'sub_sga_list_id', 'sub_sga_activate_code', 'sub_gr_api_key', 'sub_ac_api_url', 'sub_ac_api_key', 
 			'sub_ac_lists', 'sub_mr_lists', 'sub_gr_api_key', 'sub_gr_lists', 'cycle_day', 'sub_ic_app_id', 'sub_ic_app_user', 'sub_ic_app_pass', 'sub_ic_lists',
 			'sub_ck_api_key', 'sub_mem_acc_id', 'sub_mem_pud_key', 'sub_mem_priv_key', 'sub_4d_name', 'sub_4d_pass', 'sub_ymlp_api_key', 'sub_ymlp_name',
-			'sub_vtig_url', 'sub_vtig_name', 'sub_vtig_key', 'sub_v6_api_key', 'sub_dms_api_user', 'sub_dms_api_password');
+			'sub_vtig_url', 'sub_vtig_name', 'sub_vtig_key', 'sub_v6_api_key', 'sub_dms_api_user', 'sub_dms_api_password', 
+			'capt_site_key', 'capt_secret_key', 'sub_mm_username', 'sub_mm_api_key', 'sub_mm_lists');
 		foreach($popups as $i => $p) {
 			if(isset($p['params']['tpl']['anim_key']) && !empty($p['params']['tpl']['anim_key']) && $p['params']['tpl']['anim_key'] != 'none') {
 				$popups[ $i ]['params']['tpl']['anim'] = $this->getView()->getAnimationByKey( $p['params']['tpl']['anim_key'] );
@@ -324,6 +342,12 @@ class popupPps extends modulePps {
 			}
 			if(!isset($p['params']['tpl']['anim_duration']) || $p['params']['tpl']['anim_duration'] <= 0) {
 				$popups[ $i ]['params']['tpl']['anim_duration'] = 1000;	// 1 second by default
+			}
+			if(isset($p['params']['tpl']['anim_close_key']) && !empty($p['params']['tpl']['anim_close_key']) && $p['params']['tpl']['anim_close_key'] != 'none') {
+				$popups[ $i ]['params']['tpl']['anim_close'] = $this->getView()->getAnimationByKey( $p['params']['tpl']['anim_close_key'] );
+			}
+			if(isset($p['params']['tpl']['anim_close_duration']) && !empty($p['params']['tpl']['anim_close_duration'])) {
+				$popups[ $i ]['params']['tpl']['anim_close_duration'] = (float) $p['params']['tpl']['anim_close_duration'];
 			}
 			$popups[ $i ]['rendered_html'] = $this->getView()->generateHtml( $p, array('replace_style_tag' => true) );
 			// Unset those parameters - make data lighter

@@ -376,6 +376,7 @@ class popupModelPps extends modelPps {
 				'for_countries' => array('id' => 3),
 				'until_make_action' => array('id' => 4),
 				'count_times' => array('id' => 5),
+				'until_email_confirm' => array('id' => 6),
 			);
 		}
 		return $this->_showToList;
@@ -409,7 +410,7 @@ class popupModelPps extends modelPps {
 				'adblock_detected' => array('id' => 12),
 			));
 		}
-		return $this->_showPagesList;
+		return $this->_showOnList;
 	}
 	public function getShowOnIdByKey($key) {
 		$this->getShowOnList();

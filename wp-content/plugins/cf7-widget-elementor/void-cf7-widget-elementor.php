@@ -2,10 +2,10 @@
 /**
  * Plugin Name: Contact Form 7 Widget For Elementor Page Builder
  * Description: Adds Contact Form 7 widget element to Elementor page builder for easy drag & drop the created contact forms with CF7 (contact form 7).
- * Version:     1.0.5
- * Author:      VOID THEMES
- * Plugin URI:  http://voidthemes.com/contact-form-7-widget-for-elementor/
- * Author URI:  http://voidcoders.com
+ * Version:     1.0.7
+ * Author:      voidCoders
+ * Plugin URI:  https://demo.voidcoders.com/plugins/contact-form7-widget-for-elementor/
+ * Author URI:  https://voidcoders.com
  * Text Domain: void
  */
 
@@ -83,7 +83,7 @@ function void_cf7_display_admin_notice() {
         $dont_disturb = esc_url( get_admin_url() . '?spare_me2=1' );
         $plugin_info = get_plugin_data( __FILE__ , true, true );       
         $reviewurl = esc_url( 'https://wordpress.org/support/plugin/cf7-widget-elementor/reviews/#new-post' );
-        $void_url = esc_url( 'https://voidthemes.com' );
+        $void_url = esc_url( 'https://voidcoders.com/shop/' );
      
         printf(__('<div class="void-cf7-review wrap">You have been using <b> %s </b> for a while. We hope you liked it ! Please give us a quick rating, it works as a boost for us to keep working on the plugin ! Also you can visit our <a href="%s" target="_blank">site</a> to get more themes & Plugins<div class="void-cf7-review-btn"><a href="%s" class="button button-primary" target=
             "_blank">Rate Now!</a><a href="%s" class="void-cf7-review-done"> Already Done !</a></div></div>', $plugin_info['TextDomain']), $plugin_info['Name'], $void_url, $reviewurl, $dont_disturb );

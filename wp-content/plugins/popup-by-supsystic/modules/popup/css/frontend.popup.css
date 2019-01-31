@@ -1,9 +1,8 @@
 .ppsPopupShell {
 	position: fixed;
-	display: none;
 	z-index: 999999999;
-	/*top: 0;
-	left: 0;*/
+	/*visibility: hidden;*/
+	display: none;
 }
 #ppsPopupBgOverlay {
 	display: none;
@@ -39,27 +38,29 @@
 	color: #4ae8ea !important;;
 }
 .ppsPopupPreloadImg {
-	width: 1px !important;
-	height: 1px !important;
+	width: auto !important;
+	height: auto !important;
 	position: absolute !important;
 	top: -9999px !important;
 	left: -9999px !important;
 	opacity: 0 !important;
+	display: none !important;
+	visibility: hidden !important;
 }
 .ppsPopupShell .alignleft {
-    float: left;
-    margin: 7px 10px 10px 0;
+	float: left;
+	margin: 7px 10px 10px 0;
 }
 .ppsPopupShell .alignright {
-    float: right;
-    margin: 7px 0 10px 10px;
+	float: right;
+	margin: 7px 0 10px 10px;
 }
 /*Little bootsrap part*/
 .ppsPopupShell .container {
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
 }
 @media (min-width: 768px) {
 	.ppsPopupShell .container {
@@ -75,6 +76,9 @@
 	.ppsPopupShell .container {
 		width: 960px;
 	}
+}
+.ppsPopupClose {
+	z-index: 1;
 }
 .ppsSnow{
 	background: none;

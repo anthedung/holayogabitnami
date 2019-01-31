@@ -1,5 +1,4 @@
 /* This stylesheet is used to style the admin option form of the plugin. */
-
 .widget-half {
 width: 49%;
 float: left;
@@ -65,3 +64,13 @@ div#easy-facebook-likebox_popup_advanced{
 
     display: block;
   }
+.efbl_cache_holder {float: left;width: 100%; background: #fff;}
+#mt-other-plugins {
+      float: left;
+      width: 97%;
+      margin-top: 30px;
+      border: 1px solid #e5e5e5;
+      box-shadow: 0 1px 1px rgba(0,0,0,.04);
+      padding: 18px;
+      background: #fff;
+}

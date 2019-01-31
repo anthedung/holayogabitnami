@@ -90,12 +90,12 @@ function IF_get_featured_image( $size = "medium", $post_id=null ){
 	if ( has_post_thumbnail($post_id) ) { // check if the post has a Post Thumbnail assigned to it.
 
 		$thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post_id), $size );
+		//var_dump($thumb);
 		$url['alt'] = $this->get_ALTImage( $post_id );
 		$url['src'] = $thumb['0'];
 		
 	}
-
-
+	//var_dump($url);
 	return $url; 
 }
 

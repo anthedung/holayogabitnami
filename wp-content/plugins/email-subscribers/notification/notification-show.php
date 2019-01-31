@@ -18,7 +18,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 	if ($result != '1') {
 		?><div class="error fade">
 			<p><strong>
-				<?php echo __( 'Oops, selected details does not exists.', ES_TDOMAIN ); ?>
+				<?php echo __( 'Oops, selected details does not exists.', 'email-subscribers' ); ?>
 			</strong></p>
 		</div><?php
 	} else {
@@ -32,7 +32,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 
 			//	Set success message
 			$es_success_msg = TRUE;
-			$es_success = __( 'Selected record deleted.', ES_TDOMAIN );
+			$es_success = __( 'Selected record deleted.', 'email-subscribers' );
 		}
 	}
 
@@ -49,12 +49,12 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 
 <div class="wrap">
 	<h2>
-		<?php echo __( 'Post Notifications', ES_TDOMAIN ); ?>  
-		<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-notification&amp;ac=add"><?php echo __( 'Add New', ES_TDOMAIN ); ?></a>
-		<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', ES_TDOMAIN ); ?></a>
+		<?php echo __( 'Post Notifications', 'email-subscribers' ); ?>
+		<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-notification&amp;ac=add"><?php echo __( 'Add New', 'email-subscribers' ); ?></a>
+		<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', 'email-subscribers' ); ?></a>
 	</h2>
 	<p class="description"  style="margin-bottom:1em;">
-		<?php echo __( 'Use this to setup and send notification emails to your subscribers when a new post is published in your blog.', ES_TDOMAIN ); ?>
+		<?php echo __( 'Use this to setup and send notification emails to your subscribers when a new post is published in your blog.', 'email-subscribers' ); ?>
 	</p>
 	<div class="tool-box">
 		<?php
@@ -65,18 +65,18 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 			<table width="100%" class="widefat" id="straymanage">
 				<thead>
 					<tr>
-						<th scope="col"><?php echo __( 'Email Subject', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Subscribers Group', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Post Categories / Custom Post Types', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Notification Status', ES_TDOMAIN ); ?></th>
+						<th scope="col"><?php echo __( 'Email Subject', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Subscribers Group', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Post Categories / Custom Post Types', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Notification Status', 'email-subscribers' ); ?></th>
 					</tr>
 				</thead>
 				<tfoot>
 					<tr>
-						<th scope="col"><?php echo __( 'Email Subject', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Subscribers Group', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Post Categories / Custom Post Types', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Notification Status', ES_TDOMAIN ); ?></th>
+						<th scope="col"><?php echo __( 'Email Subject', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Subscribers Group', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Post Categories / Custom Post Types', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Notification Status', 'email-subscribers' ); ?></th>
 					</tr>
 				</tfoot>
 				<tbody>
@@ -97,10 +97,10 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 									?>
 									<div class="row-actions">
 										<span class="edit">
-											<a title="Edit" href="<?php echo ES_ADMINURL; ?>?page=es-notification&amp;ac=edit&amp;did=<?php echo $data['es_note_id']; ?>"><?php echo __( 'Edit', ES_TDOMAIN ); ?></a> 
+											<a title="Edit" href="<?php echo ES_ADMINURL; ?>?page=es-notification&amp;ac=edit&amp;did=<?php echo $data['es_note_id']; ?>"><?php echo __( 'Edit', 'email-subscribers' ); ?></a>
 										</span>
 										<span class="trash">
-											| <a onClick="javascript:_es_delete('<?php echo $data['es_note_id']; ?>')" href="javascript:void(0);"><?php echo __( 'Delete', ES_TDOMAIN ); ?></a>
+											| <a onClick="javascript:_es_delete('<?php echo $data['es_note_id']; ?>')" href="javascript:void(0);"><?php echo __( 'Delete', 'email-subscribers' ); ?></a>
 										</span>
 									</div>
 								</td>
@@ -127,9 +127,9 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 								<td>
 									<?php 
 									if ($data['es_note_status'] == "Enable") {
-										echo __( 'Send email immediately', ES_TDOMAIN );
+										echo __( 'Send email immediately', 'email-subscribers' );
 									} elseif ($data['es_note_status'] == "Cron") {
-										echo __( 'Add to cron and send email via cron job', ES_TDOMAIN );
+										echo __( 'Add to cron and send email via cron job', 'email-subscribers' );
 									} else {
 										echo es_cls_common::es_disp_status($data['es_note_status']);
 									}
@@ -140,7 +140,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 							$i = $i+1;
 						}
 					} else {
-						?><tr><td colspan="4" align="center"><?php echo __( 'No records available.', ES_TDOMAIN ); ?></td></tr><?php 
+						?><tr><td colspan="4" align="center"><?php echo __( 'No records available.', 'email-subscribers' ); ?></td></tr><?php
 					}
 					?>
 				</tbody>

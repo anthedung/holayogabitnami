@@ -24,7 +24,7 @@ class yuzo_related_post_make extends IF_utils2{
 								 'name_plugin_url'=>'yuzo-related-post',
 								 'descripcion'    =>'Gets the related post on your blog with any design characteristics.',
 
-								 'version'        =>'5.12.74',
+								 'version'        =>'5.12.88',
 								 'db_version'     =>'1.4',
 								 'present_version'=>'2.0', // html
 								 'popup_version'  =>array('id'=>'0.155','second_close'=>'6','html'=>''),

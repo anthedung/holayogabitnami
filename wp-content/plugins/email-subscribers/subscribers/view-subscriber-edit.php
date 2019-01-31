@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	if ($result != '1') {
 		?><div class="error fade">
 			<p><strong>
-				<?php echo __( 'Oops, selected details does not exists.', ES_TDOMAIN ); ?>
+				<?php echo __( 'Oops, selected details does not exists.', 'email-subscribers' ); ?>
 			</strong></p>
 		</div><?php
 	} else {
@@ -36,32 +36,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 			'es_email_mail' => $data[0]['es_email_mail'],
 			'es_email_status' => $data[0]['es_email_status'],
 			'es_email_group' => $data[0]['es_email_group'],
-			'es_email_id' => $data[0]['es_email_id']
+			'es_email_id' => $data[0]['es_email_id'],
+			'es_nonce' => ''
 		);
 	}
 
 	// Form submitted, check the data
-	if (isset($_POST['es_form_submit']) && $_POST['es_form_submit'] == 'yes') {
-
-		// Just security thingy that wordpress offers us
-		check_admin_referer('es_form_edit');
+	if ( isset($_POST['es_form_submit']) && $_POST['es_form_submit'] == 'yes' && !empty( $_POST['es-subscribe'] ) ) {
 
 		$form['es_email_status'] = isset($_POST['es_email_status']) ? $_POST['es_email_status'] : '';
 		$form['es_email_name'] = isset($_POST['es_email_name']) ? $_POST['es_email_name'] : '';
 		$form['es_email_mail'] = isset($_POST['es_email_mail']) ? $_POST['es_email_mail'] : '';
+		// Just security thingy that wordpress offers us
+		$form['es_nonce'] = $_POST['es-subscribe'];
 
-		if ($form['es_email_mail'] == '') {
-			$es_errors[] = __( 'Please enter subscriber email address.', ES_TDOMAIN );
+		if ( $form['es_email_mail'] == '' ) {
+			$es_errors[] = __( 'Please enter subscriber email address.', 'email-subscribers' );
 			$es_error_found = TRUE;
 		}
 
 		$form['es_email_group'] = isset($_POST['es_email_group']) ? $_POST['es_email_group'] : '';
 		$form['es_email_id'] = isset($_POST['es_email_id']) ? $_POST['es_email_id'] : '0';
 
-		if($form['es_email_group'] != "") {
+		if( $form['es_email_group'] != "" ) {
 			$special_letters = es_cls_common::es_special_letters();
 			if (preg_match($special_letters, $form['es_email_group'])) {
-				$es_errors[] = __( 'Error: Special characters are not allowed in the group name.', ES_TDOMAIN );
+				$es_errors[] = __( 'Error: Special characters are not allowed in the group name.', 'email-subscribers' );
 				$es_error_found = TRUE;
 			}
 		}
@@ -71,9 +71,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$action = "";
 			$action = es_cls_dbquery::es_view_subscriber_ins($form, "update");
 			if($action == "sus") {
-				$es_success = __( 'Subscriber details updated.', ES_TDOMAIN );
+				$es_success = __( 'Subscriber details updated.', 'email-subscribers' );
 			} elseif($action == "ext") {
-				$es_errors[] = __( 'Subscriber already exists for this group.', ES_TDOMAIN );
+				$es_errors[] = __( 'Subscriber already exists for this group.', 'email-subscribers' );
 				$es_error_found = TRUE;
 			}
 		}
@@ -105,12 +105,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="wrap">
 		<h2>
-			<?php echo __( 'Edit Subscriber', ES_TDOMAIN ); ?>
-			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=add"><?php echo __( 'Add New Subscriber', ES_TDOMAIN ); ?></a>
-			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=import"><?php echo __( 'Import', ES_TDOMAIN ); ?></a>
-			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=export"><?php echo __( 'Export', ES_TDOMAIN ); ?></a>
-			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=sync"><?php echo __( 'Sync', ES_TDOMAIN ); ?></a>
-			<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', ES_TDOMAIN ); ?></a>
+			<?php echo __( 'Edit Subscriber', 'email-subscribers' ); ?>
+			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=add"><?php echo __( 'Add New Subscriber', 'email-subscribers' ); ?></a>
+			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=import"><?php echo __( 'Import', 'email-subscribers' ); ?></a>
+			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=export"><?php echo __( 'Export', 'email-subscribers' ); ?></a>
+			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=sync"><?php echo __( 'Sync', 'email-subscribers' ); ?></a>
+			<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', 'email-subscribers' ); ?></a>
 		</h2>
 		<form name="form_addemail" method="post" action="#" onsubmit="return _es_addemail()">
 			<div class="tool-box">
@@ -119,7 +119,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<tr>
 							<th scope="row">
 								<label for="tag-image">
-									<?php echo __( 'Subscriber\'s Full Name', ES_TDOMAIN ); ?>
+									<?php echo __( 'Subscriber\'s Full Name', 'email-subscribers' ); ?>
 								</label>
 							</th>
 							<td>
@@ -129,7 +129,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<tr>
 							<th scope="row">
 								<label for="tag-image">
-									<?php echo __( 'Subscriber\'s Email Address', ES_TDOMAIN ); ?>
+									<?php echo __( 'Subscriber\'s Email Address', 'email-subscribers' ); ?>
 								</label>
 							</th>
 							<td>
@@ -139,27 +139,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<tr>
 							<th scope="row">
 								<label for="tag-display-status">
-									<?php echo __( 'Update Subscriber\'s Status', ES_TDOMAIN ); ?>
+									<?php echo __( 'Update Subscriber\'s Status', 'email-subscribers' ); ?>
 								</label>
 							</th>
 							<td>
 								<select name="es_email_status" id="es_email_status">
-									<option value='Confirmed' <?php if($form['es_email_status'] == 'Confirmed') { echo 'selected="selected"' ; } ?>><?php echo __( 'Confirmed', ES_TDOMAIN ); ?></option>
-									<option value='Unconfirmed' <?php if($form['es_email_status'] =='Unconfirmed') { echo 'selected="selected"' ; } ?>><?php echo __( 'Unconfirmed', ES_TDOMAIN ); ?></option>
-									<option value='Unsubscribed' <?php if($form['es_email_status'] == 'Unsubscribed') { echo 'selected="selected"' ; } ?>><?php echo __( 'Unsubscribed', ES_TDOMAIN ); ?></option>
-									<option value='Single Opt In' <?php if($form['es_email_status'] == 'Single Opt In') { echo 'selected="selected"' ; } ?>><?php echo __( 'Single Opt In', ES_TDOMAIN ); ?></option>
+									<option value='Confirmed' <?php if($form['es_email_status'] == 'Confirmed') { echo 'selected="selected"' ; } ?>><?php echo __( 'Confirmed', 'email-subscribers' ); ?></option>
+									<option value='Unconfirmed' <?php if($form['es_email_status'] =='Unconfirmed') { echo 'selected="selected"' ; } ?>><?php echo __( 'Unconfirmed', 'email-subscribers' ); ?></option>
+									<option value='Unsubscribed' <?php if($form['es_email_status'] == 'Unsubscribed') { echo 'selected="selected"' ; } ?>><?php echo __( 'Unsubscribed', 'email-subscribers' ); ?></option>
+									<option value='Single Opt In' <?php if($form['es_email_status'] == 'Single Opt In') { echo 'selected="selected"' ; } ?>><?php echo __( 'Single Opt In', 'email-subscribers' ); ?></option>
 								</select>
 							</td>
 						</tr>
 						<tr>
 							<th scope="row">
 								<label for="tag-display-status">
-									<?php echo __( 'Update Subscriber\'s Group', ES_TDOMAIN ); ?>
+									<?php echo __( 'Update Subscriber\'s Group', 'email-subscribers' ); ?>
 								</label>
 							</th>
 							<td>
 								<select name="es_email_group" id="es_email_group">
-									<option value=''><?php echo __( 'Select', ES_TDOMAIN ); ?></option>
+									<option value=''><?php echo __( 'Select', 'email-subscribers' ); ?></option>
 									<?php
 									$thisselected = "";
 									$groups = array();
@@ -188,9 +188,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<input type="hidden" name="es_form_submit" value="yes"/>
 			<input type="hidden" name="es_email_id" id="es_email_id" value="<?php echo $form['es_email_id']; ?>"/>
 			<p style="padding-top:5px;">
-				<input class="button-primary" value="<?php echo __( 'Save', ES_TDOMAIN ); ?>" type="submit" />
+				<input class="button-primary" value="<?php echo __( 'Save', 'email-subscribers' ); ?>" type="submit" />
 			</p>
-			<?php wp_nonce_field('es_form_edit'); ?>
+			<?php wp_nonce_field( 'es-subscribe', 'es-subscribe' ); ?>
 		</form>
 	</div>
 </div>

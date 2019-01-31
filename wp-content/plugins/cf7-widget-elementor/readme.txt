@@ -1,10 +1,10 @@
 === Contact Form7 Widget For Elementor Page Builder ===
-Contributors: voidthemes,voidcoders
+Contributors: voidthemes,voidcoders,soyket,shawon786
 Tags: page-builder, elementor, cf7, contact-form-7, contact-form-7 widget, widget, elementor add on, email, contact,form
 Donate link: https://www.paypal.me/voidcoders
 Requires at least: 4.4
-Tested up to: 4.9.1
-Stable tag: 1.0.5
+Tested up to: 5.0
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,6 +12,7 @@ This WordPress Plugin Adds Contact Form 7 widget element to Elementor page build
 
 You must have [Elementor Page Builder](https://wordpress.org/plugins/elementor/) installed.
 You must have [Contact form 7](https://wordpress.org/plugins/contact-form-7/) installed and forms created.
+
 == Description ==
 
 This plugin adds new element / widget to Elementor Page Builder which helps you to easily drag and drop contact form 7 forms from a drop down list. No need of going in cf7 & copying the shortcode and addding to shortcode widget of elementor anymore !! 
@@ -23,7 +24,7 @@ Yet this is just a simple plugin for simple users :)
 * What's more interesting is that you can have multiple form of the same single contact form 7 form with different rules and design with this on same page ! 
 
 For more details :[VOID CF7 Elementor Widget](https://voidcoders.com/product/contact-form7-widget-for-elementor-free/).
-For our other elementor & WP works visit : [VOID CODERS](http://voidcoders.com).
+For our other elementor & WP works visit : [VOID CODERS](https://voidcoders.com).
 For updates follow us on : [Facebook](https://www.facebook.com/voidcoders).
 
 
@@ -66,6 +67,10 @@ Our Contact Form7 Widget For Elementor Page Builder adds a new section in the el
 
 
 == Changelog ==
+= 1.0.6 =
+* Css added Number control
+* External redirect url available now
+* Any post type url from the site for redirect url
 = 1.0.5 =
 * Css added Hover button
 = 1.0.4 =

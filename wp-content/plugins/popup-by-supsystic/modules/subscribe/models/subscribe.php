@@ -189,6 +189,16 @@ class subscribeModelPps extends modelPps {
 				return false;
 			}
 		}
+		$enbRecaptcha = (isset($popup['params']['tpl']['enb_captcha']) && !empty($popup['params']['tpl']['enb_captcha']));
+		if($enbRecaptcha 
+			&& framePps::_()->getModule('sub_fields') 
+			&& method_exists(framePps::_()->getModule('sub_fields'), 'validateReCaptcha')
+		) {
+			if(!framePps::_()->getModule('sub_fields')->validateReCaptcha($popup['params']['tpl']['capt_secret_key'], $d['g-recaptcha-response'])) {
+				$this->pushError(framePps::_()->getModule('sub_fields')->getErrors());
+				return false;
+			}
+		}
 		return true;
 	}
 	public function getDest() {
@@ -285,6 +295,7 @@ class subscribeModelPps extends modelPps {
 						$username = $this->_getUsernameFromEmail($email, $username);
 						$ignoreConfirm = (isset($popup['params']['tpl'][$pref. '_ignore_confirm']) && $popup['params']['tpl'][$pref. '_ignore_confirm']) || $forceIgnoreConfirm;
 						$confirmHash = md5($email. NONCE_KEY);
+						$d['_subscribe_url'] = dbPps::prepareHtmlIn(reqPps::getVar('HTTP_REFERER', 'server'));
 						$saveData = array(
 							'username' => $username,
 							'email' => $email,
@@ -368,8 +379,12 @@ class subscribeModelPps extends modelPps {
 					}
 				}
 			}
+			
+			if(isset($d['_subscribe_url']) && !empty($d['_subscribe_url'])) {
+				update_user_meta($userId, '_subscribe_url', $d['_subscribe_url']);
+			}
 			$this->_sendNewUserNotification($popup, $userId, $password, $d, $forReg);
-			return true;
+			return $userId;
 		} else {
 			$defaultErrorMsg = $forReg ? __('Can\'t registrate for now. Please try again later.', PPS_LANG_CODE) : __('Can\'t subscribe for now. Please try again later.', PPS_LANG_CODE);
 			$this->pushError (is_wp_error($userId) ? $userId->get_error_message() : $defaultErrorMsg);

@@ -17,9 +17,9 @@
 						});
 					});
 					var locationHash = document.location.hash;
-					if(locationHash && locationHash != '' && $this.find(locationHash) && $this.find(locationHash).size()) {
+					if(locationHash && locationHash != '' && $this.find(locationHash) && $this.find(locationHash).length) {
 						$this.wpTabs('activate', locationHash);
-						if(jQuery(locationHash).size()) {
+						if(jQuery(locationHash).length) {
 							// Avoid scrolling to hashes
 							jQuery(window).load(function(){
 								setTimeout(function(){
@@ -38,7 +38,7 @@
 	,	activate: function(selector) {
 			return this.each(function(){
 				var $this = $(this);
-				if($this.find(selector).size()) {
+				if($this.find(selector).length) {
 					this._activeTab = selector;
 					var navigations = $this.find('.nav-tab-wrapper:first').find('a.nav-tab:not(.notTab)');
 					if(!this._firstInit) {

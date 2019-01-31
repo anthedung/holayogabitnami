@@ -30,25 +30,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		$form['es_note_group'] = isset($_POST['es_note_group']) ? $_POST['es_note_group'] : '';
 		if ($form['es_note_group'] == '') {
-			$es_errors[] = __( 'Please select subscribers group.', ES_TDOMAIN );
+			$es_errors[] = __( 'Please select subscribers group.', 'email-subscribers' );
 			$es_error_found = TRUE;
 		}
 
 		$form['es_note_status'] = isset($_POST['es_note_status']) ? $_POST['es_note_status'] : '';
 		if ($form['es_note_status'] == '') {
-			$es_errors[] = __( 'Please select notification status.', ES_TDOMAIN );
+			$es_errors[] = __( 'Please select notification status.', 'email-subscribers' );
 			$es_error_found = TRUE;
 		}
 
 		$form['es_note_templ'] = isset($_POST['es_note_templ']) ? $_POST['es_note_templ'] : '';
 		if ($form['es_note_templ'] == '') {
-			$es_errors[] = __( 'Please select notification mail subject. Use templates menu to create new.', ES_TDOMAIN );
+			$es_errors[] = __( 'Please select notification mail subject. Use templates menu to create new.', 'email-subscribers' );
 			$es_error_found = TRUE;
 		}
 
 		$es_note_cat = isset($_POST['es_note_cat']) ? $_POST['es_note_cat'] : '';
 		if ($es_note_cat == '') {
-			$es_errors[] = __( 'Please select post categories.', ES_TDOMAIN );
+			$es_errors[] = __( 'Please select post categories.', 'email-subscribers' );
 			$es_error_found = TRUE;
 		}
 
@@ -68,7 +68,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$form['es_note_cat'] = $listcategory;
 			$action = es_cls_notification::es_notification_ins($form, $action = "insert");
 			if($action) {
-				$es_success = __( 'Notification successfully created. ', ES_TDOMAIN );
+				$es_success = __( 'Notification successfully created. ', 'email-subscribers' );
 			}
 
 			// Reset the form fields
@@ -103,14 +103,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<style>
 		.form-table th {
-			width: 250px;
+			width: 400px;
 		}
 	</style>
 
 	<div class="wrap">
 		<h2>
-			<?php echo __( 'Add Notification', ES_TDOMAIN ); ?>
-			<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', ES_TDOMAIN ); ?></a>
+			<?php echo __( 'Add Notification', 'email-subscribers' ); ?>
+			<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', 'email-subscribers' ); ?></a>
 		</h2>
 		<div class="es-form" style="width: 80%;float: left;">
 			<form name="es_form" method="post" action="#" onsubmit="return _es_submit()">
@@ -118,11 +118,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<tbody>
 						<tr>
 							<th scope="row">
-								<label for="tag-link"><?php echo __( 'Select Subscribers Group', ES_TDOMAIN ); ?></label>
+								<label for="tag-link"><?php echo __( 'Subscribers Group to send post notification to', 'email-subscribers' ); ?></label>
 							</th>
 							<td>
 								<select name="es_note_group" id="es_note_group">
-									<option value=''><?php echo __( 'Select', ES_TDOMAIN ); ?></option>
+									<option value=''><?php echo __( 'Select', 'email-subscribers' ); ?></option>
 									<?php
 									$groups = array();
 									$groups = es_cls_dbquery::es_view_subscriber_group();
@@ -140,13 +140,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</tr>
 						<tr>
 							<th scope="row">
-								<label for="tag-link"><?php echo __( 'Select Notification Email Subject', ES_TDOMAIN ); ?>
-									<p class="description"><?php echo __( '(Use templates menu to create new)', ES_TDOMAIN ); ?></p>
+								<label for="tag-link"><?php echo __( 'Select Notification Email Subject', 'email-subscribers' ); ?>
+									<p class="description"><?php echo __( '(Use templates menu to create new)', 'email-subscribers' ); ?></p>
 								</label>
 							</th>
 							<td>
-									<select name="es_note_templ" id="es_note_templ" onchange="return _es_change(this.options[this.selectedIndex])">
-									<option value=''><?php echo __( 'Select', ES_TDOMAIN ); ?></option>
+									<select class="es_tmpl_select" name="es_note_templ" id="es_note_templ" onchange="return _es_change(this.options[this.selectedIndex])">
+									<option value=''><?php echo __( 'Select', 'email-subscribers' ); ?></option>
 									<?php
 									$subject = array();
 									$subject = es_cls_templates::es_template_select_type($type = "Post Notification");
@@ -161,11 +161,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 									}
 									?>
 								</select>
+								<?php do_action('es_beside_select_notification');?>
 							</td>
 						</tr>
 						<tr>
 							<th scope="row">
-								<label for="tag-link"><?php echo __( 'Select Post Categories', ES_TDOMAIN ); ?></label>
+								<label for="tag-link"><?php echo __( 'Select Post Categories', 'email-subscribers' ); ?></label>
 							</th>
 							<td>
 								<?php
@@ -193,15 +194,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 								echo "</tr></table>";
 								?>
 								<p class="select_all" style="margin-left: 0.7em;">
-									<input type="button" name="CheckAll" class="button add-new-h2" value="<?php echo __( 'Check All', ES_TDOMAIN ); ?>" onClick="_es_checkall('es_form', 'es_note_cat[]', true);">
-									<input type="button" name="UnCheckAll" class="button add-new-h2" value="<?php echo __( 'Uncheck All', ES_TDOMAIN ); ?>" onClick="_es_checkall('es_form', 'es_note_cat[]', false);">
+									<input type="button" name="CheckAll" class="button add-new-h2" value="<?php echo __( 'Check All', 'email-subscribers' ); ?>" onClick="_es_checkall('es_form', 'es_note_cat[]', true);">
+									<input type="button" name="UnCheckAll" class="button add-new-h2" value="<?php echo __( 'Uncheck All', 'email-subscribers' ); ?>" onClick="_es_checkall('es_form', 'es_note_cat[]', false);">
 								</p>
 							</td>
 						</tr>
 						<tr>
 							<th scope="row">
-								<label for="tag-link"><?php echo __( 'Select your Custom Post Type', ES_TDOMAIN ); ?>
-									<p class="description"><?php echo __( '(Optional)', ES_TDOMAIN ); ?></p>
+								<label for="tag-link"><?php echo __( 'Select your Custom Post Type', 'email-subscribers' ); ?>
+									<p class="description"><?php echo __( '(Optional)', 'email-subscribers' ); ?></p>
 								</label>
 							</th>
 							<td>
@@ -230,28 +231,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 									}
 									echo "</tr></table>";
 								} else {
-									echo __( 'No Custom Post Types Available', ES_TDOMAIN );
+									echo __( 'No Custom Post Types Available', 'email-subscribers' );
 								}
 								?>
 							</td>
 						</tr>
 						<tr>
 							<th scope="row">
-								<label for="tag-link"><?php echo __( 'Select Notification Status when a new post is published', ES_TDOMAIN ); ?></label>
+								<label for="tag-link"><?php echo __( 'Select Notification Status when a new post is published', 'email-subscribers' ); ?></label>
 							</th>
 							<td>
 								<select name="es_note_status" id="es_note_status">
-									<option value='Enable' selected="selected"><?php echo __( 'Send email immediately', ES_TDOMAIN ); ?></option>
-									<option value='Cron'><?php echo __( 'Add to cron and send email via cron job', ES_TDOMAIN );?></option>
-									<option value='Disable'><?php echo __( 'Disable email notification', ES_TDOMAIN ); ?></option>
+									<option value='Enable' selected="selected"><?php echo __( 'Send email immediately', 'email-subscribers' ); ?></option>
+									<option value='Cron'><?php echo __( 'Add to cron and send email via cron job', 'email-subscribers' );?></option>
+									<option value='Disable'><?php echo __( 'Disable email notification', 'email-subscribers' ); ?></option>
 								</select>
+								<?php do_action('es_after_email_sent_option'); ?>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 				<input type="hidden" name="es_form_submit" value="yes"/>
 				<p class="submit">
-					<input type="submit" class="button-primary" value="<?php echo __( 'Save', ES_TDOMAIN ); ?>" />
+					<input type="submit" class="button-primary" value="<?php echo __( 'Save', 'email-subscribers' ); ?>" />
 				</p>
 			  <?php wp_nonce_field('es_form_add'); ?>
 			</form>

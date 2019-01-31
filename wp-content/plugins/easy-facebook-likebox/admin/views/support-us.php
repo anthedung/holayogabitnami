@@ -14,9 +14,6 @@
 				
 ?> 
 
-
-<div class="efbl_donation"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=sjaved786%40gmail%2ecom&lc=US&item_name=Easy%20Facebook%20Like%20Box%20WordPress%20Plugin&item_number=efbl&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted">Donate</a></div>
-<div class="fb-like-box" data-href="https://www.facebook.com/jwebsol" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
             <div id="fb-root"></div>
             <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -26,6 +23,6 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
-<h1> Follow me at twitter</h1>
-<a href="https://twitter.com/SajidJavaid" class="twitter-follow-button" data-show-count="false">Follow @SajidJavaid</a>
+<div class="fb-like" data-href="https://facebook.com/maltathemes" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div>
+<a href="https://twitter.com/malta_themes" class="twitter-follow-button" data-show-count="false">Follow @MaltaThemes</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document, "script", "twitter-wjs");</script>

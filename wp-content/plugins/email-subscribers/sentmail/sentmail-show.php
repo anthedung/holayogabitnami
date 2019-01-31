@@ -19,7 +19,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 		if ($result != '1') {
 			?><div class="error fade">
 				<p><strong>
-					<?php echo __( 'Oops, selected details does not exists.', ES_TDOMAIN ); ?>
+					<?php echo __( 'Oops, selected details does not exists.', 'email-subscribers' ); ?>
 				</strong></p>
 			</div><?php
 		} else {
@@ -33,14 +33,14 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 
 				//	Set success message
 				$es_success_msg = TRUE;
-				$es_success = __( 'Selected record deleted.', ES_TDOMAIN );
+				$es_success = __( 'Selected record deleted.', 'email-subscribers' );
 			}
 		}
 	} else {
 		check_admin_referer('es_form_show');
 		es_cls_optimize::es_optimize_setdetails();
 		$es_success_msg = TRUE;
-		$es_success = __( 'Successfully deleted all reports except latest 10.', ES_TDOMAIN );
+		$es_success = __( 'Successfully deleted all reports except latest 10.', 'email-subscribers' );
 	}	
 	if ($es_success_msg == TRUE) {
 		?><div class="notice notice-success is-dismissible">
@@ -90,11 +90,11 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 
 <div class="wrap">
 	<h2>
-		<?php echo __( 'Reports', ES_TDOMAIN ); ?>
-		<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', ES_TDOMAIN ); ?></a>
+		<?php echo __( 'Reports', 'email-subscribers' ); ?>
+		<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', 'email-subscribers' ); ?></a>
 	</h2>
 	<p class="description">
-		<?php echo __( 'It will show reports for all Newsletters & Post Notification emails sent.', ES_TDOMAIN ); ?>
+		<?php echo __( 'It will show reports for all Newsletters & Post Notification emails sent.', 'email-subscribers' ); ?>
 	</p>
 	<div class="tablenav">
 		<div class="alignright" style="padding-bottom:10px;"><?php echo $page_links; ?></div>
@@ -104,28 +104,28 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 			<table width="100%" class="widefat" id="straymanage">
 				<thead>
 					<tr>
-						<th scope="col"><?php echo __( 'View Reports', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Preview', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Type', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Status', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Sent', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Start Date', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'End Date', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Total', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Action', ES_TDOMAIN ); ?></th>
+						<th scope="col"><?php echo __( 'View Reports', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Preview', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Type', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Status', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Sent', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Start Date', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'End Date', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Total', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Action', 'email-subscribers' ); ?></th>
 					</tr>
 				</thead>
 				<tfoot>
 					<tr>
-						<th scope="col"><?php echo __( 'View Reports', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Preview', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Type', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Status', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Sent', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Start Date', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'End Date', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Total', ES_TDOMAIN ); ?></th>
-						<th scope="col"><?php echo __( 'Action', ES_TDOMAIN ); ?></th>
+						<th scope="col"><?php echo __( 'View Reports', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Preview', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Type', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Status', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Sent', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Start Date', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'End Date', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Total', 'email-subscribers' ); ?></th>
+						<th scope="col"><?php echo __( 'Action', 'email-subscribers' ); ?></th>
 					</tr>
 				</tfoot>
 				<tbody>
@@ -177,7 +177,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 								$i = $i+1;
 						}
 					} else {
-						?><tr><td colspan="9" align="center"><?php echo __( 'No records available.', ES_TDOMAIN ); ?></td></tr><?php 
+						?><tr><td colspan="9" align="center"><?php echo __( 'No records available.', 'email-subscribers' ); ?></td></tr><?php
 					}
 					?>
 				</tbody>
@@ -187,18 +187,36 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 			<div class="tablenav" style="padding-top:10px;">
 				<div class="alignleft">
 					<input type="hidden" name="action" id="action" value="optimize-table">
-					<input type="submit" value="<?php echo __( 'Optimize Table & Delete Records', ES_TDOMAIN ); ?>" class="button-primary action" id="doaction" name="">
+					<input type="submit" value="<?php echo __( 'Optimize Table & Delete Records', 'email-subscribers' ); ?>" class="button-primary action" id="doaction" name="">
 				</div>
 				<div class="alignright"><?php echo $page_links; ?></div>
 			</div>
 			<input type="hidden" name="frm_es_bulkaction" value=""/>
 		</form>
-		<?php if ( $fulltotal > 30 ) { ?>
-			<div class="error fade">
+		<?php
+			if ( $fulltotal > 30 ) {
+				?>
+				<div class="error fade">
+					<p>
+						<?php echo __( 'Note: Please click on <strong>Optimize Table & Delete Records</strong> button to delete all reports except latest 10.', 'email-subscribers' ); ?>
+					</p>
+				</div>
+				<?php
+			}
+
+			global $wpdb;
+			$in_queue = 'In Queue';
+			$query = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}es_sentdetails WHERE es_sent_status = %s LIMIT 0, 1", $in_queue );
+			$report_id = $wpdb->get_col( $query );
+
+			if ( !empty( $report_id ) ) {
+				?>
+				<br>
 				<p>
-					<?php echo __( 'Note: Please click on <strong>Optimize Table & Delete Records</strong> button to delete all reports except latest 10.', ES_TDOMAIN ); ?>
+					<?php echo __( '<strong>Note:</strong> If you delete record for the emails with Status = <span style="color:#FF0000;">In Queue</span>, then cron job in queue will be deleted too and email will not be sent.', 'email-subscribers' ); ?>
 				</p>
-			</div>
-		<?php } ?>
+				<?php
+			}
+		?>
 	</div>
 </div>

@@ -6,9 +6,9 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Author URI: http://ilentheme.com
 Author: iLen
 Requires at least: 4.0
-Tested up to: 4.9.4
-Stable tag: 5.12.72
-Version: 5.12.74
+Tested up to: 5.0.2
+Stable tag: 5.12.80
+Version: 5.12.88
 License: GPLv2
 
 Related posts a so easy and fast
@@ -61,6 +61,57 @@ Gives shape and life to your post with 'Yuzo related post' ;)
 
 
 == Changelog ==
+= 5.12.88 =
+* Fixed: "Theme Alpha" was not showing custom css.
+
+= 5.12.87 =
+* Fixed: Error in the interpretation of the "most seen" this would have been fixed
+* Fixed: Minor changes in free version
+
+= 5.12.86 =
+* Fixed: the previous version caused problems in the css, it was not sending the changes of effect nor the css custom. Now you already do this.
+
+= 5.12.85 =
+* Fixed: Minor changes in free version
+
+= 5.12.84 =
+* Improve: The CSS of the footer was moved to the header
+
+= 5.12.83 =
+* Fixed: Small Css error in a layout
+
+= 5.12.82 =
+* Add: <code>Filter 'YuzoFilter_disabled__relatedpost'</code> allows you to disable the plugin from somewhere.
+* Fixed: I was not showing the posts well in the last list (widget)
+
+= 5.12.81 =
+* Fixed: I was not showing custom CSS changes in the list layout.
+* Improve: Tested in the wordpress version 4.9.8
+<blockquote>Very Soon version 6.0</blockquote>
+
+= 5.12.80 =
+* Fixed: file <code>core.php</code> did not call the function that was to be able to activate the media in wp.
+* Fixed: Variable was not clearly defined
+
+= 5.12.78 =
+* Fixed: Validation of variable not declared
+
+= 5.12.77 =
+* <blockquote>Very Soon version 6.0 (Everything will be different)</blockquote>
+* Fixed: Error removing an individual post in "include post" inside the metabox
+* Fixed: Error in the quick update of the post, the metabox did not keep the custom fields of Yuzo
+* Fixed: Before post with 'pending' status were related, now this was corrected.
+* Fixed: Minor changes in free version
+
+
+= 5.12.76 =
+* Fixed: Minor changes in free version
+* Very Soon version 6.0
+
+= 5.12.75 =
+* Fixed: Small problems with AMP due to corrected CSS problems
+* Improve: Plugin tester in version 4.9.6 of Wordpress
+
 = 5.12.74 =
 * Fixed: The algorithm of the tags in the widgets was corrected
 * Fixed: Minor changes in free version

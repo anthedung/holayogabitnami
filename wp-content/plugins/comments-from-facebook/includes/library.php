@@ -26,11 +26,11 @@ class wpdevart_comment_setting{
 			"curent_url"						=> get_permalink(),			
 			"title_text"						=> 'Comments',
 			"title_text_color"					=> '#000000',
-			"title_text_font_size"				=> '16',
+			"title_text_font_size"				=> '15',
 			"title_text_font_famely"			=> 'Times New Roman,Times,Serif,Georgia',
 			"title_text_position"				=> 'left',
 			"width"								=>  '100%',
-			"count_of_comments"					=>  '10',
+			"count_of_comments"					=>  '7',
 			"locale"							=>  'en_US',	
 				
 		);
@@ -48,6 +48,7 @@ class wpdevart_comment_setting{
 $output_code.='<div id="'.$params['iframe_id'].'" style="width:'.( (strpos($params['width'],'%')===false)?$params['width'].'px':$params['width']).';text-align:'.$params['title_text_position'].';">
 		<span style="padding: 10px;font-size:'.$params['title_text_font_size'].'px;font-family:'.$params['title_text_font_famely'].';color:'.$params['title_text_color'].';">'.$params['title_text'].'</span>
 		<div class="fb-comments" data-href="'.$params['curent_url'].'" data-order-by="'.$params['order_type'].'" data-numposts="'.$params['count_of_comments'].'" data-width="'.$params['width'].'" style="display:block;"></div></div>';
+		$output_code.= '<style>#'.$params['iframe_id'].' span,#'.$params['iframe_id'].' iframe{'.( (strpos($params['width'],'%')===false)?'':'width:'.$params['width'].' !important;').'}</style>';
 		return $output_code;
 	}
 	// Animation effects list

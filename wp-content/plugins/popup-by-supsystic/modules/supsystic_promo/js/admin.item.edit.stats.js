@@ -17,7 +17,7 @@ jQuery(document).ready(function(){
 		};
 		var $manTabsNav = jQuery('#ppsPopupEditTabs .ppsMainTabsNav');
 		var getTabName = function( $tab ) {
-			if($tab && $tab.size()) {
+			if($tab && $tab.length) {
 				var href = $tab.attr('href')
 				,	name = '';
 				if(href) {
@@ -92,10 +92,10 @@ function _ppsBigDataMainOpt( inpName, label ) {
 }
 function __ppsBigDataOptToLabel( $opt ) {
 	var $label = $opt.parents('label:first');
-	if(!$label || !$label.size()) {
+	if(!$label || !$label.length) {
 		$label = $opt.parents('.ppsPopupMainOptLbl:first');
 	}
-	if($label && $label.size()) {
+	if($label && $label.length) {
 		var optName = $label.data('name');
 		if(!optName) {
 			optName = $label.text();

@@ -619,9 +619,16 @@ class popupViewPps extends viewPps {
 			$styles = array(
 				'background-image' => 'url("'. $bullets['img_url']. '");'
 			);
-			if(isset($bullets['add_style']))
+			if(isset($bullets['add_style'])) {
+				foreach($bullets['add_style'] as $i => $s) {
+					$bullets['add_style'][ $i ] = $s. ' !important';
+				}
 				$styles = array_merge($styles, $bullets['add_style']);
+			}
 			if(function_exists('is_rtl') && is_rtl()) {
+				foreach($bullets['rtl_style'] as $i => $s) {
+					$bullets['rtl_style'][ $i ] = $s. ' !important';
+				}
 				$styles = array_merge($styles, $bullets['rtl_style']);
 			}
 			return '#ppsPopupShell_'. $popup['view_id']. ' ul li { '. utilsPps::arrToCss($styles). ' }';
@@ -632,6 +639,14 @@ class popupViewPps extends viewPps {
 	private function _generateVideoHtml($popup) {
 		$res = '';
 		if(isset($popup['params']['tpl']['video_url']) && !empty($popup['params']['tpl']['video_url'])) {
+			//wordpress wp_oembed_get can't work with youtube embed url
+			//simple replace embed url to watch url
+			if (strpos($popup['params']['tpl']['video_url'], 'www.youtube.com/embed/') !== false) {
+				preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $popup['params']['tpl']['video_url'], $matches);
+				if($matches['1']){
+					$popup['params']['tpl']['video_url'] = 'https://www.youtube.com/watch?v=' . $matches['1'];
+				}
+			}
 			
 			$attrs = array();
 			if(isset($popup['params']['opts_attrs']['video_width_as_popup']) && $popup['params']['opts_attrs']['video_width_as_popup']) {
@@ -655,6 +670,7 @@ class popupViewPps extends viewPps {
 			}
 			add_filter('oembed_result', array($this, 'modifyEmbRes'), 10, 3);
 			$res = wp_oembed_get($popup['params']['tpl']['video_url'], $attrs);
+
 			// Try to load self-hosted video
 			if(empty($res) && strpos($popup['params']['tpl']['video_url'], PPS_SITE_URL) === 0) {
 				$res = $this->_generateSelfHostedVideo($popup['params']['tpl']['video_url'], $attrs);

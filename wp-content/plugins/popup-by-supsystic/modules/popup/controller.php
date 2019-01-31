@@ -81,7 +81,8 @@ class popupControllerPps extends controllerPps {
 				&& !empty($popup['params']['tpl']['enb_contact_form']))
 				&& $this->getModule()->contactFormsSupported()
 			) {
-				$assetsStr .= frameCfs::_()->getModule('forms')->getAssetsforPrevStr();
+				$form = frameCfs::_()->getModule('forms')->getModel()->getById($popup['params']['tpl']['contact_form']);
+				$assetsStr .= frameCfs::_()->getModule('forms')->getAssetsforPrevStr($form);
 			}
 			$popupContent = $this->getView()->generateHtml( $popup );
 			echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -103,6 +104,7 @@ class popupControllerPps extends controllerPps {
 				}
 				.ppsPopupShell {
 					display: block;
+					visibility: visible;
 					position: static;
 				}
 				</style>'
@@ -225,6 +227,7 @@ class popupControllerPps extends controllerPps {
 		$forPromo = (int) reqPps::getVar('for_promo');
 		$forWix = (int) reqPps::getVar('for_wix');
 		$selectColumns = array('id','label','active','original_id','params','html','css','img_preview','show_on','show_to','show_pages','type_id','date_created','sort_order');
+		$link = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 		if($forWix) {
 			$contentKeys = array('popup_id', 'html', 'css');
 			/*foreach($contentKeys as $k) {
@@ -261,7 +264,8 @@ class popupControllerPps extends controllerPps {
 				if($addToKeys && (!$forWix || ($forWix && !in_array($k, $contentKeys)))) {
 					$allKeys[] = $k;
 				}
-				$arr[] = '"'. $wpdb->_real_escape($v). '"';
+				//$arr[] = '"'. $wpdb->_real_escape($v). '"';
+				$arr[] = '"'. mysqli_real_escape_string($link, $v). '"';
 			}
 			$valuesArr[] = '('. implode(',', $arr). ')';
 		}

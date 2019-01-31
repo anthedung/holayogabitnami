@@ -68,7 +68,7 @@ class subscribePps extends modulePps {
 		return '<script type="text/javascript">'
 		. 'jQuery(function(){ '
 			. 'var $originalBtns = jQuery("#'. $popup['view_html_id']. '").find(".ppsLoginForm input[type=submit]:not(.ppsPopupClose)");'
-			. 'if(!$originalBtns || !$originalBtns.size()) {'
+			. 'if(!$originalBtns || !$originalBtns.length) {'
 			. '$originalBtns = jQuery("#'. $popup['view_html_id']. '").find(".ppsRegForm input[type=submit]:not(.ppsPopupClose)");'
 			. '}'
 			. 'var $btns = $originalBtns.clone();'
@@ -148,6 +148,7 @@ class subscribePps extends modulePps {
 		$enbLogin = (isset($popup['params']['tpl']['enb_login']) && !empty($popup['params']['tpl']['enb_login']));
 		$enbReg = (isset($popup['params']['tpl']['enb_reg']) && !empty($popup['params']['tpl']['enb_reg']));
 		$enbSub = (isset($popup['params']['tpl']['enb_subscribe']) && !empty($popup['params']['tpl']['enb_subscribe']));
+		$enbRecaptcha = (isset($popup['params']['tpl']['enb_captcha']) && !empty($popup['params']['tpl']['enb_captcha']));
 		if(($enbLogin || $enbReg)
 			&& framePps::_()->getModule('login') && !$onlyForceSub
 		) {
@@ -232,6 +233,11 @@ class subscribePps extends modulePps {
 					}
 				}
 			}
+		}
+		if(!empty($resHtml) && $enbRecaptcha && framePps::_()->getModule('sub_fields')) {
+			$resHtml .= htmlPps::recaptcha('recap', array(
+				'sitekey' => $popup['params']['tpl']['capt_site_key'],
+			));
 		}
 		return $resHtml;
 	}

@@ -64,9 +64,9 @@ img.efbl-loader {
 
 /* To fill the container and nothing else */
 
-.responsive , .responsive  span, .responsive  span iframe[style],  .responsive  span img {
+/*.responsive , .responsive  span, .responsive  span iframe[style],  .responsive  span img {
     width: 100% !important;
-}
+}*/
 
 /*Magnific popup CSS*/
 .white-popup {

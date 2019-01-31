@@ -10,37 +10,37 @@ class es_cls_common {
 		$returnstring = "";
 		switch ($value) {
 			case "Confirmed":
-				$returnstring = __( '<span style="color:#006600;font-weight:bold;">Confirmed</span>', ES_TDOMAIN );
+				$returnstring = __( '<span style="color:#006600;font-weight:bold;">Confirmed</span>', 'email-subscribers' );
 				break;
 			case "Unconfirmed":
-				$returnstring = __( '<span style="color:#FF0000">Unconfirmed</span>', ES_TDOMAIN );
+				$returnstring = __( '<span style="color:#FF0000">Unconfirmed</span>', 'email-subscribers' );
 				break;
 			case "Unsubscribed":
-				$returnstring = __( '<span style="color:#999900">Unsubscribed</span>', ES_TDOMAIN );
+				$returnstring = __( '<span style="color:#999900">Unsubscribed</span>', 'email-subscribers' );
 				break;
 			case "Single Opt In":
-				$returnstring = __( '<span style="color:#0000FF">Single Opt In</span>', ES_TDOMAIN );
+				$returnstring = __( '<span style="color:#0000FF">Single Opt In</span>', 'email-subscribers' );
 				break;
 			case "Viewed":
-				$returnstring = __( '<span style="color:#00CC00;font-weight:bold;">Viewed</span>', ES_TDOMAIN );
+				$returnstring = __( '<span style="color:#00CC00;font-weight:bold;">Viewed</span>', 'email-subscribers' );
 				break;
 			case "Nodata":
-				$returnstring = __( '<span style="color:#999900;">Nodata</span>', ES_TDOMAIN );
+				$returnstring = __( '<span style="color:#999900;">Nodata</span>', 'email-subscribers' );
 				break;
 			case "Disable":
-				$returnstring = __( '<span style="color:#FF0000">Disabled</span>', ES_TDOMAIN );
+				$returnstring = __( '<span style="color:#FF0000">Disabled</span>', 'email-subscribers' );
 				break;
 			case "In Queue":
-				$returnstring = __( '<span style="color:#FF0000">In Queue</span>', ES_TDOMAIN );
+				$returnstring = __( '<span style="color:#FF0000">In Queue</span>', 'email-subscribers' );
 				break;
 			case "Sent":
-				$returnstring = __( '<span style="color:#00FF00;font-weight:bold;">Sent</span>', ES_TDOMAIN );
+				$returnstring = __( '<span style="color:#00FF00;font-weight:bold;">Sent</span>', 'email-subscribers' );
 				break;
 			case "Cron":
-				$returnstring = __( '<span style="color:#20b2aa;font-weight:bold;">via Cron</span>', ES_TDOMAIN );
+				$returnstring = __( '<span style="color:#20b2aa;font-weight:bold;">via Cron</span>', 'email-subscribers' );
 				break;
 			case "Immediately":
-				$returnstring = __( '<span style="color:#993399;">Immediately</span>', ES_TDOMAIN );
+				$returnstring = __( '<span style="color:#993399;">Immediately</span>', 'email-subscribers' );
 				break;
 			default:
        			$returnstring = $value;

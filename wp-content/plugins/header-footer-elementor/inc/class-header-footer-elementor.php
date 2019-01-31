@@ -58,7 +58,13 @@ class Header_Footer_Elementor {
 
 			// Scripts and styles.
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+
 			add_filter( 'body_class', array( $this, 'body_class' ) );
+			add_action( 'switch_theme', array( $this, 'reset_unsupported_theme_notice' ) );
+
+			add_shortcode( 'hfe_template', array( $this, 'render_template' ) );
 
 		} else {
 
@@ -66,6 +72,17 @@ class Header_Footer_Elementor {
 			add_action( 'network_admin_notices', array( $this, 'elementor_not_available' ) );
 		}
 
+	}
+
+	/**
+	 * Reset the Unsupported theme nnotice after a theme is switched.
+	 *
+	 * @since 1.0.16
+	 *
+	 * @return void
+	 */
+	public function reset_unsupported_theme_notice() {
+		delete_user_meta( get_current_user_id(), 'hfe-sites-notices-id-unsupported-theme' );
 	}
 
 	/**
@@ -102,8 +119,7 @@ class Header_Footer_Elementor {
 		}
 
 		// Load the Admin Notice Class.
-		// Stop loading the comments class until it is required the next time.
-		// require_once HFE_DIR . 'inc/class-hfe-notices.php';.
+		require_once HFE_DIR . 'inc/class-hfe-notices.php';
 	}
 
 	/**
@@ -119,27 +135,48 @@ class Header_Footer_Elementor {
 	public function enqueue_scripts() {
 		wp_enqueue_style( 'hfe-style', HFE_URL . 'assets/css/header-footer-elementor.css', array(), HFE_VER );
 
-		if ( class_exists( '\Elementor\Post_CSS_File' ) ) {
+		if ( class_exists( '\Elementor\Plugin' ) ) {
+			$elementor = \Elementor\Plugin::instance();
+			$elementor->frontend->enqueue_styles();
+		}
 
-			if ( class_exists( '\Elementor\Plugin' ) ) {
-				$elementor = \Elementor\Plugin::instance();
-				$elementor->frontend->enqueue_styles();
-			}
+		if ( class_exists( '\ElementorPro\Plugin' ) ) {
+			$elementor_pro = \ElementorPro\Plugin::instance();
+			$elementor_pro->enqueue_styles();
+		}
 
-			if ( class_exists( '\ElementorPro\Plugin' ) ) {
-				$elementor_pro = \ElementorPro\Plugin::instance();
-				$elementor_pro->enqueue_styles();
-			}
-
-			if ( hfe_header_enabled() ) {
+		if ( hfe_header_enabled() ) {
+			if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
+				$css_file = new \Elementor\Core\Files\CSS\Post( get_hfe_header_id() );
+			} elseif ( class_exists( '\Elementor\Post_CSS_File' ) ) {
 				$css_file = new \Elementor\Post_CSS_File( get_hfe_header_id() );
-				$css_file->enqueue();
 			}
 
-			if ( hfe_footer_enabled() ) {
+			$css_file->enqueue();
+		}
+
+		if ( hfe_footer_enabled() ) {
+			if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
+				$css_file = new \Elementor\Core\Files\CSS\Post( get_hfe_footer_id() );
+			} elseif ( class_exists( '\Elementor\Post_CSS_File' ) ) {
 				$css_file = new \Elementor\Post_CSS_File( get_hfe_footer_id() );
-				$css_file->enqueue();
 			}
+
+			$css_file->enqueue();
+		}
+	}
+
+	/**
+	 * Load admin styles on header footer elementor edit screen.
+	 */
+	public function enqueue_admin_scripts() {
+		global $pagenow;
+		$screen = get_current_screen();
+
+		if ( ( 'elementor-hf' == $screen->id && ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) ) || ( 'edit.php' == $pagenow && 'edit-elementor-hf' == $screen->id ) ) {
+			wp_enqueue_style( 'hfe-admin-style', HFE_URL . 'admin/assets/css/ehf-admin.css', array(), HFE_VER );
+
+			wp_enqueue_script( 'hfe-admin-script', HFE_URL . 'admin/assets/js/ehf-admin.js', array(), HFE_VER );
 		}
 	}
 
@@ -174,20 +211,16 @@ class Header_Footer_Elementor {
 	public function setup_unsupported_theme_notice() {
 
 		if ( ! current_theme_supports( 'header-footer-elementor' ) ) {
-			add_action( 'admin_notices', array( $this, 'unsupported_theme' ) );
-			add_action( 'network_admin_notices', array( $this, 'unsupported_theme' ) );
+			HFE_Notices::add_notice(
+				array(
+					'id'          => 'unsupported-theme',
+					'type'        => 'error',
+					'dismissible' => true,
+					'message'     => __( 'Hey, your current theme is not supported by Header Footer Elementor, click <a href="https://github.com/Nikschavan/header-footer-elementor#which-themes-are-supported-by-this-plugin">here</a> to check out the supported themes.', 'header-footer-elementor' ),
+				)
+			);
 		}
 
-	}
-
-	/**
-	 * Prints an admin notics oif the currently installed theme is not supported by header-footer-elementor.
-	 */
-	public function unsupported_theme() {
-		$class   = 'notice notice-error';
-		$message = __( 'Hey, your current theme is not supported by Header Footer Elementor, click <a href="https://github.com/Nikschavan/header-footer-elementor#which-themes-are-supported-by-this-plugin">here</a> to check out the supported themes.', 'header-footer-elementor' );
-
-		printf( '<div class="%1$s"><p>%2$s</p></div>', $class, $message );
 	}
 
 	/**
@@ -216,7 +249,7 @@ class Header_Footer_Elementor {
 	 * @return mixed.
 	 */
 	public static function get_settings( $setting = '', $default = '' ) {
-		if ( 'type_header' == $setting || 'type_footer' == $setting ) {
+		if ( 'type_header' == $setting || 'type_footer' == $setting || 'type_before_footer' == $setting ) {
 			$templates = self::get_template_id( $setting );
 
 			$template = is_array( $templates ) ? $templates[0] : '';
@@ -274,6 +307,38 @@ class Header_Footer_Elementor {
 		}
 
 		return '';
+	}
+
+	/**
+	 * Callback to shortcode.
+	 *
+	 * @param array $atts attributes for shortcode.
+	 */
+	public function render_template( $atts ) {
+
+		$atts = shortcode_atts(
+			array(
+				'id' => '',
+			),
+			$atts,
+			'hfe_template'
+		);
+
+		$id = ! empty( $atts['id'] ) ? intval( $atts['id'] ) : '';
+
+		if ( empty( $id ) ) {
+			return '';
+		}
+
+		if ( class_exists( '\Elementor\Post_CSS_File' ) ) {
+
+			// Load elementor styles.
+			$css_file = new \Elementor\Post_CSS_File( $id );
+			$css_file->enqueue();
+		}
+
+		return self::$elementor_instance->frontend->get_builder_content_for_display( $id );
+
 	}
 
 }

@@ -34,8 +34,41 @@
 			}
 			 
 		});
+
+		$('.efbl_del_trans').click(function (){
+		 
+			/*
+			* Getting clicked option value.
+			*/	
+			var efbl_option = jQuery(this).data('efbl_trans');
+			
+
+			var data = { action : 'efbl_del_trans',
+				efbl_option : efbl_option
+				}
+				
+
+			jQuery.ajax({
+			url : efbl.ajax_url,
+			type : 'POST',
+			dataType: 'json',
+			data : data,
+			success : function( response ) {
+			
+					if(response.success){
+						jQuery('.form-table .'+response.data).slideUp('slow');
+						
+						
+					}
+					
+			}
+
+			});/* Ajax func ends here. */			
+
+			 
+		});	
 		
 
 	});
 
-}(jQuery));
+}(jQuery));	

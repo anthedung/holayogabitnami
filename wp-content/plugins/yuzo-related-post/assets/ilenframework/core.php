@@ -3947,13 +3947,14 @@ function delete_select2_to_dragdrop_{$value['name']}( id ){
 	for (i = 0; i < array_values.length; i++) { 
 
 		if( array_values[i] ){
+
 			if( id != array_values[i] ){
 				new_ids = new_ids + array_values[i]+'|';
 			}
 		}
 	}
- 
-	jQuery('.select2_search_post_{$value["name"]}_values').val(new_ids);
+
+	jQuery('#select2_search_post_{$value["name"]}_values').val(new_ids);
 	jQuery('#li_select2_item_'+id).remove();
 }
 
@@ -4746,6 +4747,7 @@ function fields_update($data,$is_tab = 1){
 	function IF_save_metabox( $post_id=0 ){
 		
 		//var_dump( $this->parameter );exit;
+ 		if ( isset($_POST['_inline_edit']) && wp_verify_nonce($_POST['_inline_edit'], 'inlineeditnonce')) return;
 
 		if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;// Bail if we're doing an auto save
 
@@ -4933,7 +4935,7 @@ function fields_update($data,$is_tab = 1){
 			wp_enqueue_script('ilentheme-script-admin', (isset($this->parameter['url_framework'])?$this->parameter['url_framework']:'') . '/core.js', array( 'jquery','jquery-ui-core','jquery-ui-tabs','wp-color-picker' ,'jquery-ui-accordion','jquery-ui-autocomplete','jquery-ui-sortable' ), $this->parameter['version'], true );
 			// Enqueue Scripts WP
 			if(function_exists( 'wp_enqueue_media' )){
-				//wp_enqueue_media();
+				@wp_enqueue_media();
 			}else{
 				wp_enqueue_script('media-upload'); // else put this
 				wp_enqueue_script('media-models');

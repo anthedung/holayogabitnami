@@ -1,51 +1,70 @@
-=== WP Htaccess Editor ===
-Contributors: Lukenzi
-Author URI: http://wp-blog.cz
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KM4GZAE9FVPSN
-Tags: simply,htaccess,file,editor,backup,admin
-Version: 1.3.0
-Requires at least: 3.0
-Tested up to: 3.8.1
-Stable tag: 1.3.0
+=== Htaccess Editor - Safely Edit Htaccess File ===
+Tags: htaccess, htaccess editor, htaccess file, htaccess backup, fix htaccess, modify htaccess, file editor
+Contributors: WebFactory, UnderConstructionPage, googlemapswidget, securityninja, wpreset
+Requires at least: 4.0
+Requires PHP: 5.2
+Tested up to: 5.0
+Stable tag: 1.55
 License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Simple editor htaccess file without using FTP client.
+A safe & simple htaccess file editor with automatic backup.
 
 == Description ==
 
-Simple editor *htaccess* file without using FTP client.
-**This plugin should be used only by experienced users!**
+<a href="https://wphtaccess.com/?utm_source=wordpressorg&utm_medium=content&utm_campaign=wp-htaccess-editor&utm_term=readme-top">WP Htaccess Editor</a> provides a **simple, safe & fast way** to edit the site's .htaccess file from WP admin. It automatically creates a backup every time you make a change to the htaccess file. Backups can be restored directly from the plugin, or via FTP if the errors in .htaccess file prevent WP from running normally. For all questions, including support please use the official <a href="https://wordpress.org/support/plugin/wp-htaccess-editor">forum</a>.
+
+Access WP Htaccess Editor via the "Tools" menu in WP admin.
+
+#### Automatic Backups
+
+Htaccess Editor makes automatic backups of htaccess file every time you make a change to it. Backups are located in `/wp-content/htaccess-editor-backups/` and timestamped so you can easily find the latest htaccess backup and restore it.
+
+The plugin was originally developed by <a href="https://profiles.wordpress.org/lukenzi">Lukenzi</a> in March of 2011.
 
 == Installation ==
 
-1. Extract the zip into the *wp-content/plugins* directory
-2. Activate the plugin through the Admin panel of your WordPress
-3. Go to Menu -> Htaccess
+Follow the usual routine;
+
+1. Open WordPress admin, go to Plugins, click Add New
+2. Enter "htaccess editor" in search and hit Enter
+3. Plugin will show up as the first on the list, click "Install Now"
+4. Activate & open plugin's settings page located under the Tools menu
+
+Or if needed, upload manually;
+
+1. Download the latest stable version from from <a href="https://downloads.wordpress.org/plugin/wp-htaccess-editor.latest-stable.zip">downloads.wordpress.org/plugin/wp-htaccess-editor.latest-stable.zip</a>
+2. Unzip it and upload to _/wp-content/plugins/_
+3. Open WordPress admin - Plugins and click "Activate" next to "WP Htaccess Editor"
+4. Open plugin's admin page located under the Tools menu
 
 
 == Screenshots ==
 
-1. Editing htaccess file
-2. Automatic backup htaccess file
-3. Manual backup htaccess file
+1. WP Htaccess Editor admin page
+2. Actions have to be double-confirmed to prevent accidents
 
-== Frequently Asked Questions ==
-
-= Can create or edit the htaccess file =
-If your hosting does not allow you to create or modify files on the server, use another (better) hosting :)
-
-= I edited my htaccess file and now my site does not work =
-You probably have a syntax error in the file or on the server you are not allowed any of the settings in your htaccess file.
-Try to restore the original backup file. If restoration is not possible with this plugin, restore the backup file from the folder "wp-content " manually.
 
 == Changelog ==
 
-= 1.3.0 =
+= v1.55 =
+* 2019/01/15
+* added code editor resize feature
+* fixed a few bugs
+* 40k installations hit on 2019-01-09 with 172,000 downloads
+
+= v1.50 =
+* 2018/12/21
+* WebFactory took over development
+* complete plugin rewrite
+* 30,000 installations; 162,200 downloads
+
+= v1.3.0 =
 * Added Spanish translation (Thanks to Andrew Kurtis from WebHostingHub.com)
 * Updated design
 * Updated info links
 
-= 1.2.0 =
+= v1.2.0 =
 * Improved code
 * Improved design
 * Improved security
@@ -55,10 +74,10 @@ Try to restore the original backup file. If restoration is not possible with thi
 * Updated screenshots
 * Adding plugin logo
 
-= 1.1.1 =
+= v1.1.1 =
 * Fixed CHMOD
 
-= 1.1.0 =
+= v1.1.0 =
 * Adding Czech and English language
 * Adding debug panel
 * Added information about the author and translators
@@ -67,11 +86,33 @@ Try to restore the original backup file. If restoration is not possible with thi
 * Optimized for minimum memory requirements
 * Small code modifications
 
-= 1.0.1 =
+= v1.0.1 =
 * Adding button for create .htaccess file if not exists
 * Fixed bug in the permissions to view the plugin
 * Optimized for smaller memory requirements
 
-= 1.0.0 =
+= v1.0.0 =
+* 2011/03/24
 * First stable version
 * Adding to WordPress repository
+
+== Frequently Asked Questions ==
+
+= I've killed my site! Help!? =
+
+Nothing is lost or deleted. You can easily get your site back.
+You're probably getting an error 500 or a white screen (of death). First connect to your site via FTP and locate the .htaccess file. Delete it, or rename it. Try the site again - it should open. If it did locate the backup of the old, working .htaccess file in `/wp-content/htaccess-editor-backups/` copy the file to your site's root folder and you're back in business.
+
+= I get an error saying the .htaccess file can't be edited or created =
+
+Sorry, we can't change the file access privileges set by your server. You'll have to edit the file via FTP.
+
+Head over to our <a href="https://wordpress.org/support/plugin/wp-htaccess-editor">support forums</a>. We'll gladly assist you.
+
+= How do I get support? =
+
+Head over to our <a href="https://wordpress.org/support/plugin/wp-htaccess-editor">support forums</a>. We'll gladly help you.
+
+= Do you support WP-CLI? =
+
+Not yet, but we plan to.

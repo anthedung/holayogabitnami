@@ -1153,12 +1153,13 @@ input[type="range"]::-webkit-slider-thumb {
 .ilenplugin-options .select-wrapper.ifonts_size{
   width: 40%;
 }
+.ilenwidget-options .row .b .row_checkbox_types_post{
+  height: 35px;
+}
 .ilenplugin-options .row.row_checkbox_types_post_inline .row_checkbox_types_post{
   display: inline-block;
   width: 32%;
 }
-
-
 
 
 

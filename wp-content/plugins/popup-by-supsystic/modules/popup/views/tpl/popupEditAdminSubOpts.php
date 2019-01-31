@@ -43,6 +43,16 @@
 		</tr>
 		<tr class="ppsPopupSubDestOpts ppsPopupSubDestOpts_wordpress">
 			<th scope="row">
+				<?php _e('Confirmation page reload time', PPS_LANG_CODE)?>
+				<i class="fa fa-question supsystic-tooltip" title="<?php _e('Time that require to Confirm page to be realoaded and redirect user to your site, in seconds. Usually - 10 seconds.', PPS_LANG_CODE)?>"></i>
+			</th>
+			<td>
+				<?php echo htmlPps::text('params[tpl][sub_confirm_reload_time]', array(
+					'value' => isset($this->popup['params']['tpl']['sub_confirm_reload_time']) ? $this->popup['params']['tpl']['sub_confirm_reload_time'] : 10))?>(sec)
+			</td>
+		</tr>
+		<tr class="ppsPopupSubDestOpts ppsPopupSubDestOpts_wordpress">
+			<th scope="row">
 				<?php _e('Export Subscribers', PPS_LANG_CODE)?>
 				<i class="fa fa-question supsystic-tooltip" title="<?php _e('Export all subscribers, who subscribed using WordPress "Subscribe to" method, as CSV file.', PPS_LANG_CODE)?>"></i>
 			</th>
@@ -246,6 +256,7 @@
 				'ymlp' => array('label' => __('Your Mailing List Provider (Ymlp)', PPS_LANG_CODE)),
 				'fourdem' => array('label' => __('4Dem.it', PPS_LANG_CODE)),
 				'dotmailer' => array('label' => __('Dotmailer', PPS_LANG_CODE)),
+				'madmimi' => array('label' => __('Mad Mimi', PPS_LANG_CODE)),
 			);
 		?>
 		<script type="text/javascript">
@@ -382,6 +393,48 @@
 					</span>
 				<?php }?>
 			</label>
+			<div style="clear: both;"></div>
+			<div class="ppsReCaptchaShell">
+				<label>
+					<?php echo htmlPps::checkbox('params[tpl][enb_captcha]', array(
+						'checked' => htmlPps::checkedOpt($this->popup['params']['tpl'], 'enb_captcha'),
+						'attrs' => 'class="ppsProOpt"',
+					))?>
+					<?php _e('Re-Captcha', PPS_LANG_CODE)?>
+				</label>
+				<?php if(!$this->isPro) {?>
+					<span class="ppsProOptMiniLabel" style="margin-bottom: 0; margin-top: -5px;">
+						<a target="_blank" href="<?php echo framePps::_()->getModule('supsystic_promo')->generateMainLink('utm_source=plugin&utm_medium=re_captcha&utm_campaign=popup');?>"><?php _e('PRO option', PPS_LANG_CODE)?></a>
+					</span>
+				<?php } else { ?>
+				<div class="ppsReCaptchaOptsShell">
+					<table class="form-table ppsSubShellOptsTbl">
+						<tr>
+							<th scope="row">
+								<?php _e('ReCaptcha Site Key', PPS_LANG_CODE)?>
+								<i class="fa fa-question supsystic-tooltip" title="<?php echo esc_html(sprintf(__('Your site key, generated on <a href="%s" target="_blank">%s</a>.', PPS_LANG_CODE), 'https://www.google.com/recaptcha/admin#list', 'https://www.google.com/recaptcha/admin#list'))?>"></i>
+							</th>
+							<td>
+								<?php echo htmlPps::text('params[tpl][capt_site_key]', array(
+									'value' => (isset($this->popup['params']['tpl']['capt_site_key']) ? $this->popup['params']['tpl']['capt_site_key'] : ''),
+								))?>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">
+								<?php _e('ReCaptcha Secret Key', PPS_LANG_CODE)?>
+								<i class="fa fa-question supsystic-tooltip" title="<?php echo esc_html(sprintf(__('Your secret key, generated on <a href="%s" target="_blank">%s</a>.', PPS_LANG_CODE), 'https://www.google.com/recaptcha/admin#list', 'https://www.google.com/recaptcha/admin#list'))?>"></i>
+							</th>
+							<td>
+								<?php echo htmlPps::text('params[tpl][capt_secret_key]', array(
+									'value' => (isset($this->popup['params']['tpl']['capt_secret_key']) ? $this->popup['params']['tpl']['capt_secret_key'] : ''),
+								))?>
+							</td>
+						</tr>						
+					</table>
+				</div>
+				<?php } ?>
+			</div>
 		</fieldset>
 	</div>
 	<table class="form-table ppsSubShellOptsTbl">
@@ -478,7 +531,6 @@
 					<?php echo htmlPps::checkbox('params[tpl][sub_redirect_to_btn_url]', array(
 						'checked' => htmlPps::checkedOpt($this->popup['params']['tpl'], 'sub_redirect_to_btn_url')))?>
 					<?php _e('Redirect to button URL', PPS_LANG_CODE)?>
-					
 				</label>
 			</td>
 		</tr>

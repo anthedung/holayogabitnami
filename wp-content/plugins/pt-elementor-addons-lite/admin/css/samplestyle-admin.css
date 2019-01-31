@@ -120,12 +120,17 @@ p.pt-desc-chck {
 }
 .border-bottom {
     border-bottom: 1px solid #007fc0;
-    width: 46%;
+    width: 23%;
     margin-top: -9px;
 }
 .border-bottom1 {
     border-bottom: 1px solid #007fc0;
-    width: 69%;
+    width: 34%;
+    margin-top: -9px;
+}
+.border-bottom2 {
+    border-bottom: 1px solid #007fc0;
+    width: 67%;
     margin-top: -9px;
 }
 .social-icon {
@@ -133,7 +138,7 @@ p.pt-desc-chck {
     font-size: 40px;
 }
 .sidebar h2 {
-    font-size: 25px;
+    font-size: 14px;
 }
 i.fa.fa-facebook-square:hover {
     color: #305db7;
@@ -164,4 +169,37 @@ i.fa.fa-pinterest-square:hover {
 }
 i.fa.fa-pinterest-square {
     color: #bd081c;
+}
+#mc_embed_signup form {
+   
+     padding: 0px !important;
+}
+#mc_embed_signup .button {
+    background-color: #ed0775 !important;
+	border-color: #ed0775 !important;
+}
+#mc_embed_signup .button:hover {
+    background: #ed0775d6 !important;
+}
+.sidebar.alignright.blue {
+    background-color: #007fc0;
+}
+#mc_embed_signup {
+    background: #007fc0 !important;
+  
+}
+.blue h2 {
+    color: #fff;
+}
+.blue label {
+    color: #fff;
+}
+.indicates-required {
+    color: #fff;
+}
+.blue p {
+    color: #fff;
+}
+.blue a {
+    color: #fff;
 }

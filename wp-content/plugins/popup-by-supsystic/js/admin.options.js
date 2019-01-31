@@ -9,7 +9,7 @@ jQuery(document).ready(function(){
 	if(typeof(ppsActiveTab) != 'undefined' && ppsActiveTab != 'main_page' && jQuery('#toplevel_page_popup-wp-supsystic').hasClass('wp-has-current-submenu')) {
 		var subMenus = jQuery('#toplevel_page_popup-wp-supsystic').find('.wp-submenu li');
 		subMenus.removeClass('current').each(function(){
-			if(jQuery(this).find('a[href$="&tab='+ ppsActiveTab+ '"]').size()) {
+			if(jQuery(this).find('a[href$="&tab='+ ppsActiveTab+ '"]').length) {
 				jQuery(this).addClass('current');
 			}
 		});
@@ -34,11 +34,11 @@ jQuery(document).ready(function(){
 		}
 	}, 1000);
 
-	if(jQuery('.ppsInputsWithDescrForm').size()) {
+	if(jQuery('.ppsInputsWithDescrForm').length) {
 		jQuery('.ppsInputsWithDescrForm').find('input[type=checkbox][data-optkey]').change(function(){
 			var optKey = jQuery(this).data('optkey')
 			,	descShell = jQuery('#ppsFormOptDetails_'+ optKey);
-			if(descShell.size()) {
+			if(descShell.length) {
 				if(jQuery(this).attr('checked')) {
 					descShell.slideDown( 300 );
 				} else {
@@ -71,7 +71,7 @@ jQuery(document).ready(function(){
 		});
 	});
 	// Go to Top button init
-	if(jQuery('#ppsPopupGoToTopBtn').size()) {
+	if(jQuery('#ppsPopupGoToTopBtn').length) {
 		jQuery('#ppsPopupGoToTopBtn').click(function(){
 			jQuery('html, body').animate({
 				scrollTop: 0
@@ -89,24 +89,24 @@ jQuery(document).ready(function(){
 	//,	animation: 'swing'
 	,	maxWidth: 450
 	};
-	if(jQuery('.supsystic-tooltip').size()) {
+	if(jQuery('.supsystic-tooltip').length) {
 		tooltipsterSettings.position = 'top-left';
 		jQuery('.supsystic-tooltip').tooltipster( tooltipsterSettings );
 	}
-	if(jQuery('.supsystic-tooltip-bottom').size()) {
+	if(jQuery('.supsystic-tooltip-bottom').length) {
 		tooltipsterSettings.position = 'bottom-left';
 		jQuery('.supsystic-tooltip-bottom').tooltipster( tooltipsterSettings );
 	}
-	if(jQuery('.supsystic-tooltip-left').size()) {
+	if(jQuery('.supsystic-tooltip-left').length) {
 		tooltipsterSettings.position = 'left';
 		jQuery('.supsystic-tooltip-left').tooltipster( tooltipsterSettings );
 	}
-	if(jQuery('.supsystic-tooltip-right').size()) {
+	if(jQuery('.supsystic-tooltip-right').length) {
 		tooltipsterSettings.position = 'right';
 		jQuery('.supsystic-tooltip-right').tooltipster( tooltipsterSettings );
 	}*/
 	ppsInitTooltips();
-	if(jQuery('.ppsCopyTextCode').size()) {
+	if(jQuery('.ppsCopyTextCode').length) {
 		setTimeout(function(){	// Give it some time - wait until all other elements will be initialized
 			var cloneWidthElement =  jQuery('<span class="sup-shortcode" />').appendTo('.supsystic-plugin');
 			jQuery('.ppsCopyTextCode').attr('readonly', 'readonly').click(function(){
@@ -151,7 +151,7 @@ function ppsInitTooltips( selector ) {
 	for(var k in findPos) {
 		if(typeof(k) === 'string') {
 			var $tips = $findIn ? $findIn.find( k ) : jQuery( k ).not('.sup-no-init');
-			if($tips && $tips.size()) {
+			if($tips && $tips.length) {
 				tooltipsterSettings.position = findPos[ k ];
 				// Fallback for case if library was not loaded
 				if(!$tips.tooltipster) continue;
@@ -200,17 +200,17 @@ function ppsInitStickyItem() {
 		,	wpTollbarHeight = 32
 		,	wndScrollTop = jQuery(window).scrollTop() + wpTollbarHeight
 		,	footer = jQuery('.ppsAdminFooterShell')
-		,	footerHeight = footer && footer.size() ? footer.height() : 0
+		,	footerHeight = footer && footer.length ? footer.height() : 0
 		,	docHeight = jQuery(document).height()
 		,	wasSticking = false
 		,	wasUnSticking = false;
-		/*if(jQuery('#wpbody-content .update-nag').size()) {	// Not used for now
+		/*if(jQuery('#wpbody-content .update-nag').length) {	// Not used for now
 			wpTollbarHeight += parseInt(jQuery('#wpbody-content .update-nag').outerHeight());
 		}*/
 		for(var i = 0; i < stickiItemsSelectors.length; i++) {
 			jQuery(stickiItemsSelectors[ i ]).each(function(){
 				var element = jQuery(this);
-				if(element && element.size() && !element.hasClass('sticky-ignore')) {
+				if(element && element.length && !element.hasClass('sticky-ignore')) {
 					var scrollMinPos = element.offset().top
 					,	prevScrollMinPos = parseInt(element.data('scrollMinPos'))
 					,	useNextElementPadding = toeInArray(stickiItemsSelectors[ i ], elementsUsePaddingNext) !== -1 || element.hasClass('sticky-padd-next')
@@ -233,7 +233,7 @@ function ppsInitStickyItem() {
 						if(useNextElementPadding) {
 							//element.addClass('supsystic-sticky-active-bordered');
 							var nextElement = element.next();
-							if(nextElement && nextElement.size()) {
+							if(nextElement && nextElement.length) {
 								nextElement.data('prevPaddingTop', nextElement.css('padding-top'));
 								var addToNextPadding = parseInt(element.data('next-padding-add'));
 								addToNextPadding = addToNextPadding ? addToNextPadding : 0;
@@ -257,7 +257,7 @@ function ppsInitStickyItem() {
 						if(useNextElementPadding) {
 							//element.removeClass('supsystic-sticky-active-bordered');
 							var nextElement = element.next();
-							if(nextElement && nextElement.size()) {
+							if(nextElement && nextElement.length) {
 								var nextPrevPaddingTop = parseInt(nextElement.data('prevPaddingTop'));
 								if(isNaN(nextPrevPaddingTop))
 									nextPrevPaddingTop = 0;
@@ -292,10 +292,10 @@ function ppsInitStickyItem() {
 			});
 		}
 		if(wasSticking) {
-			if(jQuery('#ppsPopupGoToTop').size())
+			if(jQuery('#ppsPopupGoToTop').length)
 				jQuery('#ppsPopupGoToTop').show();
 		} else if(wasUnSticking) {
-			if(jQuery('#ppsPopupGoToTop').size())
+			if(jQuery('#ppsPopupGoToTop').length)
 				jQuery('#ppsPopupGoToTop').hide();
 		}
 	});
@@ -312,13 +312,13 @@ function ppsInitCustomCheckRadio(selector) {
 		jQuery(this).trigger('change');
 		if(jQuery(this).hasClass('cbox')) {
 			var parentRow = jQuery(this).parents('.jqgrow:first');
-			if(parentRow && parentRow.size()) {
+			if(parentRow && parentRow.length) {
 				jQuery(this).parents('td:first').trigger('click');
 			} else {
 				var checkId = jQuery(this).attr('id');
 				if(checkId && checkId != '' && strpos(checkId, 'cb_') === 0) {
 					var parentTblId = str_replace(checkId, 'cb_', '');
-					if(parentTblId && parentTblId != '' && jQuery('#'+ parentTblId).size()) {
+					if(parentTblId && parentTblId != '' && jQuery('#'+ parentTblId).length) {
 						jQuery('#'+ parentTblId).find('input[type=checkbox]').iCheck('update');
 					}
 				}
@@ -442,7 +442,7 @@ function prepareToPlotDate(data) {
 }
 function ppsInitPlugNotices() {
 	var $notices = jQuery('.supsystic-admin-notice');
-	if($notices && $notices.size()) {
+	if($notices && $notices.length) {
 		$notices.each(function(){
 			jQuery(this).find('.notice-dismiss').click(function(){
 				var $notice = jQuery(this).parents('.supsystic-admin-notice');
@@ -464,7 +464,7 @@ function ppsInitPlugNotices() {
 					return false;
 			});
 			var $enbStatsBtn = jQuery(this).find('.ppsEnbStatsAdBtn');
-			if($enbStatsBtn && $enbStatsBtn.size()) {
+			if($enbStatsBtn && $enbStatsBtn.length) {
 				$enbStatsBtn.click(function(){
 					jQuery.sendFormPps({
 						data: {mod: 'supsystic_promo', action: 'enbStatsOpt'}
@@ -509,7 +509,7 @@ function ppsInitMainPromoPopup() {
 			}
 			if(isRadio) {
 				jQuery('input[name="'+ jQuery(this).attr('name')+ '"]:first').parents('label:first').click();
-				if(jQuery(this).parents('.iradio_minimal:first').size()) {
+				if(jQuery(this).parents('.iradio_minimal:first').length) {
 					var self = this;
 					setTimeout(function(){
 						jQuery(self).parents('.iradio_minimal:first').removeClass('checked');
@@ -517,14 +517,14 @@ function ppsInitMainPromoPopup() {
 				}
 			}
 			var parent = null;
-			if(jQuery(this).parents('#ppsPopupMainOpts').size()) {
+			if(jQuery(this).parents('#ppsPopupMainOpts').length) {
 				parent = jQuery(this).parents('label:first');
-			} else if(jQuery(this).parents('.ppsPopupOptRow:first').size()) {
+			} else if(jQuery(this).parents('.ppsPopupOptRow:first').length) {
 				parent = jQuery(this).parents('.ppsPopupOptRow:first');
 			} else {
 				parent = jQuery(this).parents('tr:first');
 			}
-			if(!parent.size()) return;
+			if(!parent.length) return;
 			var promoLink = parent.find('.ppsProOptMiniLabel a').attr('href');
 			if(promoLink && promoLink != '') {
 				jQuery('#ppsOptInProWnd a').attr('href', promoLink);

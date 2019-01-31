@@ -337,14 +337,16 @@ class utilsPps {
 			add_action('activated_plugin', array(framePps::_(), 'savePluginActivationErrors'));
 		}
         if (function_exists('is_multisite') && is_multisite()) {
-            $orig_id = $wpdb->blogid;
+			// $orig_id = $wpdb->blogid;
             $blog_id = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
             foreach ($blog_id as $id) {
                 if (switch_to_blog($id)) {
                     installerPps::init();
+					restore_current_blog();
                 } 
             }
-            switch_to_blog($orig_id);
+			// restore_current_blog();
+			// switch_to_blog($orig_id);
             return;
         } else {
             installerPps::init();
@@ -359,14 +361,16 @@ class utilsPps {
     static public function deletePlugin() {
         global $wpdb;
         if (function_exists('is_multisite') && is_multisite()) {
-            $orig_id = $wpdb->blogid;
+			// $orig_id = $wpdb->blogid;
             $blog_id = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
             foreach ($blog_id as $id) {
                 if (switch_to_blog($id)) {
                     installerPps::delete();
+					restore_current_blog();
                 } 
             }
-            switch_to_blog($orig_id);
+			// restore_current_blog();
+			// switch_to_blog($orig_id);
             return;
         } else {
             installerPps::delete();
@@ -375,14 +379,16 @@ class utilsPps {
 	static public function deactivatePlugin() {
 		global $wpdb;
         if (function_exists('is_multisite') && is_multisite()) {
-            $orig_id = $wpdb->blogid;
+			// $orig_id = $wpdb->blogid;
             $blog_id = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
             foreach ($blog_id as $id) {
                 if (switch_to_blog($id)) {
                     installerPps::deactivate();
+					restore_current_blog();
                 } 
             }
-            switch_to_blog($orig_id);
+			// restore_current_blog();
+			// switch_to_blog($orig_id);
             return;
         } else {
             installerPps::deactivate();

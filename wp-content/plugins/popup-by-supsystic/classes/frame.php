@@ -200,7 +200,7 @@ class framePps {
 				if(!empty($noncedMethods)) {
 					$noncedMethods = array_map('strtolower', $noncedMethods);
 					if(in_array($action, $noncedMethods)) {
-						$nonce = isset($_REQUEST['_wpnonce']) ? $_REQUEST['_wpnonce'] : reqCfs::getVar('_wpnonce');
+						$nonce = isset($_REQUEST['_wpnonce']) ? $_REQUEST['_wpnonce'] : reqPps::getVar('_wpnonce');
 						if(!wp_verify_nonce( $nonce, $action )) {
 							$res = false;
 						}

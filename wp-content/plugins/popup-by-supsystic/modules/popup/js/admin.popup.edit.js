@@ -171,7 +171,7 @@ jQuery(document).ready(function(){
 		,	nameReplaced = pps_str_replace( pps_str_replace( pps_str_replace(name, '][', '_'), '[', '_'), ']', '_' )
 		,	nameValueReplaced = nameReplaced+ value
 		,	descShell = jQuery('#ppsOptDesc_'+ nameValueReplaced);
-		if(descShell.size()) {
+		if(descShell.length) {
 			jQuery(this).attr('checked') ? descShell.slideDown( g_ppsAnimationSpeed ) : descShell.slideUp( g_ppsAnimationSpeed );
 		}
 	}).change();
@@ -210,7 +210,55 @@ jQuery(document).ready(function(){
 			});
 		}
 	});
-	jQuery('.ppsPopupAnimEff').click(function(){
+	var animSelector = {
+		_forClose: false
+	,	init: function() {
+			// Events init
+			var self = this;
+			jQuery('.ppsPopupAnimEff').click(function(){
+				var animElement = jQuery(this).find('.ppsPopupAnimEffLabel:first');
+				self._setAnim( animElement.data('key') );
+				return false;
+			});
+			jQuery('#ppsOpenCloseAnimSwitchBtn').click(function(){
+				self._switchClose();
+				return false;
+			});
+			// First data init
+			this._setCloseSwitchBtn();
+			var activeAnimKey = ppsPopup.params.tpl && ppsPopup.params.tpl.anim_key ? ppsPopup.params.tpl.anim_key : 'none';
+			if(activeAnimKey) {
+				this._setAnim(activeAnimKey);
+			}
+		}
+	,	_setAnim: function(key) {
+			jQuery('.ppsPopupAnimEff').removeClass('active');
+			var animElement = jQuery('.ppsPopupAnimEffLabel[data-key="'+ key+ '"]')
+			animElement.parents('.ppsPopupAnimEff:first').addClass('active');
+			jQuery('#ppsPopupEditForm').find(this._forClose 
+					? '[name="params[tpl][anim_close_key]"]'
+					: '[name="params[tpl][anim_key]"]').val( key );
+			jQuery('#ppsPopupAnimCurrStyle').html( animElement.data('label') );
+		}
+	,	_switchClose: function() {
+			this._forClose = !this._forClose;
+			var animKey = jQuery('#ppsPopupEditForm').find(this._forClose 
+					? '[name="params[tpl][anim_close_key]"]'
+					: '[name="params[tpl][anim_key]"]').val();
+			if(!animKey || animKey == '')
+				animKey = 'none';
+			this._setAnim(animKey);
+			this._setCloseSwitchBtn();
+		}
+	,	_setCloseSwitchBtn: function() {
+			var $btn = jQuery('#ppsOpenCloseAnimSwitchBtn');
+			$btn.html( $btn.data(this._forClose ? 'txt-open' : 'txt-close') );
+			jQuery((this._forClose ? '.ppsAnimOpenRow' : '.ppsAnimCloseRow')).hide( g_ppsAnimationSpeed );
+			jQuery((this._forClose ? '.ppsAnimCloseRow' : '.ppsAnimOpenRow')).show( g_ppsAnimationSpeed );
+		}
+	};
+	animSelector.init();
+	/*jQuery('.ppsPopupAnimEff').click(function(){
 		jQuery('.ppsPopupAnimEff').removeClass('active');
 		jQuery(this).addClass('active');
 		var animElement = jQuery(this).find('.ppsPopupAnimEffLabel:first');
@@ -218,14 +266,20 @@ jQuery(document).ready(function(){
 		jQuery('#ppsPopupEditForm').find('[name="params[tpl][anim_key]"]').val( key ).trigger('change');
 		jQuery('#ppsPopupAnimCurrStyle').html( animElement.data('label') );
 		return false;
-	});
-	var activeAnimKey = ppsPopup.params.tpl && ppsPopup.params.tpl.anim_key ? ppsPopup.params.tpl.anim_key : 'none';
+	});*/
+	/*var activeAnimKey = ppsPopup.params.tpl && ppsPopup.params.tpl.anim_key ? ppsPopup.params.tpl.anim_key : 'none';
 	if(activeAnimKey) {
 		var animElement = jQuery('.ppsPopupAnimEffLabel[data-key="'+ activeAnimKey+ '"]')
 		animElement.parents('.ppsPopupAnimEff:first').addClass('active');
 		jQuery('#ppsPopupEditForm').find('[name="params[tpl][anim_key]"]').val( activeAnimKey );
 		jQuery('#ppsPopupAnimCurrStyle').html( animElement.data('label') );
-	}
+	}*/
+	/*var g_ppsAnimForClose = true;
+	jQuery('#ppsOpenCloseAnimSwitchBtn').click(function(){
+		g_ppsAnimForClose = !g_ppsAnimForClose;
+		
+		return false;
+	}).trigger('click');*/
 	jQuery('.ppsPopupPreviewBtn').click(function(){
 		jQuery('html, body').animate({
 			scrollTop: jQuery("#ppsPopupPreview").offset().top
@@ -446,7 +500,7 @@ jQuery(document).ready(function(){
 	}).change();
 	// Vimeo extra fuscreen option manpulations
 	var $videoUrlInp = jQuery('#ppsPopupEditForm').find('[name="params[tpl][video_url]"]');
-	if($videoUrlInp.size()) {
+	if($videoUrlInp.length) {
 		$videoUrlInp.change(function(){
 			var videoUrl = jQuery(this).val();
 			if(videoUrl.indexOf('vimeo') === -1) {
@@ -456,6 +510,7 @@ jQuery(document).ready(function(){
 			}
 		}).change();
 	}
+	jQuery("#ppsPopupEditTabs .tooltipstered").removeAttr("title");
 });
 function ppsAddEmailAttach(params) {
 	var $parent = params.$parentShell

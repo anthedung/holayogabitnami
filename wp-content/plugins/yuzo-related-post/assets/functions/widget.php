@@ -947,24 +947,25 @@ function widget($args,$instance){
 	//if( $wp_query->post_count != 0 ){ // if have result in loop post
 	if( $rebuilt_query ){
 
-		if( $yuzo_option_widget->yuzo_widget_as == 'related' ){
+		// Categories on which related thumbnails will appear
+		$object_current_categories_of_post = get_the_category($post->ID);
+		$array_current_categories_of_post = array();
+		if( $object_current_categories_of_post ){ foreach($object_current_categories_of_post as $value_cat) $array_current_categories_of_post[] = (string)$value_cat->term_id; }
 
-
-			// Categories on which related thumbnails will appear
-			$object_current_categories_of_post = get_the_category($post->ID);
-			$array_current_categories_of_post = array();
-			if( $object_current_categories_of_post ){ foreach($object_current_categories_of_post as $value_cat) $array_current_categories_of_post[] = (string)$value_cat->term_id; }
-
-			if( isset($yuzo_option_widget->categories) && (array)$yuzo_option_widget->categories ){
-				if( !in_array("-1",$yuzo_option_widget->categories) ){
-					$containsSearch = array_intersect($yuzo_option_widget->categories, $array_current_categories_of_post);
-					if( ! $containsSearch ){
-						return;
-					}
+		if( isset($yuzo_option_widget->categories) && (array)$yuzo_option_widget->categories ){
+			if( !in_array("-1",$yuzo_option_widget->categories) ){
+				$containsSearch = array_intersect($yuzo_option_widget->categories, $array_current_categories_of_post);
+				if( ! $containsSearch ){
+					return;
 				}
 			}
+		}
 
 
+
+		if( $yuzo_option_widget->yuzo_widget_as == 'related' ){
+
+ 
 			// Exclude category and set categories
 			$array_categories_to_show = array();
 			$string_categories_to_show = null;
@@ -1189,8 +1190,11 @@ function widget($args,$instance){
 						// prepare parameters
 						$args_sql = null;
 						if( $yuzo_option_widget->show_list == 'most-view' ){
-
+							
 							$meta_view_widget = "";
+							$args_sql = array(
+												'posts_per_page'  => (int)$yuzo_option_widget->number_post,
+												'showposts'       => isset($yuzo_option_widget->number_post)?$yuzo_option_widget->number_post:0);
 							if( isset($yuzo_option_widget->meta_views) && $yuzo_option_widget->meta_views == 'yuzo-views'  ){
 								$meta_view_widget = "yuzo_views";
 							}elseif( isset($yuzo_option_widget->meta_views) && $yuzo_option_widget->meta_views == 'other' ){
@@ -1199,7 +1203,8 @@ function widget($args,$instance){
 
 							$args_sql = array(  'meta_key'        => $yuzo_option_widget->meta_views_custom,
 												'orderby'         => 'meta_value_num',
-												'posts_per_page'  => (int)$yuzo_option_widget->number_post);
+												'posts_per_page'  => (int)$yuzo_option_widget->number_post,
+												'showposts'       => isset($yuzo_option_widget->number_post)?$yuzo_option_widget->number_post:0);
 
 
 
@@ -1265,8 +1270,9 @@ function widget($args,$instance){
 								$interval_filter 
 								ORDER BY views DESC
 								LIMIT 0,$yuzo_option_widget->number_post";
-
+						//echo $sql;
 						$array_ids = $wpdb->get_results(  $sql , ARRAY_A );
+						//var_dump( $array_ids );
 
 						if( is_array($array_ids) ){
 
@@ -1275,13 +1281,16 @@ function widget($args,$instance){
 							}
 
 						}
-
+						//var_dump($post_in);
 
 						// validate order most views
 						//var_dump($yuzo_option_widget->show_list);
 						if( $yuzo_option_widget->show_list == 'most-view' ){
+							$args_sql['posts_per_page'] = (int)$yuzo_option_widget->number_post;
+							$args_sql['showposts'] = isset($yuzo_option_widget->number_post)?$yuzo_option_widget->number_post:0;
 							$args_sql["order"] = '';
 							$args_sql["orderby"] = 'post__in';
+
 						}
 
 
@@ -1354,8 +1363,9 @@ function widget($args,$instance){
 
 	} // rebuilt query
 
-	if( isset($yuzo_option_widget->categories) && $yuzo_option_widget->categories ){
-		if( !in_array("-1", (array)$yuzo_option_widget->categories) ){
+	if(  $yuzo_option_widget->yuzo_widget_as != 'list-post' && isset($yuzo_option_widget->categories) && $yuzo_option_widget->categories ){
+		
+		if( !(in_array("-1", (array)$yuzo_option_widget->categories) && count($yuzo_option_widget->categories) == 1) ){
 			if( is_array($yuzo_option_widget->categories) ){
 				// $string_categories_to_show = implode(",",$yuzo_option_widget->categories);		
 				$args_sql['tax_query'] = array(
@@ -1391,6 +1401,7 @@ function widget($args,$instance){
 		}
 
 	}
+	//var_dump( $the_query_yuzo->request );
 	//echo $the_query_yuzo->request;
 	//print_r( $args_sql );
 	

@@ -5,7 +5,7 @@ jQuery(document).ready(function(){
 	} else {			// Creating new popup
 		ppsInitCreatePopupDialog();
 	}
-	if(jQuery('.ppsTplPrevImg').size()) {	// If on creation page
+	if(jQuery('.ppsTplPrevImg').length) {	// If on creation page
 		ppsAdjustPreviewSize();
 		jQuery(window).resize(function(){
 			ppsAdjustPreviewSize();

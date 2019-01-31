@@ -3,14 +3,22 @@
  * Plugin Name: PT Elementor Addons Lite
  * Description: Elements bundle for Elementor Plugin for WordPress. <a href="https://www.paramthemes.com">Get Premium version</a>.
  * Plugin URI:  https://www.paramthemes.com
- * Version:     1.3.2
+ * Version:     1.3.4
  *
  * @package PT Elementor Addons
  * Author:      paramthemes
  * Author URI:  https://www.paramthemes.com/
  * Text Domain: pt-elementor-addons
  */
+register_activation_hook( __FILE__, 'pt_is_elementor_plugin_activate' );
+function pt_is_elementor_plugin_activate(){
 
+    // Require parent plugin
+    if ( ! is_plugin_active( 'elementor/elementor.php' ) and current_user_can( 'activate_plugins' ) ) {
+        // Stop activation redirect and show error
+        wp_die('Sorry, but this plugin requires the Elementor Plugin to be installed and active. <br><a href="' . admin_url( 'plugins.php' ) . '">&laquo; Return to Plugins</a>');
+    }
+}
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

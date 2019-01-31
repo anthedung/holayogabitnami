@@ -15,7 +15,7 @@ $result = es_cls_sentmail::es_sentmail_count($did);
 if ($result != '1') {
 	?><div class="error fade">
 		<p><strong>
-			<?php echo __( 'Oops, selected details does not exists.', ES_TDOMAIN ); ?>
+			<?php echo __( 'Oops, selected details does not exists.', 'email-subscribers' ); ?>
 		</strong></p>
 	</div><?php
 }
@@ -24,11 +24,11 @@ if ($result != '1') {
 
 <div class="wrap">
 	<h2 style="margin-bottom:1em;">
-		<?php echo __( 'Preview Email', ES_TDOMAIN ); ?>
-		<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', ES_TDOMAIN ); ?></a>
+		<?php echo __( 'Preview Email', 'email-subscribers' ); ?>
+		<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', 'email-subscribers' ); ?></a>
 	</h2>
 	<p>
-		<?php echo __( 'This is how the email you sent may look. <br>Note: Different email services (like gmail, yahoo etc) display email content differently. So there could be a slight variation on how your customer will view the email content.', ES_TDOMAIN ); ?>
+		<?php echo __( 'This is how the email you sent may look. <br>Note: Different email services (like gmail, yahoo etc) display email content differently. So there could be a slight variation on how your customer will view the email content.', 'email-subscribers' ); ?>
 	</p>
 	<div class="tool-box">
 		<div style="padding:15px;background-color:#FFFFFF;">
@@ -50,7 +50,7 @@ if ($result != '1') {
 		</div>
 		<div class="tablenav">
 			<h2>
-				<a class="button-primary" href="<?php echo ES_ADMINURL; ?>?page=es-sentmail&pagenum=<?php echo $pagenum; ?>"><?php echo __( 'Back', ES_TDOMAIN ); ?></a>
+				<a class="button-primary" href="<?php echo ES_ADMINURL; ?>?page=es-sentmail&pagenum=<?php echo $pagenum; ?>"><?php echo __( 'Back', 'email-subscribers' ); ?></a>
 			</h2>
 		</div>
 	</div>

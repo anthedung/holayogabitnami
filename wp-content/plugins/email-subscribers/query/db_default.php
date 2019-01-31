@@ -41,7 +41,7 @@ class es_cls_default {
 			$default['ig_es_confirmcontent'] = "Hi {{NAME}},\r\n\r\nWe have received a subscription request from this email address. Please confirm it by <a href='{{LINK}}'>clicking here</a>.\r\n\r\nIf you still cannot subscribe, please copy this link and paste it in your browser :\r\n{{LINK}} \r\n\r\nThank You\r\n".$blogname;
 			$default['ig_es_optinlink'] = $optinlink;
 			$default['ig_es_unsublink'] = $unsublink;
-			$default['ig_es_unsubcontent'] = "No longer interested in emails from ".$blogname."?. Please <a href='{{LINK}}'>click here</a> to unsubscribe";
+			$default['ig_es_unsubcontent'] = "No longer interested in emails from ".$blogname."? Please <a href='{{LINK}}'>click here</a> to unsubscribe.";
 			$default['ig_es_unsubtext'] = "Thank You, You have been successfully unsubscribed. You will no longer hear from us.";
 			$default['ig_es_successmsg'] = "You have been successfully subscribed.";
 			$default['ig_es_suberror'] = "Oops.. Your request couldn't be completed. This email address seems to be already subscribed / blocked.";
@@ -56,11 +56,64 @@ class es_cls_default {
 		return true;
 	}
 
-	public static function es_template_default() {
+	public static function es_default_widget( $sidebars_widgets ){
+		$set_widget = get_option( 'ig_es_set_widget', 'no' );
+		$ig_es_sample_data_imported = get_option( 'ig_es_sample_data_imported', 'no' );
+		if ( 'yes' === $set_widget  || 'yes' === $ig_es_sample_data_imported ) return;
+		$sidebars_widgets = get_option( 'sidebars_widgets' );
+		$widget_email_subscribers_1 = get_option( 'widget_email-subscribers' );
+		if ( empty( $widget_email_subscribers_1 ) || ! is_array( $widget_email_subscribers_1 ) ) {
+			$widget_email_subscribers_1 = array(
+														'_multiwidget' => 1
+													);
+		}
 
+		$instance = array();
+		$instance['es_pre'] = 'widget';
+		$instance['es_group'] = 'Public';
+		$instance['es_desc'] = '';
+		$instance['es_name'] = 'YES';
+		if ( count( $widget_email_subscribers_1 ) < 2 ) {
+			$widget_email_subscribers_1[] = $instance;
+		}
+
+		end( $widget_email_subscribers_1 );
+		$last_id = key( $widget_email_subscribers_1 );
+
+		update_option( 'widget_email-subscribers', $widget_email_subscribers_1 );
+
+		if ( ! empty( $sidebars_widgets ) ) {
+			foreach ( $sidebars_widgets as $key => $sidebars_widget ) {
+				if ( strpos( $key, 'sidebar' ) !== false && ! in_array( 'email-subscribers-' . $last_id, $sidebars_widgets[ $key ] ) ) {
+					if ( empty( $sidebars_widgets[ $key ] ) || ! is_array( $sidebars_widgets[ $key ] ) ) {
+						$sidebars_widgets[ $key ] = array();
+					}
+					if ( count( $sidebars_widgets[ $key ] ) > 1 ) {
+						array_splice( $sidebars_widgets[ $key ], 1, 0, 'email-subscribers-' . $last_id );
+					} else {
+						$sidebars_widgets[ $key ][] = 'email-subscribers-' . $last_id;
+					}
+					break;
+				}
+			}
+		} else {
+			$sidebars_widgets = array(
+									'sidebar-0' => array( 'email-subscribers-' . $last_id )
+								);
+		}
+
+		update_option( 'sidebars_widgets', $sidebars_widgets );
+
+		update_option( 'ig_es_set_widget', 'yes' );
+
+	}
+
+	public static function es_template_default() {
 		// Temp workaround - in future use option=ig_es_sample_data_imported to check against
-		$result = es_cls_dbquery::es_view_subscriber_count(0);
-		if ($result == 0) {
+		$ig_es_default_subscriber_imported = get_option( 'ig_es_default_subscriber_imported', 'no');
+		$ig_es_sample_data_imported = get_option( 'ig_es_sample_data_imported', 'no' );
+		if ( 'yes' === $ig_es_sample_data_imported ) return;
+		if ( 'yes' === $ig_es_default_subscriber_imported) {
 
 			//Adding a sample Post Notification Template
 			$es_b = "Hello {{NAME}},\r\n\r\n";
@@ -85,7 +138,7 @@ class es_cls_default {
 			$last_inserted_id = wp_insert_post( $es_post );
 			
 			// Adding a Post Notification for above created template
-			$form["es_note_group"] = "Public";
+			$form["es_note_group"] = "Test";
 			$form["es_note_status"] = "Enable";
 			$form["es_note_templ"] = $last_inserted_id;
 
@@ -103,7 +156,10 @@ class es_cls_default {
 			}
 			$form["es_note_cat"] = $listcategory;
 			es_cls_notification::es_notification_ins($form, "insert");
-
+			$latest_post = get_posts("post_type=post&numberposts=1");
+			if($latest_post[0]->ID > 0 ){ // check if exists
+				es_cls_sendmail::es_prepare_notification( 'publish', 'draft', $latest_post[0]->ID );
+			}
 			// Adding a sample Newsletter Template
 			$Sample = '<strong style="color: #990000">What can you achieve using Email Subscribers?</strong><p>Add subscription forms on website, send HTML newsletters & automatically notify subscribers about new blog posts once it is published.';
 			$Sample .= ' You can also Import or Export subscribers from any list to Email Subscribers.</p>';
@@ -128,10 +184,10 @@ class es_cls_default {
 			);
 			// Insert the post into the database
 			$last_inserted_id = wp_insert_post( $es_post );
-
-			update_option( 'ig_es_sample_data_imported', 'yes' );
+			//sending first newsletter to test group
+			es_cls_sendmail::es_prepare_newsletter_manual( $last_inserted_id, "Immediately", "Test" );
+				
 		}
-
 		return true;
 	}
 
@@ -139,17 +195,16 @@ class es_cls_default {
 
 		$result = es_cls_dbquery::es_view_subscriber_count(0);
 		if ($result == 0) {
+			$form['es_nonce'] = wp_create_nonce( 'es-subscribe' );
 			$form["es_email_mail"] = get_option('admin_email');
 			$form["es_email_name"] = "Admin";
-			$form["es_email_group"] = "Public";
+			$form["es_email_group"] = "Test";
 			$form["es_email_status"] = "Confirmed";
-			es_cls_dbquery::es_view_subscriber_ins($form, "insert");
+			$res = es_cls_dbquery::es_view_subscriber_ins($form, "insert");
+			if('sus' === $res){
+				update_option( 'ig_es_default_subscriber_imported', 'yes' );
+			}
 
-			$form["es_email_mail"] = "a.example@example.com";
-			$form["es_email_name"] = "Example";
-			$form["es_email_group"] = "Public";
-			$form["es_email_status"] = "Confirmed";
-			es_cls_dbquery::es_view_subscriber_ins($form, "insert");
 		}
 
 		return true;

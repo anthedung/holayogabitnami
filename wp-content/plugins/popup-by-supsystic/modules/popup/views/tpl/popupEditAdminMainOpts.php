@@ -65,7 +65,7 @@
 		<br />
 		<?php _e('Or, if you know HTML basics, - you can insert "onclick" attribute to any of your element from code below', PPS_LANG_CODE)?>:<br />
 		<?php echo htmlPps::text('ppsCopyTextCode', array(
-				'value' => esc_html('onclick="ppsShowPopup('. $this->popup['id'] .'); return false;"'),
+				'value' => esc_html('onclick="ppsShowPopUpOnClick('. $this->popup['id'] .', this); return false;"'),
 				'attrs' => 'data-parent-selector=".ppsPopupMainOptSect" class="ppsCopyTextCode"'));?><br />
 		<?php _e('Or you can even use it for your Menu item, just add code', PPS_LANG_CODE)?>:<br />
 		<?php echo htmlPps::text('ppsCopyTextCode', array(
@@ -254,7 +254,25 @@
 		<span class="supsystic-tooltip-right" title="<?php echo esc_html(__('If enabled - this will show PopUp in admin area too - like on frontend.', PPS_LANG_CODE))?>">
 			<?php _e('Show in Admin Area', PPS_LANG_CODE)?>
 		</span>
-	</label>
+	</label><br />
+	<label class="ppsPopupMainOptLbl" data-name="Visit several Pages">
+		<?php echo htmlPps::radiobutton('params[main][show_on]', array(
+			'attrs' => 'class="ppsProOpt"',
+			'value' => 'visit_several_pages',
+			'checked' => htmlPps::checkedOpt($this->popup['params']['main'], 'show_on', 'visit_several_pages')))?>
+		<span class="supsystic-tooltip-right" title="<?php echo esc_html(__('PopUp will appear after your site visitor will visit required pages number on your site.', PPS_LANG_CODE))?>">
+			<?php _e('Visit several Pages', PPS_LANG_CODE)?>
+		</span>
+		<?php if(!$this->isPro) {?>
+			<span class="ppsProOptMiniLabel"><a target="_blank" href="<?php echo framePps::_()->getModule('supsystic_promo')->generateMainLink('utm_source=plugin&utm_medium=visit_several_pages&utm_campaign=popup');?>"><?php _e('PRO option', PPS_LANG_CODE)?></a></span>
+		<?php }?>
+	</label><br />
+	<div id="ppsOptDesc_params_main_show_on_visit_several_pages" style="display: none;" class="ppsOptDescParamsShell supsystic-tooltip-right" title="<?php _e('Enter here number of pages that need to be visited by user before PopUp will be shown.', PPS_LANG_CODE)?>">
+		<?php _e('Pages number to visit', PPS_LANG_CODE)?>:<br />
+		<?php echo htmlPps::text('params[main][visit_page_cnt]', array(
+			'value' => isset($this->popup['params']['main']['visit_page_cnt']) ? $this->popup['params']['main']['visit_page_cnt'] : '',
+			'attrs' => 'class=""'));?>
+	</div><br />
 </section>
 <section class="ppsPopupMainOptSect">
 	<span class="ppsOptLabel"><?php _e('When to close PopUp', PPS_LANG_CODE)?></span>
@@ -486,6 +504,16 @@
 			'attrs' => 'class="chosen" data-chosen-width="80px"'
 		))?>
 	</div><br />
+	<label class="supsystic-tooltip-left ppsPopupMainOptLbl" data-name="Until user confirm email" title="<?php _e('Only after user will confirm email address - PopUp will disappear (for WordPress subscription for now).')?>">
+		<?php echo htmlPps::radiobutton('params[main][show_to]', array(
+			'value' => 'until_email_confirm',
+			'attrs' => 'class="ppsProOpt"',
+			'checked' => htmlPps::checkedOpt($this->popup['params']['main'], 'show_to', 'until_email_confirm')))?>
+		<?php _e('Until user confirm email', PPS_LANG_CODE)?>
+		<?php if(!$this->isPro) {?>
+			<span class="ppsProOptMiniLabel"><a target="_blank" href="<?php echo framePps::_()->getModule('supsystic_promo')->generateMainLink('utm_source=plugin&utm_medium=show_to_until_email_confirm&utm_campaign=popup');?>"><?php _e('PRO option', PPS_LANG_CODE)?></a></span>
+		<?php } ?>
+	</label><br />
 	<label class="ppsPopupMainOptLbl" id="ppsHideForDevicesLabel">
 		<span class="supsystic-tooltip" title="<?php echo esc_html(__('Click to revert feature function: from Hide - to Show, and vice versa.', PPS_LANG_CODE))?>">
 			<a href="#" class="ppsSwitchShowHideOptLink" data-input-value="0" data-input-name="params[main][hide_for_devices_show]"><?php _e('Hide', PPS_LANG_CODE)?></a>/<a href="#" class="ppsSwitchShowHideOptLink" data-input-value="1" data-input-name="params[main][hide_for_devices_show]"><?php _e('Show Only', PPS_LANG_CODE)?></a>
@@ -623,6 +651,11 @@
 		<?php echo htmlPps::checkbox('params[main][hide_for_logged_in]', array(
 			'checked' => htmlPps::checkedOpt($this->popup['params']['main'], 'hide_for_logged_in')))?>
 		<?php _e('Hide for Logged-in', PPS_LANG_CODE)?>
+	</label><br />
+	<label class="supsystic-tooltip-left ppsPopupMainOptLbl" title="<?php _e('Show PopUp only for Logged-in users and hide it for not Logged-in site visitors.', PPS_LANG_CODE)?>" style="">
+		<?php echo htmlPps::checkbox('params[main][show_for_logged_in]', array(
+			'checked' => htmlPps::checkedOpt($this->popup['params']['main'], 'show_for_logged_in')))?>
+		<?php _e('Show Only for Logged-in', PPS_LANG_CODE)?>
 	</label><br />
 </section>
 <div id="ppsHideForIpWnd" style="display: none;" title="<?php _e('IPs List', PPS_LANG_CODE)?>">

@@ -27,6 +27,11 @@ class ElemenTemplater {
 		add_action( 'init', array( $this, 'load_composer_lib' ), 9 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ), 998 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ), 9999 );
+
+		if ( ! class_exists( 'Ti_Upsell_Notice_Manager' ) ) {
+			require ET_PATH . 'inc/class-ti-upsell-notice-manager.php';
+			add_action( 'init', array( Ti_Upsell_Notice_Manager::instance(), 'init' ) );
+		}
 	}
 
 	public function elementemplater_load_plugin_textdomain() {

@@ -15,7 +15,7 @@ if ($es_c_email_subscribers_ver != "2.9") {
 	<div class="error fade">
 		<p>
 		Note: You have recently upgraded the plugin and your tables are not sync. 
-		Please <a title="Sync plugin tables." href="<?php echo ES_ADMINURL; ?>?page=es-settings&amp;ac=sync"><?php echo __( 'Click Here', ES_TDOMAIN ); ?></a> to sync the table. 
+		Please <a title="Sync plugin tables." href="<?php echo ES_ADMINURL; ?>?page=es-settings&amp;ac=sync"><?php echo __( 'Click Here', 'email-subscribers' ); ?></a> to sync the table.
 		This is mandatory and it will not affect your data.
 		</p>
 	</div>
@@ -37,36 +37,36 @@ if ($sendmailsubmit == 'yes') {
 
 	$form['es_templ_heading'] = isset($_POST['es_templ_heading']) ? $_POST['es_templ_heading'] : '';
 	if ( $form['es_templ_heading'] == '' ) {
-		$es_errors[] = __( 'Please select your mail subject.', ES_TDOMAIN );
+		$es_errors[] = __( 'Please select your mail subject.', 'email-subscribers' );
 		$es_error_found = TRUE;
 	}
 
 	$form['es_sent_type'] = isset($_POST['es_sent_type']) ? $_POST['es_sent_type'] : '';
 	if ( $form['es_sent_type'] == '' ) {
-		$es_errors[] = __( 'Please select your mail type.', ES_TDOMAIN );
+		$es_errors[] = __( 'Please select your mail type.', 'email-subscribers' );
 		$es_error_found = TRUE;
 	}
 
 	$form['es_email_group'] = isset($_POST['es_email_group']) ? $_POST['es_email_group'] : '';
 	if( $form['es_email_group'] == '' ) {
-		$es_errors[] = __( 'Please select your group.', ES_TDOMAIN );
+		$es_errors[] = __( 'Please select your group.', 'email-subscribers' );
 		$es_error_found = TRUE;
 	}
 
 	if ($es_error_found == FALSE) {
 		es_cls_sendmail::es_prepare_newsletter_manual( $es_templ_heading, $es_sent_type, $es_email_group );
 		$es_success_msg = TRUE;
-		$es_success = __( 'Email sent successfully. ', ES_TDOMAIN );
+		$es_success = __( 'Email sent successfully. ', 'email-subscribers' );
 		if ($es_success_msg == TRUE) {
 			?><div class="notice notice-success is-dismissible">
 				<p><strong>
-			  		<?php echo $es_success; ?><a href="<?php echo ES_ADMINURL; ?>?page=es-sentmail"><?php echo __( 'Click here to check Statistics', ES_TDOMAIN ); ?></a>
+			  		<?php echo $es_success; ?><a href="<?php echo ES_ADMINURL; ?>?page=es-sentmail"><?php echo __( 'Click here to check Statistics', 'email-subscribers' ); ?></a>
 				</strong></p>
 			</div><?php
 		} else {
 			?><div class="error fade">
 				<p><strong>
-					<?php echo __( 'Oops.. We are getting some error. mail not sending.', ES_TDOMAIN ); ?>
+					<?php echo __( 'Oops.. We are getting some error. mail not sending.', 'email-subscribers' ); ?>
 				</strong></p>
 			</div><?php
 		}
@@ -90,11 +90,11 @@ if ($es_error_found == TRUE && isset($es_errors[0]) == TRUE) {
 
 <div class="wrap">
 	<h2>
-		<?php echo __( 'Newsletters', ES_TDOMAIN ); ?>
-		<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', ES_TDOMAIN ); ?></a>
+		<?php echo __( 'Newsletters', 'email-subscribers' ); ?>
+		<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', 'email-subscribers' ); ?></a>
 	</h2>
 	<p class="description">
-		<?php echo __( 'Use this to send newsletter emails to your subscribers.', ES_TDOMAIN ); ?>
+		<?php echo __( 'Use this to send newsletter emails to your subscribers.', 'email-subscribers' ); ?>
 	</p>
 	<div class="es-form" style="width: 80%;float: left;">
 	<form name="es_form" method="post" action="#" onsubmit="return _es_submit()">
@@ -103,12 +103,12 @@ if ($es_error_found == TRUE && isset($es_errors[0]) == TRUE) {
 				<tr>
 					<th scope="row">
 						<label for="tag-image">
-							<?php echo __( 'Select Email Subject from available list', ES_TDOMAIN ); ?>
+							<?php echo __( 'Select Email Subject from available list', 'email-subscribers' ); ?>
 						</label>
 					</th>
 					<td>
-							<select name="es_templ_heading" id="es_templ_heading" onchange="return _es_change(this.options[this.selectedIndex])">
-							<option value=''><?php echo __( 'Select', ES_TDOMAIN ); ?></option>
+							<select class="es_tmpl_select" name="es_templ_heading" id="es_templ_heading" onchange="return _es_change(this.options[this.selectedIndex])">
+							<option value=''><?php echo __( 'Select', 'email-subscribers' ); ?></option>
 							<?php
 								$subject = array();
 								$subject = es_cls_templates::es_template_select_type($type = "Newsletter");
@@ -125,31 +125,33 @@ if ($es_error_found == TRUE && isset($es_errors[0]) == TRUE) {
 								}
 							?>
 						</select>
-					</td>	
-				</tr>
-				<tr>
-					<th scope="row">
-						<label for="tag-image">
-							<?php echo __( 'Select Email Type', ES_TDOMAIN ); ?>
-						</label>
-					</th>
-					<td>
-						<select name="es_sent_type" id="es_sent_type">
-							<option value=''><?php echo __( 'Select', ES_TDOMAIN ); ?></option>
-							<option value='Immediately' <?php if($es_sent_type == 'Immediately') { echo "selected='selected'" ; } ?>><?php echo __( 'Send email immediately', ES_TDOMAIN ); ?></option>
-							<option value='Cron' <?php if($es_sent_type == 'Cron') { echo "selected='selected'" ; } ?>><?php echo __( 'Send email via cron job', ES_TDOMAIN ); ?></option>
-						</select>
+						<?php do_action('es_beside_select_notification');?>
 					</td>
 				</tr>
 				<tr>
 					<th scope="row">
 						<label for="tag-image">
-							<?php echo __( 'Select Subscribers group to Send Email', ES_TDOMAIN ); ?>
+							<?php echo __( 'Select Email Type', 'email-subscribers' ); ?>
+						</label>
+					</th>
+					<td>
+						<select name="es_sent_type" id="es_sent_type">
+							<option value=''><?php echo __( 'Select', 'email-subscribers' ); ?></option>
+							<option value='Immediately' <?php if($es_sent_type == 'Immediately') { echo "selected='selected'" ; } ?>><?php echo __( 'Send email immediately', 'email-subscribers' ); ?></option>
+							<option value='Cron' <?php if($es_sent_type == 'Cron') { echo "selected='selected'" ; } ?>><?php echo __( 'Send email via cron job', 'email-subscribers' ); ?></option>
+						</select>
+						<?php do_action('es_after_email_sent_option'); ?>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label for="tag-image">
+							<?php echo __( 'Select Subscribers group to Send Email', 'email-subscribers' ); ?>
 						</label>
 					</th>
 					<td>
 						<select name="es_email_group" id="es_email_group" onChange="_es_mailgroup(this.options[this.selectedIndex].value)">
-							<option value=''><?php echo __( 'Select', ES_TDOMAIN ); ?></option>
+							<option value=''><?php echo __( 'Select', 'email-subscribers' ); ?></option>
 							<?php
 								$groups = array();
 								$thisselected = "";
@@ -176,28 +178,30 @@ if ($es_error_found == TRUE && isset($es_errors[0]) == TRUE) {
 							$subscribers_count = array();
 							$subscribers_count = es_cls_dbquery::es_subscriber_count_in_group($es_email_group);
 							if( $subscribers_count == '0' ) {
-								echo __( 'Recipients : 0 ', ES_TDOMAIN );
+								echo __( 'Recipients : 0 ', 'email-subscribers' );
 							} else {
-								echo sprintf(__( 'Recipients : %s', ES_TDOMAIN ), $subscribers_count );
+								echo sprintf(__( 'Recipients : %s', 'email-subscribers' ), $subscribers_count );
 							}
 							if( $subscribers_count > '100' && $es_sent_type == 'Immediately' ) {
-								echo __( '<br><br><strong>Your Recipients count is above 100.<br>We strongly recommend that you change above Mail Type to Cron and Send Mail via Cron Job.</strong><br>Click on Help for more information.', ES_TDOMAIN );
+								echo __( '<br><br><strong>Your Recipients count is above 100.<br>We strongly recommend that you change above Mail Type to Cron and Send Mail via Cron Job.</strong><br>Click on Help for more information.', 'email-subscribers' );
 							}
 						?>
 					</td>
 				</tr>
+				<?php do_action('es_after_newsletter_edit_form'); ?>
 			</tbody>
 		</table>
 		<?php $nonce = wp_create_nonce( 'sendmail-nonce' ); ?>
 		<input type="hidden" name="sendmailsubmit" id="sendmailsubmit" value=""/>
 		<input type="hidden" name="wp_create_nonce" id="wp_create_nonce" value="<?php echo $nonce; ?>"/>
 		<?php if( $subscribers_count != 0 ) { ?>
-			<input type="submit" name="Submit" class="send button-primary" style="width:160px;" value="<?php echo __( 'Send Email', ES_TDOMAIN ); ?>" />&nbsp;
+			<input type="submit" name="Submit" class="send button-primary" style="width:160px;" value="<?php echo __( 'Send Email', 'email-subscribers' ); ?>" />&nbsp;
 		<?php } else { ?>
-			<input type="submit" name="Submit" disabled="disabled" class="send button add-new-h2" style="width:160px;" value="<?php echo __( 'Send Email', ES_TDOMAIN ); ?>" />&nbsp;
+			<input type="submit" name="Submit" disabled="disabled" class="send button add-new-h2" style="width:160px;" value="<?php echo __( 'Send Email', 'email-subscribers' ); ?>" />&nbsp;
 		<?php } ?>
 		<?php wp_nonce_field('es_form_submit'); ?>
-		<input type="button" class="button-primary" onclick="_es_redirect()" value="<?php echo __( 'Reset', ES_TDOMAIN ); ?>" />
+		<input type="button" class="button-primary" onclick="_es_redirect()" value="<?php echo __( 'Reset', 'email-subscribers' ); ?>" />
+		<?php do_action('es_after_reset_button_newsletter'); ?>
 	</form>
 	</div>
 	<div clas="es-preview" style="float: right;width: 19%;">

@@ -65,11 +65,22 @@
 			$successMessage = $this->popup && isset($this->popup['params']['tpl'][$pref. '_txt_success'])
 				? $this->popup['params']['tpl'][$pref. '_txt_success']
 				: $defaultSuccessMsg;
-			$redirectUrl = isset($this->popup['params']['tpl'][$pref. '_redirect_url']) && !empty($this->popup['params']['tpl'][$pref. '_redirect_url'])
-				? $this->popup['params']['tpl'][$pref. '_redirect_url']
-				: get_bloginfo('wpurl');
+			if(isset($this->popup['params']['tpl'][$pref. '_redirect_url']) 
+				&& !empty($this->popup['params']['tpl'][$pref. '_redirect_url'])
+			) {
+				$redirectUrl = $this->popup['params']['tpl'][$pref. '_redirect_url'];
+			} elseif(!empty($this->redirectUrl)) {
+				$redirectUrl = $this->redirectUrl;
+			} else {
+				$redirectUrl = get_bloginfo('wpurl');
+			}
 			$redirectUrl = uriPps::normal( $redirectUrl );
 			$autoRedirectTime = 10;
+			if(isset($this->popup['params']['tpl']['sub_confirm_reload_time']) 
+					&& !empty($this->popup['params']['tpl']['sub_confirm_reload_time'])
+			) {
+				$autoRedirectTime = (int) $this->popup['params']['tpl']['sub_confirm_reload_time'];
+			}
 		?>
 		<h1 class="ppsConfirmTitle"><?php echo ($this->forReg 
 				? __('Registration confirmed', PPS_LANG_CODE) 

@@ -4,9 +4,11 @@ class subscribeControllerPps extends controllerPps {
 		$res = new responsePps();
 		$data = reqPps::get('post');
 		$id = isset($data['id']) ? (int) $data['id'] : 0;
-		$nonce = isset($_REQUEST['_wpnonce']) ? $_REQUEST['_wpnonce'] : reqPps::getVar('_wpnonce');
-		if(!wp_verify_nonce($nonce, 'subscribe-'. $id)) {
-			die('Some error with your request.........');
+		if((int)framePps::_()->getModule('options')->get('enable_spam_filter')) {
+			$nonce = isset($_REQUEST['_wpnonce']) ? $_REQUEST['_wpnonce'] : reqPps::getVar('_wpnonce');
+			if(!wp_verify_nonce($nonce, 'subscribe-'. $id)) {
+				die('Some error with your request.........');
+			}
 		}
 		if($this->getModel()->subscribe(reqPps::get('post'), true)) {
 			$dest = $this->getModel()->getDest();
@@ -50,7 +52,8 @@ class subscribeControllerPps extends controllerPps {
 				&& !empty($lastPopup['params']['tpl']['sub_redirect_email_exists'])
 				&& $this->getModel()->getEmailExists()
 			) {
-				$res->addData('emailExistsRedirect', uriPps::normal($lastPopup['params']['tpl']['sub_redirect_email_exists']));
+				$this->_setConfirmedCookie($lastPopup['id']);
+				$res->addData('emailExistsRedirect', $lastPopup['params']['tpl']['sub_redirect_email_exists']);
 			}
 			$res->pushError ($this->getModel()->getErrors());
 		}
@@ -71,14 +74,29 @@ class subscribeControllerPps extends controllerPps {
 		}
 		return $res->ajaxExec();
 	}
+	private function _setConfirmedCookie($popupId) {
+		reqPps::setVar('pps_email_confirmed_'. $popupId, '1', 'cookie', array('expire' => 999 * 24 * 60 * 60));
+	}
 	public function confirm() {
 		$res = new responsePps();
 		$forReg = (int) reqPps::getVar('for_reg', 'get');
-		if(!$this->getModel()->confirm(reqPps::get('get'), $forReg)) {
+		$haveErrors = false;
+		if(($userId = $this->getModel()->confirm(reqPps::get('get'), $forReg)) === false) {
 			$res->pushError ($this->getModel()->getErrors());
+			$haveErrors = true;
 		}
+		
 		$lastPopup = $this->getModel()->getLastPopup();
-		$this->getView()->displaySuccessPage($lastPopup, $res, $forReg);
+		$subscribedUrl = '';
+		if(!$haveErrors) {
+			//reqPps::setVar('pps_email_confirmed_'. $lastPopup['id'], '1', 'cookie', array('expire' => 999 * 24 * 60 * 60));
+			$this->_setConfirmedCookie($lastPopup['id']);
+			$subscribedUrl = get_user_meta($userId, '_subscribe_url', true);
+			if(strpos($subscribedUrl, $_SERVER['HTTP_HOST']) === false) {
+				$subscribedUrl = '';
+			}
+		}
+		$this->getView()->displaySuccessPage($lastPopup, $res, $forReg, $subscribedUrl);
 		exit();
 		// Just simple redirect for now
 		//$siteUrl = get_bloginfo('wpurl');

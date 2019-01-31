@@ -13,7 +13,7 @@ class optionsModelPps extends modelPps {
 	}
 	public function save($optKey, $val, $ignoreDbUpdate = false) {
 		$this->_loadOptValues();
-		if(!isset($this->_values[ $optKey ]) || $this->_values[ $optKey ]['value'] != $val) {
+		if(!isset($this->_values[ $optKey ]) || $this->_values[ $optKey ]['value'] !== $val) {
 			if(isset($this->_values[ $optKey ]) || !isset($this->_values[ $optKey ]['value']))
 				$this->_values[ $optKey ] = array();
 			$this->_values[ $optKey ]['value'] = $val;
@@ -35,7 +35,7 @@ class optionsModelPps extends modelPps {
 		$this->_loadOptValues();
 		foreach($options as $cKey => $cData) {
 			foreach($cData['opts'] as $optKey => $optData) {
-				$value = 0;
+				$value = '';
 				$changedOn = 0;
 				// Retrive value from saved options
 				if(isset($this->_values[ $optKey ])) {

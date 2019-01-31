@@ -424,6 +424,19 @@ class Pt_Elementor_FlipBox extends Widget_Base {
 				 'selector' => '{{WRAPPER}} .pt-flip-box-front',
 			 ]
 		 );
+		 $this->add_control(
+			'front_box_background_overlay',
+			[
+				'label' => __( 'Background Overlay', 'elementor' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .pt-flip-box-front .flipbox-content' => 'background-color: {{VALUE}};',
+				],
+				
+			]
+		);
+
 
 		$this->add_control(
 			'front_box_title_color',
@@ -631,6 +644,18 @@ class Pt_Elementor_FlipBox extends Widget_Base {
 				'label' => __( 'Back Box Background', 'elementor' ),
 				'types' => [ 'classic', 'gradient' ],
 				'selector' => '{{WRAPPER}} .pt-flip-box-back',
+			]
+		);
+		$this->add_control(
+			'back_box_background_overlay',
+			[
+				'label' => __( 'Background Overlay', 'elementor' ),
+				'type' => Controls_Manager::COLOR,
+				'default' => '',
+				'selectors' => [
+					'{{WRAPPER}} .pt-flip-box-back .flipbox-content' => 'background-color: {{VALUE}};',
+				],
+				
 			]
 		);
 

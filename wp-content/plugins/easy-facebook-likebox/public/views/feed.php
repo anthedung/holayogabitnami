@@ -15,19 +15,30 @@
 extract($instance);
 error_reporting( E_ERROR | E_PARSE ); 
 //Switch to test mode to disable cache 
-$test_mode = true; 
+
+   
+$test_mode = false; 
 if(empty($fanpage_url)){
 	$page_id = 'jwebsol';
 }else {
 	$page_id = efbl_parse_url(  $fanpage_url );
 }
 
-if(!isset( $access_token ) ){
+
+
+ 
+if(!isset( $access_token ) or !isset($instance['fb_appid']) ){
 	$access_tokens = array('395202813876688|73e8ede72008b231a0322e40f0072fe6','135460520461476|d33727eafc0f885361d5ccc8913b991b','1983264355330375|e5c100f6d4b768abb560e7df1771ac89');
-	$rand_access_token = array_rand($access_tokens, '1');
+	// $rand_access_token = array_rand($access_tokens, '1');
 	
-	$access_token = $access_tokens[$rand_access_token]; //Use default token if not provided
+	// $access_token = $access_tokens[$rand_access_token]; //Use default token if not provided
+
+	$access_token = '395202813876688|73e8ede72008b231a0322e40f0072fe6';
 }
+
+if(isset($instance['fb_appid']) and !empty($instance['fb_appid'])) $access_token = $instance['fb_appid'];
+
+// echo "<pre>"; print_r($access_token);exit();
 
 $post_limit = ($post_limit) ? $post_limit : '10';
 $number_of_posts = ($post_number) ? $post_number : '10';
@@ -39,12 +50,18 @@ if( empty($show_logo) || $show_logo == 0 ) $show_logo = 0; else $show_logo = 1;
 if( empty($show_image) || $show_image == 0 ) $show_image = 0; else $show_image = 1;
 
 //Calculate the cache time in seconds
-if($cache_duration == 'minutes') $cache_duration = 60;
-if($cache_duration == 'hours') $cache_duration = 60*60;
+// if($cache_duration == 'minutes') $cache_duration = 60;
+// if($cache_duration == 'hours') $cache_duration = 60*60;
+
+
+if(empty($cache_unit)) $cache_unit = 5;
+
+if($cache_unit < 1) $cache_unit = 1;
+// echo "<pre>"; print_r($cache_unit);exit();
 if($cache_duration == 'days') $cache_duration = 60*60*24;
 //echo $cache_duration.'<br>';
 $cache_seconds = $cache_duration * $cache_unit;
-//echo $cache_seconds;exit;
+
 
 //setting query for "Show Posts By"
 $query = 'posts';
@@ -63,9 +80,13 @@ $enable_popup_for = array('photo' , 'video');
 
 $trasneint_name = 'efbl_'.$query.'_'.$page_id;
 
+//if(isset($instance['clear_cache']) && !empty($instance['clear_cache'])) delete_transient( $trasneint_name );
+
 //delete_transient($trasneint_name);
 
 $posts_json = get_transient( $trasneint_name );
+
+// echo $posts_json;exit;
 
 if( !$posts_json || '' == $posts_json || $test_mode ){
 	//build query
@@ -206,7 +227,7 @@ if( !empty($fbData->data) ) {
 			$auth_img_src = 'https://graph.facebook.com/' . $page_id . '/picture?type=large';
 			
 			//get author image src
-			$author_image ='<a href="https://facebook.com/'.$page_id.'" target="'.$link_target.'"><img src="'.$auth_img_src.'" title="'. $story->from->name .'" width="40" height="40" /></a>';
+			$author_image ='<a href="https://facebook.com/'.$page_id.'" title="'.$story->name.'" target="'.$link_target.'"><img alt="'.$story->name.'" src="'.$auth_img_src.'" title="'. $story->from->name .'" width="40" height="40" /></a>';
 			if($story->object_id and $show_image){
 
 				//Get story image
@@ -237,7 +258,7 @@ if( !empty($fbData->data) ) {
 							// exit();
 							//if image attached
 							echo '<div class="efbl_story_photo">';
- 									echo '<img src="' .$pic. '" width="'.$img_width.'" height="'.$img_height.'" />';
+ 									echo '<img alt="'.$story->name.'" src="' .$pic. '" width="'.$img_width.'" height="'.$img_height.'" />';
  									echo '<a href="'.admin_url('admin-ajax.php').'?action=efbl_generate_popup_html&rand_id='.$rand_id.'" data-imagelink="' .$full_img_url. '" data-storylink="'.$story_link.'"  data-linktext="'.__('Read full story', 'easy-facebook-likebox').'" data-caption="'.htmlentities($post_text).'" data-itemnumber="'.$pi.'" class="efbl_feed_popup efbl-cff-item_number-'.$pi.'"><span class="efbl_hover"><i class="fa fa-plus" aria-hidden="true"></i></span></a>';	
 							echo '</div>';
 							
@@ -321,7 +342,7 @@ if( !empty($fbData->data) ) {
 								$story_content .= '<div class="efbl_shared_story '.$link_image.' ">';
 									
 									if($story->picture)
-										$story_content .= '<a href="'.$story->link.'" class="efbl_link_image" re="nofollow" target="'.$link_target.'"><img src="'.$story->picture.'" /></a>';
+										$story_content .= '<a href="'.$story->link.'" class="efbl_link_image" re="nofollow" target="'.$link_target.'"><img alt="'.$story->name.'" src="'.$story->picture.'" /></a>';
 									
 									$story_content .= '<div class="efbl_link_text">';
 										$story_content .= '<p class="efbl_title_link"><a href="'.$story->link.'" target="'.$link_target.'">'.$story->name.'</a></p>';
@@ -451,14 +472,14 @@ if( !empty($fbData->data) ) {
 											
 													echo '<div class="efbl_commenter_image">';
 													
-															 echo '<a href="https://facebook.com/'. $comment->from->id .'" target="'.$link_target.'" rel="nofollow"> 
-																		<img src="https://graph.facebook.com/'.$comment->from->id.'/picture" width=32 height=32>
+															 echo '<a href="https://facebook.com/'. $comment->from->id .'" target="'.$link_target.'" rel="nofollow" title="'.$story->name.'"> 
+																		<img alt="'.$story->name.'" src="https://graph.facebook.com/'.$comment->from->id.'/picture" width=32 height=32>
 																	</a>';
 													echo '</div>';
 													
 													echo '<div class="efbl_comment_text">';
 															
-															echo '<a class="efbl_comenter_name" href="https://facebook.com/'. $comment->from->id .'" target="'.$link_target.'" rel="nofollow"> 
+															echo '<a  title="'.$story->name.'" class="efbl_comenter_name" href="https://facebook.com/'. $comment->from->id .'" target="'.$link_target.'" rel="nofollow"> 
 																		  '.$comment->from->name.'
 																	</a>';
 																	

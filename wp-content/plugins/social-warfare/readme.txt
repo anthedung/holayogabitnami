@@ -1,21 +1,21 @@
-=== Social Warfare ===
-Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedia
-Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, stumbleupon button, tweet button, twitter share, click to tweet
-Requires at least: 3.5.1
-Tested up to: 4.9
-Stable tag: 2.3.5
+=== WordPress Social Sharing Plugin - Social Warfare ===
+Contributors: holas84, dustinwstout, webinator, warfareplugins, nutsandboltsmedia, cdegraff1, ckmahoney
+Tags: sharing buttons, social media share, floating share buttons, facebook share, google plus share, linkedin share, pin it, pinterest save, mix button, tweet button, twitter share, click to tweet, social sharing buttons, social share, social sharing, social media sharing, wordpress social sharing plugin, social sharing plugin, share buttons, share counts
+Requires at least: 4.5.0
+Tested up to: 5.0
+Stable tag: 3.4.2
 License: GNU General Public License v2.0 or later
 
-The most beautiful, lightning fast social media sharing buttons built to boost shares and drive more traffic without slowing down your site.
+The most beautiful, responsive, lightning fast social share buttons built to boost shares and drive more traffic without slowing down your site.
 
 == Description ==
 
-Get more social media shares which can lead to more website traffic with the best sharing plugin for WordPress! Built by a group of social media marketing experts and world class developers who are obsessed with performance. Learn more at <a href="https://warfareplugins.com/?utm_medium=repository&utm_campaign=description&utm_source=wordpress_org&utm_content=repo_description" rel="friend" target="_blank">Warfare Plugins</a>.
+Get more social shares which can lead to more website traffic with the best WordPress social sharing plugin! Built by a group of social media marketing experts and world class developers who are obsessed with performance. Learn more at <a href="https://warfareplugins.com/?utm_medium=repository&utm_campaign=description&utm_source=wordpress_org&utm_content=repo_description" rel="friend" target="_blank">Warfare Plugins</a>.
 
 = WordPress Sharing Plugin =
-Most social sharing plugins for WordPress slow down your site, are not attractive, and don't work the way you would hope. Social Warfare is both lightning fast and beautiful.
+Most WordPress social sharing plugins slow down your site, are not attractive, and don't work the way you would hope. Social Warfare share buttons are both lightning fast and beautiful.
 
-Not only will it never slow down your website like other sharing plugins, we give you the most attractive buttons available that look great no matter what screen size or resolution.
+Not only will it never slow down your website like other sharing plugins, we give you the most attractive share buttons available that look great no matter what screen size or resolution.
 
 > Social Warfare has boosted social shares by **300%** without slowing down my blog.<br>
 > Eddie Gear - Professional Blogger
@@ -27,9 +27,9 @@ You can choose from the top social networks sharing buttons, including:
 * Google+
 * Pinterest
 * LinkedIn
-* StumbleUpon
+* Mix
 
-You can also choose where you want the buttons to show up. Choose from the following placement options:
+You can also choose where you want the share buttons to show up. Choose from the following placement options:
 
 * Above the post content
 * Below the post content
@@ -47,7 +47,7 @@ Proudly display how many times your content has been shared-- **even tweet count
 We use the social network API endpoints to ensure that the most accurate share counts are always displayed.
 
 = Popular Posts Widget based on Social Share Counts =
-Wouldn't you love to show what your most popular posts are based on the number of social shares's they've received? Social Warfare allows you to do just that.
+Wouldn't you love to show what your most popular posts are based on the number of social shares they've received? Social Warfare allows you to do just that.
 
 You can even choose to display most your popular posts based on which social network they were popular on!
 
@@ -61,17 +61,17 @@ Social Warfare's Popular Posts widget allows you to display and customize the lo
 = Click to Tweet Quotes =
 A simple and effective way to create tweetable quotes right inside your posts or pages. This has proven to increase the average number of tweets per article dramatically.
 
-= Use Shortcodes to Manually Place Share Buttons Anywhere =
+= Use Shortcodes to Manually Place Social Share Buttons Anywhere =
 If you want to place buttons in the middle of an article, you can with our `[social_warfare]` shortcode.
 
-What if you wanted to add share buttons to a page but actually have them share out a different page altogether (like being able to share your “Sign-up” page from your “Thank You” page)? Social Warfare allows you to do this!
+What if you wanted to add share buttons to a page but actually have them share out a different page altogether (like being able to share your Subscribe page from your Thank You)? Social Warfare allows you to do this!
 
 If you're experienced with PHP, you can also hook Social Warfare into your theme templates for hyper customization.
 
 = Content Protection =
 We've built our highly demanded <a href="https://wordpress.org/plugins/frame-buster/">Frame Buster</a> right into Social Warfare so that you are protected from content hijackers seeking to place their advertisements on top of your content without your permission.
 
-> Social Warfare is by far the best social sharing plugin I’ve ever used. I recommend it to all of my clients.<br>
+> Social Warfare is by far the best social sharing plugin I've ever used. I recommend it to all of my clients.<br>
 > Andrew Wilder, Marketing Consultant
 
 = Premium Social Sharing Options =
@@ -93,7 +93,7 @@ In addition to the extra social networks, you can also reactivate, track and dis
 Enabling the Image Hover Pin Button will place a "Pin" button over top of every image inside of your content when a reader hovers their mouse over it. This makes every image on your page highly sharable to Pinterest!
 
 = Powerful Share Customization =
-> "I use Social Warfare - Pro because how things are shared when I’m not there to do it is important!"<br>
+> "I use Social Warfare - Pro because how things are shared when I'm not there to do it is important!"<br>
 > Peg Fitzpatrick, author of The Art and Science of Social Media
 
 Social Warfare is among the pioneers of customizing how your content is shared, particularly with Pinterest. The _Social Warfare - Pro_ add-on allows you to decide exactly which image, title and description appears when your content is shared on sites like Facebook and Google+. This also applies to any other networks that use Open Graph data for social shares.
@@ -139,7 +139,7 @@ Additionally, if you're a Google Analytics user, you can set up Analytics tracki
 
 You can also activate Event Tracking so that you can also see in Google Analytics exactly how many times your buttons are clicked.
 
-It is without question that Social Warfare is the most powerful sharing plugin available for WordPress. You get all these premium features while still benefitting form a super-fast, light-weight code base.
+It is without question that Social Warfare is the most powerful social sharing plugin available for WordPress. You get all these premium features while still benefitting from a super-fast, light-weight code base.
 
 == Installation ==
 
@@ -170,10 +170,10 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 = Testimonial =
 
-> I use Social Warfare - Pro because how things are shared when I’m not there to do it is important!<br>
+> I use Social Warfare - Pro because how things are shared when I'm not there to do it is important!<br>
 > Peg Fitzpatrick, Social Media Strategist
 
-> Social Warfare is by far the best social-sharing-button plugin I’ve ever used. I recommend it to all of my clients.<br>
+> Social Warfare is by far the best social-sharing-button plugin I've ever used. I recommend it to all of my clients.<br>
 > Andrew Wilder, Consultant
 
 > It's a beautiful, super lightweight, and highly customizable plugin. I love everything about it!<br>
@@ -193,6 +193,151 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 
 == Changelog ==
 
+= 3.4.2 (13 DEC 2018) =
+* Fixed floating bottom disappear on mobile when pro is deactivated.
+* Fixed blocks disappearing after Gutenberg update.
+* Fixed buttons accidentally showing up on pages created with content builders.
+
+= 3.4.1 (4 DEC 2018) =
+* Fixed JS error in Admin (`TypeError $ is not defined`)
+* Fixed placement of mobile floating buttons.
+* Fixed breakpoint transition for mobile buttons.
+* Fixed option registration when Pro is temporarily deactivated.
+* Updated cURL method so API requests are faster.
+* Removed references to Open Share Count.
+
+= 3.4.0 (27 NOV 2018) =
+* Props to our Warfare Community beta testers- you guys rock!
+* Added support for Gutenberg blocks Social Warfare and Click To Tweet (as of Gutenberg 4.5.1)
+* Added option in Advanced tab to disable Gutenberg blocks.
+* Added interactive components to the Admin sidebar.
+* Added a tooltip to network icons in the settings page.
+* Updated JS to open share links in windows instead of tabs.
+* Updated Social Warfare settings page to be mobile responsive.
+* Updated the cURL request timeout duration to be shorter.
+* Fixed extra whitespace when floating buttons are present on mobile.
+* Fixed bug during post caching which prevented shares from updating.
+* Fixed error 'invalid argument supplied foreach' regarding `$network` objects.
+* Fixed 'Social Shares' total counts column in Admin view.
+* Fixed Popular Posts widget from defaulting to the wrong post type.
+* Fixed use of 'total' and 'totals' in the [social_warfare] shortcode.
+* Fixed totals only appearing on one set of buttons.
+* Fixed minor cosmetic detail on the buttons panel (removed an underline).
+* Fixed tweet character encoding.
+* Refactored the script.js file (frontend JavaScript)
+
+= 3.3.2 (14 SEP 2018) =
+* Fixed a line of code that caused the 'social_warfare()' function to disappear.
+
+= 3.3.1 (11 SEP 2018) =
+* Fixed the URL for post editor placeholder images.
+* Fixed the Twitter Count toggle.
+* Added backward compatability for swp_kilomega().
+* Added compatability for mb_convert_encoding().
+
+= 3.3.0 (11 SEP 2018) =
+* Added CSS to hide buttons on print views.
+* Added Mix to the Social Networks.
+* Added "url" paramter to the shortcode.
+* Fixed plugin compatability issue with BuddyPress.
+* Fixed the decimal separator for share counts.
+* Updated the option-getting mechanism (`global $swp_user_options` is now deprecated).
+* Updated the sidebar in the Social Warfare settings page.
+* Updated the plugin file structure and organization.
+
+= 3.2.1 (16 AUG 2018) =
+* Fixed a minor DOMDocument warning that was appearing when data-pin-description was ON
+
+= 3.2.0 (13 AUG 2018) =
+* Shoutout to our Warfare Community beta testers- thank you so much!
+* Created shortcode for Pinterest Image.
+* Created Custom Pinterst Description on a per-image basis.
+* Fixed the Total Shares icon/counts not displaying.
+* Fixed many JS related issues on floating and mobile buttons.
+* Fixed an issue where some buttons did not display on some posts (after 'post_updated' fires).
+* Fixed the total shares missing counts from LinkedIn and Google Plus.
+* Fixed floating buttons not showing until bottom of content.
+* Fixed where posts were receiving false share counts from Facebook.
+* Fixed the update process for addons (like Pro) so it should now receive dashboard notifications.
+* Fixed sharing on Pinterest when images use relative paths instead of absolute paths.
+* Fixed hidden Pinterest image from covering content "below".
+* Changed the cursor from cursor to pointer for Total Shares hover state.
+* Added option to add data-pin-description to all images in a post.
+* Added !important tags for our Custom Color option.
+* Added check for whether or not to fetch share counts (based on Button Count and Total Count settings).
+* Updated the visibility of Mobile Float Location option.
+* Replaced New Share Counts with Twitcount.
+
+= 3.1.1 (12 JUl 2018) =
+* Fixed Javascript "minWidth" is undefined.
+* Fixed which buttons are displayed when using Dynamic Sorting.
+* Fixed "Undefined Index: post_id" error.
+* Changed default "Float Before Content" from "ON" to "OFF".
+* Removed excess printing of "Float Before Content" variable.
+
+= 3.1.0 (09 JUl 2018) =
+* Fixed incompatibility with Yoast update
+* Fixed side floating button fade effect.
+* Fixed the shares icon CSS in the side floating buttons.
+* Added option for post-specific share recovery
+* Added option to show/hide buttons before content.
+* Added "noopener noreferrer" to outbound links.
+* Added two Pinterest image selectors.
+* Added the Pinterest character counter.
+* Added Google Tag Manager compatibility for Click/Event Tracking
+* Removed the StumbleUpon button.
+* Updated references of http to https where possible.
+* Updated the Facebook share count system.
+* Updated notifications to read from WarfarePlugins server.
+* Major update to the metadata caching system.
+* Major updates on floating buttons and mobile buttons.
+* Updated the plugin update processes.
+* Ensures all custom post types are showing in the "Position Share Buttons" display section.
+
+= 3.0.9 (08 JUN 2018) =
+* Fix for slow page loads on some sites.
+* Added notice to warn that StumbleUpon is being removed at the end of the month.
+* Fix for buttons not showing on mobile in some cases.
+* Removed calls to Google Plus' and LinkedIn's API's since they no longer offer share counts.
+* Fix for the Pinterest fallback image functionality.
+* Fix for admin settings page not saving in some instances.
+* Fix for the post_id parameter not working in the shortcodes.
+* Fix for the Buffer share button showing plusses instead of spaces.
+* Fix for Bitly Authentication occasionally not working.
+* Fix for some undefined index errors.
+
+= 3.0.8 (24 MAY 2018) =
+* Fixed 'Undefined Index' notices.
+* Fixed 'File not found' errors.
+* Custom Color and Custom Color Outlines are fully functional.
+* Floating bar on mobile is back to normal.
+* Fixed global/post-specific setting incompatibilities.
+* Total shares is responsive to the settings, shortcode, and function.
+* Right floating buttons are properly positioned.
+* Fixed conflict with buttons showing on Archive/Category post types.
+* The shortcode and social_warfare() function behave as expected.
+* Yummly and StumbleUpon buttons are back.
+* Created default settings for float position, location, and size.
+* Improved the migration mechanism.
+
+= 3.0.0 (8 MAY 2018) =
+* Rewrote the core mechanics of the plugin to a class based system.
+* Added top floating bar for mobile.
+* Added circular button option.
+* Normalized variable and function naming conventions.
+* Updated CSS to reflect new classnames and keys.
+* Share windows now appear in the center of the browser.
+* Added toggle to print/not print OG output.
+* Created a custom CSS field for Click To Tweet.
+* Added option for right floating buttons.
+* Added size option for floating buttons.
+* Added vertical placement options for floating buttons.
+* Added option in to select from all post-types for the Widget.
+* Fixed URL Encoding for social network links.
+* URLs are no longer created for attachment or media items.
+* Updated copyright dates.
+* Made the buttons preview its own section in the options page.
+* Moved Tweet Count registration from Registrations to Social Identity.
 
 = 2.3.5 (12 JAN 2017) =
 
@@ -210,6 +355,21 @@ We have a growing archive of <a href="https://warfareplugins.com/support/" rel="
 * Update to block shortlinks on attachments
 * Change the counter error message on the CTT generator.
 * Fixed a CSS conflict with UI Tabs
+
+
+= 2.3.4 (06 DEC 2017) =
+
+* Changed the Twitter counter from 140 characters to 280 characters
+* Changed the WhatsApp button to also appear on desktop since their are now desktop apps for it.
+* Added a hook to change the location of the menu link in the dashboard.
+* Adjusted a filter to stop nonce's from being cached with certain caching plugins.
+* Add filter for adjusting the share recovery URL especially on development sites.
+* Refined the pin image hover button layout.
+* Adjust the radius on the "Leaf on the Wind" layout's CSS.
+* Force text-transform to none on icons so that the icons do not show up as text.
+* Only output the cache trigger on published posts.
+* Adjust the DOM loaded event to use native JS rather than jQuery.
+* Various CSS and minor bugfixes.
 
 = 2.3.3 (27 SEP 2017) =
 
@@ -477,8 +637,8 @@ Made some more major updates in response to Facebook's API changes. We've tested
 
 *New:*
 
-* Updated to Facebook’s new share API
-* Shortcode parameters for buttons=“” now supports spaces
+* Updated to Facebookâ€™s new share API
+* Shortcode parameters for buttons=â€œâ€ now supports spaces
 * Better detection of content location for some themes
 * Floating buttons now ignore shortcode (to avoid wonky behavior)
 * Updated floating position settings to apply to both side and horizontal instances

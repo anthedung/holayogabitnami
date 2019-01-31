@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$form['es_registered_group'] = isset($_POST['es_registered_group']) ? $_POST['es_registered_group'] : '';
 
 		if ($form['es_registered_group'] == '' && $form['es_registered'] == "YES") {
-			$es_errors[] = __( 'Please select default group to newly registered user.', ES_TDOMAIN );
+			$es_errors[] = __( 'Please select default group to newly registered user.', 'email-subscribers' );
 			$es_error_found = TRUE;
 		}
 
@@ -47,12 +47,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'es_registered_group' => ''
 			);
 
-			$es_success = __( 'Emails Successfully Synced.', ES_TDOMAIN );
+			$es_success = __( 'Emails Successfully Synced.', 'email-subscribers' );
 		}
 	}
 
 	$es_c_emailsubscribers = get_option( 'ig_es_sync_wp_users', 'norecord' );
-	if($es_c_emailsubscribers != 'norecord' && $es_c_emailsubscribers != "") {
+	if( $es_c_emailsubscribers != 'norecord' && $es_c_emailsubscribers != "" && !is_numeric( $es_c_emailsubscribers ) ) {
 
 		$es_sync_unserialized_data = maybe_unserialize($es_c_emailsubscribers);
 		$es_registered = $es_sync_unserialized_data['es_registered'];
@@ -85,11 +85,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="wrap">
 		<h2>
-			<?php echo __( 'Sync Email', ES_TDOMAIN ); ?>
-			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=add"><?php echo __( 'Add New Subscriber', ES_TDOMAIN ); ?></a>
-			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=import"><?php echo __( 'Import', ES_TDOMAIN ); ?></a>
-			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=export"><?php echo __( 'Export', ES_TDOMAIN ); ?></a>
-			<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', ES_TDOMAIN ); ?></a>
+			<?php echo __( 'Sync Email', 'email-subscribers' ); ?>
+			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=add"><?php echo __( 'Add New Subscriber', 'email-subscribers' ); ?></a>
+			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=import"><?php echo __( 'Import', 'email-subscribers' ); ?></a>
+			<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=export"><?php echo __( 'Export', 'email-subscribers' ); ?></a>
+			<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', 'email-subscribers' ); ?></a>
 		</h2>
 		<form name="form_addemail" method="post" action="#" onsubmit="return _es_addemail()">
 			<div class="tool-box">
@@ -98,25 +98,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<tr>
 							<th scope="row">
 								<label for="tag-image">
-									<?php echo __( 'Sync newly registered users to subscribers list', ES_TDOMAIN ); ?>
+									<?php echo __( 'Sync newly registered users to subscribers list', 'email-subscribers' ); ?>
 								</label>
 							</th>
 							<td>
 								<select name="es_registered" id="es_email_status">
-									<option value='NO' <?php if($es_registered == 'NO') { echo "selected='selected'" ; } ?>><?php echo __( 'NO', ES_TDOMAIN ); ?></option>
-									<option value='YES' <?php if($es_registered == 'YES') { echo "selected='selected'" ; } ?>><?php echo __( 'YES', ES_TDOMAIN ); ?></option>
+									<option value='NO' <?php if($es_registered == 'NO') { echo "selected='selected'" ; } ?>><?php echo __( 'NO', 'email-subscribers' ); ?></option>
+									<option value='YES' <?php if($es_registered == 'YES') { echo "selected='selected'" ; } ?>><?php echo __( 'YES', 'email-subscribers' ); ?></option>
 								</select>
 							</td>
 						</tr>
 						<tr>
 							<th>
 								<label for="tag-display-status">
-									<?php echo __( 'Select group to add newly registered users to', ES_TDOMAIN ); ?>
+									<?php echo __( 'Select group to add newly registered users to', 'email-subscribers' ); ?>
 								</label>
 							</th>
 							<td>
 								<select name="es_registered_group" id="es_email_group">
-									<option value=''><?php echo __( 'Select', ES_TDOMAIN ); ?></option>
+									<option value=''><?php echo __( 'Select', 'email-subscribers' ); ?></option>
 									<?php
 									$thisselected = "";
 									$groups = array();
@@ -140,7 +140,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 			<input type="hidden" name="es_form_submit" value="yes"/>
 			<p style="padding-top:5px;">
-				<input type="submit" class="button-primary" value="<?php echo __( 'Sync', ES_TDOMAIN ); ?>" />
+				<input type="submit" class="button-primary" value="<?php echo __( 'Sync', 'email-subscribers' ); ?>" />
 			</p>
 			<?php wp_nonce_field('es_form_add'); ?>
 		</form>

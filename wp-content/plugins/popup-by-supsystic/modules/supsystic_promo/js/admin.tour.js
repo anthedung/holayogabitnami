@@ -46,7 +46,7 @@ function _ppsOpenPointerAndPopupTab(tourId, pointId, tab) {
 function _ppsOpenPointer(tourId, pointId) {
 	var pointer = ppsAdminTourData.tour[ tourId ].points[ pointId ];
 	var $content = ppsAdminTourData._$.find('#supsystic-'+ tourId+ '-'+ pointId);
-	if(!jQuery(pointer.target) || !jQuery(pointer.target).size())
+	if(!jQuery(pointer.target) || !jQuery(pointer.target).length)
 		return;
 	if(g_ppsCurrTour) {
 		_ppsTourSendNext(g_ppsCurrTour._tourId, g_ppsCurrTour._pointId);
@@ -70,7 +70,7 @@ function _ppsOpenPointer(tourId, pointId) {
 			,	$closeBtn = $btnsShell.find('.close')
 			,	$finishBtn = $btnsShell.find('.supsystic-tour-finish-btn');
 
-			if($finishBtn && $finishBtn.size()) {
+			if($finishBtn && $finishBtn.length) {
 				$finishBtn.click(function(e){
 					e.preventDefault();
 					jQuery.sendFormPps({
@@ -80,7 +80,7 @@ function _ppsOpenPointer(tourId, pointId) {
 					g_ppsCurrTour.element.pointer('close');
 				});
 			}
-			if($closeBtn && $closeBtn.size()) {
+			if($closeBtn && $closeBtn.length) {
 				$closeBtn.bind( 'click.pointer', function(e) {
 					e.preventDefault();
 					jQuery.sendFormPps({

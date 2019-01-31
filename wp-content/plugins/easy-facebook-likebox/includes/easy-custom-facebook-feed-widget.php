@@ -124,7 +124,7 @@ class Easy_Custom_Facebook_Feed_Widget extends WP_Widget {
 		$defaults = array(
 						  'title'		=> null,
 						  'fb_appid'	=>	null,
-						  'fanpage_url' => 'jwebsol',
+						  'fanpage_url' => 'maltathemes',
 						  'layout'		=> 'half',
 						  'image_size'	=>	'normal',
 						  'type'		=>  'page',
@@ -136,8 +136,8 @@ class Easy_Custom_Facebook_Feed_Widget extends WP_Widget {
 						  'show_image' => 1,
 						  'show_like_box'	=> 1,
 						  'links_new_tab'	=> '1',
-						  'cache_unit'	=> 1,
-						  'cache_duration'	=> 'hours',
+						  'cache_unit'	=> 5,
+						  'cache_duration'	=> 'days',
 						  'locale' => 'en_US',
 						  'locale_other'=> ''
 						  );
@@ -162,7 +162,13 @@ class Easy_Custom_Facebook_Feed_Widget extends WP_Widget {
         <p>
 		<label for="<?php echo $this->get_field_id( 'fanpage_url' ); ?>"><?php _e( 'Fanpage ID:', 'easy-facebook-likebox' ); ?></label> 
 		<input class="widefat" id="<?php echo $this->get_field_id( 'fanpage_url' ); ?>" name="<?php echo $this->get_field_name( 'fanpage_url' ); ?>" type="text" value="<?php echo esc_attr( $fanpage_url ); ?>"><br />
-		<i>E.g jwebsol or 123456789</i>
+		<i>E.g maltathemes or 123456789</i>
+		</p>
+
+		 <p>
+		<label for="<?php echo $this->get_field_id( 'fb_appid' ); ?>"><?php _e( 'Access Token:' ); ?></label> 
+		<input class="widefat" id="<?php echo $this->get_field_id( 'fb_appid' ); ?>" name="<?php echo $this->get_field_name( 'fb_appid' ); ?>" type="text" value="<?php echo esc_attr( $fb_appid ); ?>"><br />
+		<i>Optional</i>
 		</p>
          
         <p class="widget-half">
@@ -242,6 +248,9 @@ class Easy_Custom_Facebook_Feed_Widget extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'links_new_tab' ); ?>"><?php _e( 'Open links in New tab', 'easy-facebook-likebox' ); ?></label>
 			
 		</p>
+
+		
+
        
         <div class="clearfix"></div>
           <p>
@@ -249,8 +258,7 @@ class Easy_Custom_Facebook_Feed_Widget extends WP_Widget {
  
 		<input class="half_field" id="<?php echo $this->get_field_id( 'cache_unit' ); ?>" name="<?php echo $this->get_field_name( 'cache_unit' ); ?>" type="number"  min="1" value="<?php echo esc_attr( $cache_unit ); ?>" size="5">  
         <select class="half_field" id="<?php echo $this->get_field_id( 'cache_duration' ); ?>" name="<?php echo $this->get_field_name( 'cache_duration' ); ?>">
-        		<option <?php selected( $cache_duration, 'minutes', $echo = true); ?> value="minutes" ><?php _e( 'Minutes', 'easy-facebook-likebox' ); ?></option>
-                 <option <?php selected( $cache_duration, 'hours' , $echo = true); ?> value="hours"><?php _e( 'Hours', 'easy-facebook-likebox' ); ?></option>
+        		
                 <option <?php selected( $cache_duration, 'days', $echo = true); ?> value="days" ><?php _e( 'Days', 'easy-facebook-likebox' ); ?></option>
             </select><br />
          <i><?php _e( 'Plugin will store the posts in database temporarily and will look for new posts after every selected time duration', 'easy-facebook-likebox' ); ?></i>    
@@ -260,6 +268,10 @@ class Easy_Custom_Facebook_Feed_Widget extends WP_Widget {
 		<?php 
   		
 		$fanpage_url = efbl_parse_url(  $fanpage_url );
+
+			if( !empty($fb_appid) ){
+			$fb_appid = 'fb_appid="'.$fb_appid.'"';
+		}
 
 		/*echo "<pre>";
 		print_r( $fb_url  );
@@ -272,7 +284,7 @@ class Easy_Custom_Facebook_Feed_Widget extends WP_Widget {
 		
 		?>
         
-        <p style="background:#ddd; padding:5px; "><?php echo '[efb_feed fanpage_url="'.$fanpage_url.'" layout="'.$layout.'" image_size="'.$image_size.'" type="'.$type.'" post_by="'.$post_by.'" show_logo="'.$show_logo.'" show_image="'.$show_image.'" show_like_box="'.$show_like_box.'" links_new_tab="'.$links_new_tab.'" post_number="'.$post_number.'" post_limit="'.$post_limit.'" words_limit="'.$words_limit.'" cache_unit="'.$cache_unit.'" cache_duration="'.$cache_duration.'" ]'?></p>
+        <p style="background:#ddd; padding:5px; "><?php echo '[efb_feed fanpage_url="'.$fanpage_url.'" layout="'.$layout.'" image_size="'.$image_size.'" type="'.$type.'" post_by="'.$post_by.'" show_logo="'.$show_logo.'" show_image="'.$show_image.'" show_like_box="'.$show_like_box.'" links_new_tab="'.$links_new_tab.'" post_number="'.$post_number.'" post_limit="'.$post_limit.'" words_limit="'.$words_limit.'"  cache_unit="'.$cache_unit.'" cache_duration="'.$cache_duration.'" ]'?></p>
          </div>
 		<?php 
 	}
@@ -293,6 +305,7 @@ class Easy_Custom_Facebook_Feed_Widget extends WP_Widget {
 		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
 		
 		$instance['fanpage_url'] = ( ! empty( $new_instance['fanpage_url'] ) ) ? strip_tags( $new_instance['fanpage_url'] ) : '';
+		$instance['fb_appid'] = ( ! empty( $new_instance['fb_appid'] ) ) ? strip_tags( $new_instance['fb_appid'] ) : '';
 		
 		$instance['image_size'] = ( ! empty( $new_instance['image_size'] ) ) ? strip_tags( $new_instance['image_size']  ) : '';
 		
@@ -314,6 +327,9 @@ class Easy_Custom_Facebook_Feed_Widget extends WP_Widget {
 		$instance['show_like_box'] = ( ! empty( $new_instance['show_like_box'] ) ) ? strip_tags( $new_instance['show_like_box'] ) : '';
 		
 		$instance['links_new_tab'] = ( ! empty( $new_instance['links_new_tab'] ) ) ? strip_tags( $new_instance['links_new_tab'] ) : '';
+
+
+
 		
 		$instance['cache_unit'] = ( ! empty( $new_instance['cache_unit'] ) ) ? strip_tags( $new_instance['cache_unit'] ) : '';
 		

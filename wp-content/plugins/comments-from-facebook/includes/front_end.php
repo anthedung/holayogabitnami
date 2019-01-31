@@ -106,7 +106,7 @@ class wpdevart_comment_front_end{
 		return  wpdevart_comment_setting::generete_iframe_by_array($atts);
 	}
 
-    /*############  Generate Facebook Js function  ################*/	
+    /*############  Generate Js_SDK function  ################*/	
 	
 	public function generete_facbook_js_sdk(){
 		?>

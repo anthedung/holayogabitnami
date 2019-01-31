@@ -4,18 +4,11 @@ Plugin Name: Related Posts
 Plugin URI: https://wordpress.org/plugins/yuzo-related-post/
 Description: Related posts so easy and fast
 Tags: related posts,related post,related content,popular posts,last post, most views, widget,related page,content,associate page, associate post
-Version: 5.12.74
+Version: 5.12.88
 Author: iLen
 Author URI: http://ilentheme.com
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd =_s-xclick&hosted_button_id=MSRAUBMB5BZFU
 */
-
-
-
-
-
-
-
 
 // live as if it were the last day of your life
 if ( !class_exists('yuzo_related_post') ) {
@@ -151,7 +144,7 @@ class yuzo_related_post extends yuzo_related_post_make{
 			add_action( 'wp_enqueue_scripts', array( &$this,'script_and_style_front' ) );
 
 			// add custom css
-			add_action( 'wp_footer', array( &$this,'add_custom_css' ) );
+			add_action( 'wp_head', array( &$this,'add_custom_css' ) );
 
 		}
 
@@ -171,6 +164,10 @@ class yuzo_related_post extends yuzo_related_post_make{
 function create_post_related( $content = '' ){
 
 	global $post,$yuzo_options,$wp_query,$if_utils;  
+
+	// Disabled related post
+	if( apply_filters( 'YuzoFilter_disabled__relatedpost', false ) == true ) return $content;
+
 	$orig_post = $post;
 
 	// validate feed init
@@ -537,7 +534,7 @@ function create_post_related( $content = '' ){
 				$args = array(
 					'showposts'           =>  $number_post,
 					'post_type'           => (array)$yuzo_options->post_type,
-					'post_status'         => 'publish',
+					'post_status'         => array('publish'),
 					'ignore_sticky_posts' => 1,
 					'orderby'             => $string_order_by,
 					'order'               => $string_order,
@@ -681,6 +678,7 @@ function create_post_related( $content = '' ){
 
 		//var_dump( $args );
 		// cache query
+		$args['post_status'] = array('publish');
 		if( $rebuilt_query && ! $break_query_post ){
 			
 			$the_query_yuzo = new WP_Query( $args );
@@ -853,7 +851,7 @@ function create_post_related( $content = '' ){
                         $post = get_post( $post_id );
 
                         // Validate if manual post and private post
-                        if( is_object($post) && $post->post_status == 'private' ) $post_private_manual = true;
+                        if( is_object($post) && ($post->post_status == 'private' || $post->post_status == 'pending') ) $post_private_manual = true;
                         //var_dump($post);
                     }elseif($the_query_yuzo->have_posts() && $wp_query->post_count != 0){
 						$the_query_yuzo->the_post(); // END custom first post
@@ -972,7 +970,7 @@ function create_post_related( $content = '' ){
 						  <div class="relatedthumb relatedpost-'.get_the_ID().' '.$class_box_shadow.'" style="width:'.$width.'px;float:left;overflow:hidden;'.$css_title_center.'">  
 							  
 							  <a '.$rel_link.' href="'.get_permalink().'" '.$target_link.' >
-									  <div class="yuzo-img-wrap '.$css_shine_effect1.'" style="/*width: '.$width.'px;height:'.$height.'px;*/">
+									  <div class="yuzo-img-wrap '.$css_shine_effect1.'" >
 										'.$css_shine_effect2.'
 										<div class="yuzo-img" style="background:url(\''.$image['src'].'\') 50% 50% no-repeat;width: '.$width.'px;;max-width:100%;height:'.$height.'px;margin-bottom: 5px;background-size: '.$size_css.'; '.$css_border.'"></div>
 									  </div>
@@ -983,19 +981,7 @@ function create_post_related( $content = '' ){
 							  </a>
 
 						  </div>';
-					  $style="<style>
-								.yuzo_related_post img{width:".$width."px !important; height:{$height}px !important;}
-								.yuzo_related_post .relatedthumb{line-height:".((int)$yuzo_options->font_size +2 )."px;background:{$yuzo_options->bg_color->color} !important;color:{$css_text_color}!important;}
-								.yuzo_related_post .relatedthumb:hover{background:{$yuzo_options->bg_color->hover} !important;$css_transitions;color:{$css_text_color_hover}!important;}
-								.yuzo_related_post .relatedthumb a{color:{$css_title_color}!important;}
-								.yuzo_related_post .relatedthumb a:hover{ color:$css_title_color_hover}!important;}
-								.yuzo_related_post .relatedthumb:hover a{ color:{$css_title_color_hover}!important;}
-								.yuzo_related_post .relatedthumb:hover .yuzo__text--title{ color:{$css_title_color_hover}!important;}
-								.yuzo_related_post .yuzo_text, .yuzo_related_post .yuzo_views_post {color:{$css_text_color}!important;}
-								.yuzo_related_post .relatedthumb:hover .yuzo_text, .yuzo_related_post:hover .yuzo_views_post {color:{$css_text_color_hover}!important;}
-								.yuzo_related_post .relatedthumb{ $css_margin $css_padding }
-								$css_effects
-								</style>";
+					  
 
 						if ( ! isset($yuzo_options->yuzo_conflict) || ! $yuzo_options->yuzo_conflict ) {
 						  $script="<script>
@@ -1019,18 +1005,7 @@ function create_post_related( $content = '' ){
 								'.$text2_extract .'
 						   
 						</div>';
-							$style="<style>
-						.yuzo_related_post .relatedthumb { background:{$yuzo_options->bg_color->color} !important;$css_transitions;color:{$css_text_color}!important; }
-						.yuzo_related_post .relatedthumb:hover{background:{$yuzo_options->bg_color->hover} !important;color:{$css_text_color_hover}!important;}
-						.yuzo_related_post .yuzo_text, .yuzo_related_post .yuzo_views_post {color:{$css_text_color}!important;}
-						.yuzo_related_post .relatedthumb:hover .yuzo_text, .yuzo_related_post:hover .yuzo_views_post {color:{$css_text_color_hover}!important;}
-						.yuzo_related_post .relatedthumb a{color:{$css_title_color}!important;}
-						.yuzo_related_post .relatedthumb a:hover{color:{$css_title_color_hover}!important;}
-						.yuzo_related_post .relatedthumb:hover a{ color:{$css_title_color_hover}!important;}
-						.yuzo_related_post .relatedthumb{ $css_margin $css_padding }
-
-						$css_effects
-						</style>";
+							
 						
 				}elseif( $yuzo_options->style == 3 ){
 					//$image = IF_get_image(  $yuzo_options->thumbnail_size, $yuzo_options->default_image );
@@ -1039,16 +1014,7 @@ function create_post_related( $content = '' ){
 						<a '.$rel_link.' class="link-list yuzo__text--title" href="'.get_permalink().'"  '.$target_link.'  style="font-size:'.$yuzo_options->font_size.'px;'.$bold_title.';line-height:'.( (int)$yuzo_options->font_size + 8).'px;">'.$my_array_views['top'].' '.$if_utils->IF_setHtml( $if_utils->IF_cut_text( get_the_title(), $yuzo_options->text_length , true ) ).' '.$my_array_views['bottom'].'</a>
 							  '.$text2_extract .'
 					</div>';
-					$style="<style>
-							.yuzo_related_post .relatedthumb{background:{$yuzo_options->bg_color->color} !important;$css_transitions;color:{$css_text_color}!important;}
-							.yuzo_related_post .relatedthumb:hover{background:{$yuzo_options->bg_color->hover} !important;$css_transitions;color:{$css_text_color_hover}!important;}
-							.yuzo_related_post .yuzo_text, .yuzo_related_post .yuzo_views_post {color:{$css_text_color}!important;}
-							.yuzo_related_post .relatedthumb:hover .yuzo_text, .yuzo_related_post:hover .yuzo_views_post {color:{$css_text_color_hover}!important;}
-							.yuzo_related_post .relatedthumb a{color:{$css_title_color}!important;}
-							.yuzo_related_post .relatedthumb a:hover{color:{$css_title_color_hover}!important;}
-							.yuzo_related_post .relatedthumb:hover a{ color:{$css_title_color_hover}!important;}
-							.yuzo_related_post .relatedthumb{ $css_margin $css_padding }
-							</style>";
+					
 									
 				}elseif( $yuzo_options->style == 4 ){
 					//$image = IF_get_image(  $yuzo_options->thumbnail_size, $yuzo_options->default_image );
@@ -1057,10 +1023,7 @@ function create_post_related( $content = '' ){
 						<a '.$rel_link.' class="link-list yuzo__text--title" href="'.get_permalink().'"  '.$target_link.'  style="font-size:'.$yuzo_options->font_size.'px;'.$bold_title.';line-height:'.( (int)$yuzo_options->font_size + 8).'px;">'.$my_array_views['top'].' '.$if_utils->IF_setHtml( $if_utils->IF_cut_text( get_the_title(), $yuzo_options->text_length , true ) ).' '.$my_array_views['bottom'].'</a>
 							  '.$text2_extract .'
 					</div>';
-					$style="<style>
-						.yuzo_related_post .yuzo_text {color:{$yuzo_options->text_color->color};}
-						.yuzo_related_post .relatedthumb a{color:{$yuzo_options->title_color->color};}
-					</style>";
+					
 					
 				}
 				$count++;
@@ -1083,9 +1046,8 @@ function create_post_related( $content = '' ){
 					'post_type'            => (array)$yuzo_options->post_type,
 					'post_status'          => 'publish',
 					'ignore_sticky_posts ' => 1,
-					'orderby'              => 'rand'
+					'orderby'              => 'rand',
 				   );
-
 			$metabox_add_post_first = 0;
 
 			// validate post current
@@ -1301,18 +1263,7 @@ function create_post_related( $content = '' ){
 							  </a>
 
 						  </div>';
-					  $style="<style>
-								.yuzo_related_post img{width:".((int)$yuzo_options->height_image + 10 )."px !important; height:{$yuzo_options->height_image}px !important;}
-								.yuzo_related_post .relatedthumb{line-height:".((int)$yuzo_options->font_size +2 )."px;background:{$yuzo_options->bg_color->color} !important;color:{$css_text_color}!important;}
-								.yuzo_related_post .relatedthumb:hover{background:{$yuzo_options->bg_color->hover} !important;$css_transitions;color:{$css_text_color_hover}!important;}
-								.yuzo_related_post .relatedthumb a{color:{$css_title_color}!important;}
-								.yuzo_related_post .relatedthumb a:hover{ color:$css_title_color_hover}!important;}
-								.yuzo_related_post .relatedthumb:hover a{ color:{$css_title_color_hover}!important;}
-								.yuzo_related_post .yuzo_text {color:{$css_text_color}!important;}
-								.yuzo_related_post .relatedthumb:hover .yuzo_text {color:{$css_text_color_hover}!important;}
-								.yuzo_related_post .relatedthumb{ $css_margin $css_padding }
-								$css_effects
-								</style>";
+					  
 
 						if ( ! isset($yuzo_options->yuzo_conflict) || ! $yuzo_options->yuzo_conflict ) {
 						  $script="<script>
@@ -1337,17 +1288,7 @@ function create_post_related( $content = '' ){
 								'.$text2_extract .'
 						   
 						</div>';
-							$style="<style>
-						.yuzo_related_post .relatedthumb { background:{$yuzo_options->bg_color->color} !important;$css_transitions;color:{$css_text_color}!important; }
-						.yuzo_related_post .relatedthumb:hover{background:{$yuzo_options->bg_color->hover} !important;color:{$css_text_color_hover}!important;}
-						.yuzo_related_post .yuzo_text {color:{$css_text_color}!important;}
-						.yuzo_related_post .relatedthumb:hover .yuzo_text {color:{$css_text_color_hover}!important;}
-						.yuzo_related_post .relatedthumb a{color:{$css_title_color}!important;}
-						.yuzo_related_post .relatedthumb a:hover{color:{$css_title_color_hover}!important;}
-						.yuzo_related_post .relatedthumb:hover a{ color:{$css_title_color_hover}!important;}
-						.yuzo_related_post .relatedthumb{ $css_margin $css_padding }
-						$css_effects
-						</style>";
+							
 						
 				}elseif( $yuzo_options->style == 3 ){
 					//$image = IF_get_image(  $yuzo_options->thumbnail_size, $yuzo_options->default_image );
@@ -1356,16 +1297,7 @@ function create_post_related( $content = '' ){
 						<a '.$rel_link.' class="link-list yuzo__text--title" href="'.get_permalink().'"  '.$target_link.'  style="font-size:'.$yuzo_options->font_size.'px;'.$bold_title.';line-height:'.( (int)$yuzo_options->font_size + 8).'px;">'.$my_array_views['top'].' '.$if_utils->IF_setHtml( $if_utils->IF_cut_text( get_the_title(), $yuzo_options->text_length , true ) ).' '.$my_array_views['bottom'].'</a>
 							  '.$text2_extract .'
 					</div>';
-					$style="<style>
-							.yuzo_related_post .relatedthumb{background:{$yuzo_options->bg_color->color} !important;$css_transitions;color:{$css_text_color}!important;}
-							.yuzo_related_post .relatedthumb:hover{background:{$yuzo_options->bg_color->hover} !important;$css_transitions;color:{$css_text_color_hover}!important;}
-							.yuzo_related_post .yuzo_text {color:{$css_text_color}!important;}
-							.yuzo_related_post .relatedthumb:hover .yuzo_text {color:{$css_text_color_hover}!important;}
-							.yuzo_related_post .relatedthumb a{color:{$css_title_color}!important;}
-							.yuzo_related_post .relatedthumb a:hover{color:{$css_title_color_hover}!important;}
-							.yuzo_related_post .relatedthumb:hover a{ color:{$css_title_color_hover}!important;}
-							.yuzo_related_post .relatedthumb{ $css_margin $css_padding }
-							</style>";
+					
 									
 				}elseif( $yuzo_options->style == 4 ){
 					//$image = IF_get_image(  $yuzo_options->thumbnail_size, $yuzo_options->default_image );
@@ -1374,10 +1306,7 @@ function create_post_related( $content = '' ){
 						<a '.$rel_link.' class="link-list yuzo__text--title" href="'.get_permalink().'"  '.$target_link.'  style="font-size:'.$yuzo_options->font_size.'px;'.$bold_title.';line-height:'.( (int)$yuzo_options->font_size + 8).'px;">'.$my_array_views['top'].' '.$if_utils->IF_setHtml( $if_utils->IF_cut_text( get_the_title(), $yuzo_options->text_length , true ) ).' '.$my_array_views['bottom'].'</a>
 							  '.$text2_extract .'
 					</div>';
-					$style="<style>
-						.yuzo_related_post .yuzo_text {color:{$yuzo_options->text_color};}
-						.yuzo_related_post .relatedthumb a{color:{$yuzo_options->title_color};}
-					</style>";
+					
 					
 				}
 				$count++;
@@ -1391,7 +1320,7 @@ function create_post_related( $content = '' ){
 
 	}
 	  
-	$_html .= "\n</div> $style $script <!-- End Yuzo :) -->";
+	$_html .= "\n</div> $script <!-- End Yuzo :) -->";
 	  
 	$post = $orig_post;  
 	
@@ -1479,7 +1408,7 @@ function effects(){
 
    global $yuzo_options;
 
-   $css_effects = null;
+   $css_effects = null; 
    if( isset( $yuzo_options->effect_related ) ){
 
 	  if( $yuzo_options->effect_related == 'enlarge' ){
@@ -2221,12 +2150,109 @@ jQuery(document).ready( function($) {
 
 function add_custom_css(){
 
-	global $yuzo_options;
+global $yuzo_options; 
 
-	if( $yuzo_options->style == 1 || $yuzo_options->style == 2 ){
+// margin related
+$css_margin = null;
+if( isset($yuzo_options->related_margin) && $yuzo_options->related_margin ){
+	$css_margin = " margin: {$yuzo_options->related_margin->top}px  {$yuzo_options->related_margin->right}px  {$yuzo_options->related_margin->bottom}px  {$yuzo_options->related_margin->left}px; ";
+}
+
+// padding related
+$css_padding = null;
+if( isset($yuzo_options->related_padding) && $yuzo_options->related_padding ){
+	$css_padding = " padding: {$yuzo_options->related_padding->top}px  {$yuzo_options->related_padding->right}px  {$yuzo_options->related_padding->bottom}px  {$yuzo_options->related_padding->left}px; ";
+}
+
+$css_effects = $this->effects();
+
+// set colors text and title
+// set colors text and title
+$css_text_color="";$css_text_color_hover="";
+$css_title_color="";$css_title_color_hover="";
+if( isset( $yuzo_options->text_color->color ) && $yuzo_options->text_color->color ){ $css_text_color=$yuzo_options->text_color->color; }
+if( isset( $yuzo_options->text_color->hover ) && $yuzo_options->text_color->hover ){ $css_text_color_hover=$yuzo_options->text_color->hover; }
+if( isset( $yuzo_options->title_color->color ) && $yuzo_options->title_color->color ){ $css_title_color=$yuzo_options->title_color->color; }
+if( isset( $yuzo_options->title_color->hover ) && $yuzo_options->title_color->hover ){ $css_title_color_hover=$yuzo_options->title_color->hover; }
+
+// type image
+$width="";
+$height="";
+/*if( !isset($yuzo_options->type_image) || !$yuzo_options->type_image ){
+	$width = ( (int)$yuzo_options->height_image * 15 / 100 ) + (int)$yuzo_options->height_image;
+	$height =  (int)$yuzo_options->height_image - ( (int)$yuzo_options->height_image * 20 / 100 );
+}else*/if( isset($yuzo_options->type_image)  && $yuzo_options->type_image ){
+
+	if( $yuzo_options->type_image == 'rectangular' ){
+		$width =  ( (int)$yuzo_options->height_image * 15 / 100 ) + (int)$yuzo_options->height_image;
+		$height = (int)$yuzo_options->height_image - ( (int)$yuzo_options->height_image * 20 / 100 ) ;
+	}elseif( $yuzo_options->type_image == 'square'  ){
+		$width =  (int)$yuzo_options->height_image;
+		$height = ((int)$yuzo_options->height_image);
+	}elseif( $yuzo_options->type_image == 'full-rectangular' ){
+		$width =  ( (int)$yuzo_options->height_image * 70 / 100 ) + (int)$yuzo_options->height_image;
+		$height = (int)$yuzo_options->height_image - ( (int)$yuzo_options->height_image * 20 / 100 ) ;
+	}elseif( $yuzo_options->type_image == 'full-vertical' ){
+		$width =  (int)$yuzo_options->height_image;
+		$height = isset($yuzo_options->height_full) && $yuzo_options->height_full?  (int)$yuzo_options->height_full: ( (int)$yuzo_options->height_image * 40 / 100 ) + (int)$yuzo_options->height_image ;
+	}
+
+}
+$style = null;
+// set transitions
+$css_transitions = null;
+if(  isset($yuzo_options->bg_color_hover_transitions) && $yuzo_options->bg_color_hover_transitions ){
+	$css_transitions = " -webkit-transition: background {$yuzo_options->bg_color_hover_transitions}s linear; -moz-transition: background {$yuzo_options->bg_color_hover_transitions}s linear; -o-transition: background {$yuzo_options->bg_color_hover_transitions}s linear; transition: background {$yuzo_options->bg_color_hover_transitions}s linear;";
+}
+	if( $yuzo_options->style == 1 ){
+$style="<style>
+								.yuzo_related_post img{width:".$width."px !important; height:{$height}px !important;}
+								.yuzo_related_post .relatedthumb{line-height:".((int)$yuzo_options->font_size +2 )."px;background:{$yuzo_options->bg_color->color} !important;color:{$css_text_color}!important;}
+								.yuzo_related_post .relatedthumb:hover{background:{$yuzo_options->bg_color->hover} !important;$css_transitions;color:{$css_text_color_hover}!important;}
+								.yuzo_related_post .relatedthumb a{color:{$css_title_color}!important;}
+								.yuzo_related_post .relatedthumb a:hover{ color: {$css_title_color_hover}!important;}
+								.yuzo_related_post .relatedthumb:hover a{ color:{$css_title_color_hover}!important;}
+								.yuzo_related_post .relatedthumb:hover .yuzo__text--title{ color:{$css_title_color_hover}!important;}
+								.yuzo_related_post .yuzo_text, .yuzo_related_post .yuzo_views_post {color:{$css_text_color}!important;}
+								.yuzo_related_post .relatedthumb:hover .yuzo_text, .yuzo_related_post:hover .yuzo_views_post {color:{$css_text_color_hover}!important;}
+								.yuzo_related_post .relatedthumb{ $css_margin $css_padding }
+								$css_effects
+								</style>";
+}elseif( $yuzo_options->style == 2 ){
+$style="<style>
+						.yuzo_related_post .relatedthumb { background:{$yuzo_options->bg_color->color} !important;$css_transitions;color:{$css_text_color}!important; }
+						.yuzo_related_post .relatedthumb:hover{background:{$yuzo_options->bg_color->hover} !important;color:{$css_text_color_hover}!important;}
+						.yuzo_related_post .yuzo_text, .yuzo_related_post .yuzo_views_post {color:{$css_text_color}!important;}
+						.yuzo_related_post .relatedthumb:hover .yuzo_text, .yuzo_related_post:hover .yuzo_views_post {color:{$css_text_color_hover}!important;}
+						.yuzo_related_post .relatedthumb a{color:{$css_title_color}!important;}
+						.yuzo_related_post .relatedthumb a:hover{color:{$css_title_color_hover}!important;}
+						.yuzo_related_post .relatedthumb:hover a{ color:{$css_title_color_hover}!important;}
+						.yuzo_related_post .relatedthumb{ $css_margin $css_padding }
+
+						$css_effects
+						</style>";
+}elseif( $yuzo_options->style == 3 ){
+$style="<style>
+							.yuzo_related_post .relatedthumb{background:{$yuzo_options->bg_color->color} !important;$css_transitions;color:{$css_text_color}!important;}
+							.yuzo_related_post .relatedthumb:hover{background:{$yuzo_options->bg_color->hover} !important;$css_transitions;color:{$css_text_color_hover}!important;}
+							.yuzo_related_post .yuzo_text, .yuzo_related_post .yuzo_views_post {color:{$css_text_color}!important;}
+							.yuzo_related_post .relatedthumb:hover .yuzo_text, .yuzo_related_post:hover .yuzo_views_post {color:{$css_text_color_hover}!important;}
+							.yuzo_related_post .relatedthumb a{color:{$css_title_color}!important;}
+							.yuzo_related_post .relatedthumb a:hover{color:{$css_title_color_hover}!important;}
+							.yuzo_related_post .relatedthumb:hover a{ color:{$css_title_color_hover}!important;}
+							.yuzo_related_post .relatedthumb{ $css_margin $css_padding }
+							</style>";
+}elseif( $yuzo_options->style == 4 ){
+$style="<style>
+						.yuzo_related_post .yuzo_text {color:{$yuzo_options->text_color->color};}
+						.yuzo_related_post .relatedthumb a{color:{$yuzo_options->title_color->color};}
+					</style>";
+}
+
+	if( $yuzo_options->style == 1 || $yuzo_options->style == 2 || $yuzo_options->style == 3 || $yuzo_options->style == 4 ){
 
 		if( isset($yuzo_options->css_and_style) && $yuzo_options->css_and_style && isset($yuzo_options->theme) && $yuzo_options->theme == 'default' ){
-			echo ("<style scoped>{$yuzo_options->css_and_style}</style>");
+			echo ("<style>{$yuzo_options->css_and_style}</style>{$style}");
 		}elseif( isset($yuzo_options->theme) && $yuzo_options->theme == 'magazine-alfa' ){
 			echo addslashes("<style>.yuzo_wraps{
    box-shadow: 0px 0px 8px -2px #333; 
@@ -2267,7 +2293,7 @@ function add_custom_css(){
  }
  .yuzo__title h3,.yuzo__title{
    display: inline-block;
- }</style>");
+ }</style>{$style}");
 		}
 		
 

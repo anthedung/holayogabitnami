@@ -11,7 +11,7 @@ $es_current_folder = dirname(dirname(__FILE__));
 
 if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
 
-if(!defined('ES_TDOMAIN')) define('ES_TDOMAIN', $es_plugin_name);
+if(!defined('ES_TDOMAIN')) define('ES_TDOMAIN', 'email-subscribers');
 
 if(!defined('ES_PLUGIN_NAME')) define('ES_PLUGIN_NAME', $es_plugin_name);
 

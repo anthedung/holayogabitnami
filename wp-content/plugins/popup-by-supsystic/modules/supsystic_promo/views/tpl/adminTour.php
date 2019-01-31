@@ -2,7 +2,7 @@
 	<div id="supsystic-welcome-first_welcome">
 		<div class="supsystic-tour-content">
 			<h3><?php printf(__('Welcome to %s plugin!', PPS_LANG_CODE), PPS_WP_PLUGIN_NAME)?></h3>
-			<p><?php printf(__('Thank you for choosing our %s plugin. Just click here to start using it - and we will show you it\'s possibilities and powerfull features.', PPS_LANG_CODE), PPS_WP_PLUGIN_NAME)?></p>
+			<p><?php printf(__('Thank you for choosing our %s plugin. Just click here to start using it - and we will show you it\'s possibilities and powerful features.', PPS_LANG_CODE), PPS_WP_PLUGIN_NAME)?></p>
 		</div>
 		<div class="supsystic-tour-btns">
 			<a href="#" class="close"><?php _e('Close', PPS_LANG_CODE)?></a>
@@ -62,7 +62,7 @@
 	<div id="supsystic-first_edit-popup_design_opts">
 		<div class="supsystic-tour-content">
 			<h3><?php printf(__('Design Settings', PPS_LANG_CODE), PPS_WP_PLUGIN_NAME)?></h3>
-			<p><?php printf(__('One of our most powerfull features - possibility to <strong>customize</strong> design for each PopUp window for your needs. In this section you can select your PopUp colors and images, enter required texts that will describe your neds for your visitors, setup social settings (if required), select PopUp location, and in the end - select Animation style for your PopUp from list of more then 20 different animation styles!', PPS_LANG_CODE), PPS_WP_PLUGIN_NAME)?></p>
+			<p><?php printf(__('One of our most powerful features - possibility to <strong>customize</strong> design for each PopUp window for your needs. In this section you can select your PopUp colors and images, enter required texts that will describe your needs for your visitors, setup social settings (if required), select PopUp location, and in the end - select Animation style for your PopUp from list of more then 20 different animation styles!', PPS_LANG_CODE), PPS_WP_PLUGIN_NAME)?></p>
 		</div>
 		<div class="supsystic-tour-btns">
 			<a href="#" class="close"><?php _e('Close', PPS_LANG_CODE)?></a>

@@ -1,6 +1,6 @@
 jQuery(document).ready(function(){
 	var $deactivateLnk = jQuery('#the-list tr[data-slug="'+ ppsPluginsData.plugSlug+ '"] .row-actions .deactivate a');
-	if($deactivateLnk && $deactivateLnk.size()) {
+	if($deactivateLnk && $deactivateLnk.length) {
 		var $deactivateForm = jQuery('#ppsDeactivateForm');
 		var $deactivateWnd = jQuery('#ppsDeactivateWnd').dialog({
 			modal:    true
@@ -40,7 +40,7 @@ jQuery(document).ready(function(){
 			jQuery('.ppsDeactivateDescShell').slideUp( g_ppsAnimationSpeed );
 			if(jQuery(this).prop('checked')) {
 				var $descShell = jQuery(this).parents('.ppsDeactivateReasonShell:first').find('.ppsDeactivateDescShell');
-				if($descShell && $descShell.size()) {
+				if($descShell && $descShell.length) {
 					$descShell.slideDown( g_ppsAnimationSpeed );
 				}
 			}

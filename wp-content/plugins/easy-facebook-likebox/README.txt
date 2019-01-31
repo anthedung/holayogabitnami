@@ -1,9 +1,9 @@
-﻿=== Easy Facebook Like Box (Facebook Page Plugin) - Custom Facebook Feed - Auto PopUp ===
-Contributors: sjaved, jwebsol
+=== Easy Facebook Like Box (Facebook Page Plugin) - Custom Facebook Feed - Auto PopUp ===
+Contributors: maltathemes, sjaved
 Tags: easy custom facebook feed, facebook feed, facebook page plugin, page plugin, adoptive, facebook, facebook like box,, like box, facebook like box,  facebook like box widget,  facebook like box shortcodes, shortcodes,  facebook like box plugin, facebook like box wordpress plugin, plugin, responsive facebook like box, responsive, facebook like box in 75 locales, facebook like box in 75 languages, custom facebook feed, facebook like box in PopUp, PopUp, Auto PopUp, like box in PopUp, fancybox, lightbox, seo, social media, facebook badge, facebook button, facebook connect, facebook facepile, Facebook fan page, wordpress facebook like box, facebook share, facebook integration, shortcode generator, advanced responsive facebook likebox, facebook wall, facebook sidebar, facebook recommend, like box facebook, open graph, facebook page, facebook group, rt facebook like box, sharebar 
 Requires at least: 3.3
-Tested up to: 4.9.1
-Stable tag: 4.9.1
+Tested up to: 5.0.2
+Stable tag: 4.3.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html 
 
@@ -13,8 +13,6 @@ Easy facebook like box WordPress plugin allows to display custom facebook feed, 
 
 There are **three** main features of this plugin, **Custom Facebook Feed**, **Faceook Page Plugin** (previously Facebook Like Box) and **Auto PopUp**.
 
-[Custom facebook feed demo](http://jwebsol.com/custom-facebook-feed/ "See this plugin in action (Custom facebook feed demo)") | [Fixed width demo](http://jwebsol.com/easy-facebook-like-box-plugin-demo/ "See this plugin in action (Fixed width)") | [Responsive demo](http://jwebsol.com/easy-facebook-like-box-responsive-demo/ "See this plugin in action (Responsive)") | 
-[Auto PopUp demo](http://jwebsol.com/easy-facebook-like-box-auto-popup-demo/ "See this plugin in action (Auto PopUp)") 
 
 *"Cool plugin – Fast Support too! Plugin works like magic! And you won’t see anyone around here that provides fast support like sjaved..EASY indeed!"* - [aolaso0914](https://wordpress.org/support/topic/cool-plugin-fast-support-too/)
 
@@ -61,11 +59,11 @@ You can use easy facebook like box in number of ways:
 * Display custom facebook feed in sidebar using widget.
 
 * Display custom facebook feed in posts or pages using shortcode. Genraete shortcode using widget or add this shortcode and modify the values manually. 
-`[efb_feed fanpage_url="YOUR_FB_FANPAGE_NAME_OR_URL" layout="CHOSE_LAYOUT(thumbnail/half/full)" image_size="CHOSE_IMAGE_SIZE(thumbnail/album/normal)" type="CHOSE_TYPE(page/group)" post_by="DISPLAY_POSTS_FROM(me/others/onlyothers)" show_logo="SHOW_HIDE_PAGE_LOGO(1/0)" show_image="SHOW_HIDE_IMAGES(1/0)" show_like_box="SHOW_HIDE_LIKEBOX(1/0)" links_new_tab="OPEN_LINKS_IN_EXTERNAL_TAB(1/0)" post_number="NUMBER_OF_POST_DISPALAY(10)" post_limit="NUMBER_OF_POST_RETRIEVE(10)" cache_unit="NUMMBER_OF_MINUTES_HOURS_DAYS(1)" cache_duration="SELECT_CACHE_DURATION(minutes/hours/days)" ]`
+`[efb_feed fanpage_url="YOUR_FB_FANPAGE_NAME_OR_URL" layout="CHOSE_LAYOUT(thumbnail/half/full)" image_size="CHOSE_IMAGE_SIZE(thumbnail/album/normal)" type="CHOSE_TYPE(page/group)" post_by="DISPLAY_POSTS_FROM(me/others/onlyothers)" show_logo="SHOW_HIDE_PAGE_LOGO(1/0)" show_image="SHOW_HIDE_IMAGES(1/0)" show_like_box="SHOW_HIDE_LIKEBOX(1/0)" links_new_tab="OPEN_LINKS_IN_EXTERNAL_TAB(1/0)" post_number="NUMBER_OF_POST_DISPALAY(10)" post_limit="NUMBER_OF_POST_RETRIEVE(10)" cache_unit="NUMMBER_OF_DAYS(1)" cache_duration="SELECT_CACHE_DURATION(days)" ]`
 
 
 * Want to display in a template paste below code along with your optional settings.
-`<?php echo do_shortcode( '[efb_feed fanpage_url="YOUR_FB_FANPAGE_NAME_OR_URL" layout="CHOSE_LAYOUT(thumbnail/half/full)" image_size="CHOSE_IMAGE_SIZE(thumbnail/album/normal)" type="CHOSE_TYPE(page/group)" post_by="DISPLAY_POSTS_FROM(me/others/onlyothers)" show_logo="SHOW_HIDE_PAGE_LOGO(1/0)" show_image="SHOW_HIDE_IMAGES(1/0)" show_like_box="SHOW_HIDE_LIKEBOX(1/0)" post_number="NUMBER_OF_POST_DISPALAY(10)" post_limit="NUMBER_OF_POST_RETRIEVE(10)" cache_unit="NUMMBER_OF_MINUTES_HOURS_DAYS(1)" cache_duration="SELECT_CACHE_DURATION(minutes/hours/days)" ]' ); ?>` 
+`<?php echo do_shortcode( '[efb_feed fanpage_url="YOUR_FB_FANPAGE_NAME_OR_URL" layout="CHOSE_LAYOUT(thumbnail/half/full)" image_size="CHOSE_IMAGE_SIZE(thumbnail/album/normal)" type="CHOSE_TYPE(page/group)" post_by="DISPLAY_POSTS_FROM(me/others/onlyothers)" show_logo="SHOW_HIDE_PAGE_LOGO(1/0)" show_image="SHOW_HIDE_IMAGES(1/0)" show_like_box="SHOW_HIDE_LIKEBOX(1/0)" post_number="NUMBER_OF_POST_DISPALAY(10)" post_limit="NUMBER_OF_POST_RETRIEVE(10)" cache_unit="NUMMBER_OF_DAYS(1)" cache_duration="SELECT_CACHE_DURATION(days)" ]' ); ?>` 
 
 
 ### How to use facebook like box widget, shortcode and PopUp. 
@@ -88,12 +86,44 @@ Thanks to *Marek Sierociński* for translating this plugin into polish language
 **Need support** feel free to open support ticket:   
 [Support](https://wordpress.org/support/plugin/easy-facebook-likebox "Support")
 
+**NOTE**
+Easy Facebook Likebox is absolutely the simplest, most beginner friendly yet powerful and the only plugin with one minute setup (or even less). 
+
+Also, I’m the author of [Floating Links](https://wordpress.org/plugins/floating-links) (the easiest to use plugin with 5 star rating and over 800+ active installs) and [My Instagram Feed](https://wordpress.org/plugins/my-instagram-feed) (simplest plugin ever to show your Instagram Feeds in One minute only).
+
+
+
+Thank you
+
+
+
+Danish Ali Malik
+
+
 == Installation ==
 1. Upload "easy-facebook-likebox" to the "/wp-content/plugins/" directory.
 2. Activate the plugin through the "Plugins" menu in WordPress.
 3. Navigate to "Appearance > Widgets" and drag and drop "Easy Facebook Likebox" in desired widget area or use the shortcode in page/post generated by widget. 
 
+
 == Upgrade Notice ==
+= 4.3.9 =
+Added My Plugins Page.
+Tested Upto 5.0.2
+Tested With Gutenberg
+
+= 4.3.8 =
+Added Minimum 1 day cache storing (Still working on it and improve more in future).
+Fixed Plugin CSS mess up the WordPress admin bar issue.
+Fixed Alt attribute missing in feeds.
+
+= 4.3.7 =
+Added Clear cache option.
+
+= 4.3.6 =
+Fixed Feeds not showing error.
+Added Minimum 6 days cache storing.
+
 = 4.3.5 =
 Fixed FB not defined issue.
 Added multiple facebook apps to reduce api rate limit error.
@@ -179,7 +209,24 @@ http://wordpress.org/support/topic/need-feed-back-on-plugin-feature/
 8. Easy Facebook Like Box settings dashboard.
 9. Auto PopUp settings panel.
 
-== Changelog ==
+== Changelog == 
+= 4.3.9 =
+* Added: My Plugins Page
+* Tested: Upto 5.0.2
+* Tested: With Gutenberg
+
+= 4.3.8 =
+* Added: Minimum 1 day cache storing (Still working on it and improve more in future).
+* Fixed: Plugin CSS mess up the WordPress admin bar issue.
+* Fixed: Alt attribute missing in feeds.
+
+= 4.3.7 =
+* Added: Clear cache option.
+
+= 4.3.6 =
+* Fixed: Feeds not showing error.
+* Added: Minimum 6 days cache storing.
+
 = 4.3.5 =
 * Fixed: FB not defined issue.
 * Added: Multiple facebook apps to reduce api rate limit error.

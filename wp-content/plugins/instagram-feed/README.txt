@@ -2,8 +2,8 @@
 Contributors: smashballoon, craig-at-smash-balloon
 Tags: Instagram, Instagram feed, Instagram photos, Instagram widget, Instagram gallery
 Requires at least: 3.0
-Tested up to: 4.9
-Stable tag: 1.8.2
+Tested up to: 5.0
+Stable tag: 1.10.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,7 +11,7 @@ Display beautifully clean, customizable, and responsive feeds from multiple Inst
 
 == Description ==
 
-Display Instagram photos from any non-private Instagram accounts, either in the same single feed or in multiple different ones.
+Display Instagram posts from your Instagram accounts, either in the same single feed or in multiple different ones.
 
 = Features =
 * Super **simple to set up**
@@ -33,6 +33,22 @@ Display Instagram photos from any non-private Instagram accounts, either in the 
 * **Display Your Content Your Way** - Customize your Instagram feeds to look exactly the way you want, so that they blend seemlessly into your site or pop out at your visitors!
 * **Keep Your Site Looking Fresh** - Automatically push your new Instagram content straight to your site to keep it looking fresh and keeping your audience engaged.
 * **Super simple to set up** - Once installed, you can be displaying your Instagram photos within 30 seconds! No confusing steps or Instagram Developer account needed.
+
+= Pro Version =
+In order to maintain the free version of the plugin on an ongoing basis, and to provide quick and effective support for free, we offer a Pro version of the plugin. The Pro version allows you to:
+
+* Display **Hashtag feeds** (fully compatible with the Instagram December 11, 2018, API changes)
+* View photos and videos in a **popup lightbox** directly on your site
+* View post **comments** for user feeds
+* Display the number of **likes and comments** for each post
+* Create **carousels** from your posts
+* Use **"Masonry" or "Highlight" layouts** for your feeds
+* Display **captions** for photos and videos
+* **Filter posts** based on hashtag/word
+* Advanced **moderation system** for hiding/showing certain posts
+* Create **"shoppable" Instagram feeds**, and more.
+
+[Find out more about the Pro version](https://smashballoon.com/instagram-feed/ "Instagram Feed Pro") or [try out the Pro demo](https://smashballoon.com/instagram-feed/demo "Instagram Feed Pro Demo").
 
 = Featured Reviews =
 "**Simple and concise** - Excellent plugin. Simple and non-bloated. I had a couple small issues with the plugin when I first started using it, but a quick comment on the support forums got a new version pushed out the next day with the fix. Awesome support!" - [Josh Jones](https://wordpress.org/support/topic/simple-and-concise-3 'Simple and concise Instagram plugin')
@@ -142,8 +158,6 @@ Yep. You can just separate the IDs by commas, either in the User ID(s) field on 
 = How do I find my Instagram Access Token and Instagram User ID =
 
 We've made it super easy. Simply click on the big blue button on the Instagram Feed Settings page and log into your Instagram account. The plugin will then retrieve and display both your Access Token and User ID from Instagram.
-
-You can also display photos from other peoples Instagram accounts. To find their Instagram User ID you can use [this tool](http://www.otzberg.net/iguserid/).
 
 = My Instagram feed isn't displaying. Why not!? =
 
@@ -287,7 +301,7 @@ We understand that sometimes you need help, have issues or just have questions. 
 
 = What can it do? =
 
-* Display Instagram photos from any non-private Instagram account.
+* Display Instagram photos from any Instagram account you own.
 * Completely responsive and mobile ready –your Instagram feed layout looks great on any screen size and in any container width
 * Display multiple Instagram feeds on the same page or on different pages throughout your site by using our powerful Instagram Feed shortcode options
 * Display posts from multiple Instagram User IDs
@@ -310,25 +324,59 @@ We understand that sometimes you need help, have issues or just have questions. 
 * Plus more customization options added all the time!
 
 == Changelog ==
+= 1.10.2 =
+* Confirmed compatibility with the upcoming WordPress 5.0 "Gutenberg" update
+* Fix: Fixed an issue caused by some themes which affected the formatting of the 'Load More' and 'Follow' buttons
+* Fix: Fixed an occassional formatting issue with error messages due to no line-height being set
+* Fix: Minor admin UI fixes
+* Tweak: Removed mention of some Pro features which will be deprecated due to upcoming Instagram API changes
+
+= 1.10.1 =
+* Tweak: Automatic image resolution detection setting now works better with wide images. Resizing the browser will now automatically raise the image resolution if needed.
+* Fix: Fixed an issue where the Load More button would disappear if all posts for a feed were cached.
+
+= 1.10 =
+* New: We've made improvements to the way photos are loaded into the feed, adding a smooth transition to display photos subtly rather than suddenly.
+* New: More header sizes; you can now choose from three sizes: small, medium, and large. Change this on the "Customize" tab.
+* Fix: Using a percent for the image padding was causing the height of images to be too tall
+* Fix: Removed a PHP notice when the Instagram API was blocked by the web host
+
+= 1.9.1 =
+* Fix: Captions missing as "alt" text for Instagram images.
+* Fix: System information was not formatting connected Instagram accounts and user ids correctly
+* Fix: "Unauthorized redirect URL" error occurring while trying to connect a new Instagram account due to recent changes from Instagram
+* Fix: Using a percent for the image padding was causing the height of Instagram images to be to tall
+
+= 1.9 =
+* New: Retrieving Access Tokens and connecting multiple Instagram accounts is now easier using our improved interface for managing account information. While on the Configure tab, click on the big blue button to connect an account, or use the "Manually Connect an Account" option to connect one using an existing Access Token. Once an account is connected, you can use the associated buttons to either add it to your primary Instagram User feed or to a different Instagram feed on your site using the `user` shortcode option, eg: `user=smashballoon`.
+* Tweak: Disabled auto load in the database for backup caches
+* Fix: Fixed an occasional issue with the Instagram login flow which would result in an "Unauthorized redirect URL" error
+
+= 1.8.3 =
+* Fix: SVG icons caused some display problems in IE 11
+* Fix: Removed support for using usernames in the Instagram User ID setting due to recent API changes. Will now default to the Instagram User ID attached to the Access Token.
+* Fix: Backup feed not always being used when Access Tokens expire
+* Fix: Instagram Access Tokens may have been incorrectly saved as invalid under certain circumstances
+
 = 1.8.2 =
-* Tweak: Setting "Cache Error API Recheck" enabled by default for new installs
+* Tweak: Setting "Cache Error API Recheck" enabled by default for new Instagram Feed installs
 * Fix: Page caches created with the WP Rocket plugin will be cleared when the Instagram Feed settings are updated or the cache is forced to clear
 * Fix: Fixed a rare issue where feeds were displaying "Looking for cache that doesn't exist" when page caching was not being used
 
 = 1.8.1 =
-* Fix: Fixed issue where feeds were displaying "Looking for cache that doesn't exist" when page caching was not being used
+* Fix: Fixed issue where Instagram feeds were displaying "Looking for cache that doesn't exist" when page caching was not being used
 * Fix: Font method setting not working when "Are you using an ajax theme?" setting is enabled
 
 = 1.8 =
 * Important: Due to [recent changes](https://smashballoon.com/instagram-api-changes-april-4-2018/) in the Instagram API it is no longer possible to display photos from other Instagram accounts which are not your own. You can only display the user feed of the account which is associated with your Access Token.
-* New: Added an Access Token shortcode option and support for multiple Access Tokens. If you own multiple Instagram accounts then you can now use multiple Access Tokens in order to display user feeds from each account, either in separate feeds, or in the same feed. Just use the `accesstoken` shortcode option. See [this FAQ](https://smashballoon.com/display-multiple-instagram-feeds/#multiple-user-feeds) for more information on displaying multiple User feeds.
+* New: Added an Access Token shortcode option and support for multiple Instagram Access Tokens. If you own multiple Instagram accounts then you can now use multiple Access Tokens in order to display user feeds from each Instagram account, either in separate feeds, or in the same feed. Just use the `accesstoken` shortcode option. See [this FAQ](https://smashballoon.com/display-multiple-instagram-feeds/#multiple-user-feeds) for more information on displaying multiple User feeds.
 
 = 1.7 =
-* New: Added feed caching to limit the number of API requests. Use the setting on the "Configure" tab "Check for new posts every" to set how long feed data will be cached before refreshing.
-* New: Added backup caching for all feeds. If the feed is unable to display then a backup feed will be shown to visitors if one is available. The backup cache can be disabled or cleared by using the following setting: `Customize > Misc > Enable Backup Caching`.
+* New: Added feed caching to limit the number of Instagram API requests. Use the setting on the "Configure" tab "Check for new posts every" to set how long feed data will be cached before refreshing.
+* New: Added backup caching for all feeds. If the Instagram feed is unable to display then a backup feed will be shown to visitors if one is available. The backup cache can be disabled or cleared by using the following setting: `Customize > Misc > Enable Backup Caching`.
 * New: Icons are now generated as SVGs for a sharper look and more semantic markup
-* New: Carousel posts include an icon to indicate that they are carousel posts
-* Tweak: Using the "sort posts by random" feature will include the most recent 33 posts instead of just the posts shown in the feed
+* New: Instagram carousel posts include an icon to indicate that they are carousel posts
+* Tweak: Using the "sort posts by random" feature will include the most recent 33 posts instead of just the posts shown in the Instagram feed
 * Fix: links back to instagram.com will use the "www" prefix
 
 = 1.6.2 =

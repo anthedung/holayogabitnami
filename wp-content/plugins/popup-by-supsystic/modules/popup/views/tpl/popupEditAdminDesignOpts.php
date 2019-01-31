@@ -104,17 +104,17 @@
 			))?>
 		</td>
 	</tr>
-	<tr>
+	<?php /*<tr>
 		<th scope="row" class="col-w-1perc">
 			<?php _e('Ignore related videos', PPS_LANG_CODE)?>&nbsp;
-			<i class="fa fa-question supsystic-tooltip" title="<?php esc_html(sprintf(__('In the end there are list of related videos by default, but you can disable this feature using this option. For vimeo videos - you need to change this in your vide settings, check <a href="%s" target="_blank">this FAQ</a>.', PPS_LANG_CODE), 'https://vimeo.com/help/faq/sharing-videos/embedding-videos'))?>"></i>
+			<i class="fa fa-question supsystic-tooltip" title="<?php echo esc_html(sprintf(__('In the end there are list of related videos by default, but you can disable this feature using this option. For vimeo videos - you need to change this in your vide settings, check <a href="%s" target="_blank">this FAQ</a>.', PPS_LANG_CODE), 'https://vimeo.com/help/faq/sharing-videos/embedding-videos'))?>"></i>
 		</th>
 		<td class="col-w-1perc">
 			<?php echo htmlPps::checkbox('params[tpl][video_hide_rel]', array(
 				'checked' => htmlPps::checkedOpt($this->popup['params']['tpl'], 'video_hide_rel')
 			))?>
 		</td>
-	</tr>
+	</tr>*/ ?>
 	<?php }?>
 		<?php if(in_array($this->popup['type'], array(PPS_FB_LIKE))) {?>
 			<?php foreach($this->fbLikeOpts as $fKey => $fData) { ?>
@@ -350,6 +350,11 @@
 			<?php echo htmlPps::checkbox('params[tpl][reidrect_on_close_new_wnd]', array(
 				'checked' => htmlPps::checkedOpt($this->popup['params']['tpl'], 'reidrect_on_close_new_wnd')))?>
 			<?php _e('Open in a new window (tab)', PPS_LANG_CODE)?>
+		</label>
+		<label class="supsystic-tooltip" title="<?php _e('If you set PopUp to Show On -> Click on certain link, and this link have href parameter - you can redirect your users there after PopUp close.', PPS_LANG_CODE)?>">
+			<?php echo htmlPps::checkbox('params[tpl][close_redirect_to_btn_url]', array(
+				'checked' => htmlPps::checkedOpt($this->popup['params']['tpl'], 'close_redirect_to_btn_url')))?>
+			<?php _e('Redirect to button URL', PPS_LANG_CODE)?>
 		</label>
 	</td>
 </tr>

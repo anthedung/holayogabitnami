@@ -2,7 +2,7 @@
 **Contributors:** [themeisle](https://profiles.wordpress.org/themeisle), [codeinwp](https://profiles.wordpress.org/codeinwp)  
 **Tags:** elementor, pagebuilder, page builder, page builder template, page builder templates, actions, storefront, twentysixteen, genesis, template builder, builder templates  
 **Requires at least:** 4.4  
-**Tested up to:** 4.9  
+**Tested up to:** 5.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -24,11 +24,13 @@ Adds 2 new templates for complete full width experience while using the page bui
 ## Supported Themes ##
 The following themes are currently supported out of the box - if your desired theme is not list you may need to add some custom css.
 
+* [Neve](https://themeisle.com/themes/neve/) - by ThemeIsle
 * [Hestia](https://wordpress.org/themes/hestia/) - by ThemeIsle
 * [Hestia Pro](https://themeisle.com/themes/hestia-pro/) - by ThemeIsle
 * [Zerif Lite](https://themeisle.com/themes/zerif-lite) - by ThemeIsle
 * [ShopIsle](https://wordpress.org/themes/shop-isle/) - by ThemeIsle
 * [Orfeo](https://themeisle.com/themes/orfeo) - by ThemeIsle
+* [Phlox](http://phlox.pro/) - by Averta
 * [Edge](https://wordpress.org/themes/edge/) - By themefreesia
 * [Experon](https://wordpress.org/themes/experon/) - ThinkUpThemes
 * [Genesis](http://my.studiopress.com/themes/genesis/) - By StudioPress
@@ -128,6 +130,31 @@ Further details will be available near the time of the release.
 2. Fullwidth no Header no Footer
 
 ## Changelog ##
+### 1.2.9 - 2018-12-10  ###
+
+* Tested with WP 5.0
+
+
+### 1.2.8 - 2018-11-29  ###
+
+* Fix possible issue with multiple notices
+
+
+### 1.2.7 - 2018-11-27  ###
+
+* Update recommended theme link
+
+
+### 1.2.6 - 2018-10-09  ###
+
+* support for Neve
+
+
+### 1.2.5 - 2018-05-15  ###
+
+* Version Bump.
+
+
 ### 1.2.4 - 2018-03-12  ###
 
 * Added Compatibility with a lot of themes.

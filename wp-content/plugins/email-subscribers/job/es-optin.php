@@ -6,6 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if( (isset($_GET['es'])) && ($_GET['es'] == "optin") ) {
+	$es_page_request = $_GET['es'];
 
 	$blogname = get_option('blogname');
 	$noerror = true;
@@ -69,6 +70,7 @@ if( (isset($_GET['es'])) && ($_GET['es'] == "optin") ) {
 				}
 				echo $message;
 			}
+			do_action('es_redirect_to_optin_page', $es_page_request);
 			?>
 		</div>
 	</body>

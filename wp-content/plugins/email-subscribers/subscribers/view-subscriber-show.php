@@ -14,7 +14,7 @@ if ( $es_c_email_subscribers_ver != "2.9" ) {
 	?><div class="error fade">
 		<p>
 			Note: You have recently upgraded the plugin and your tables are not sync.
-			Please <a title="Sync plugin tables." href="<?php echo ES_ADMINURL; ?>?page=es-settings&amp;ac=sync"><?php echo __( 'Click Here', ES_TDOMAIN ); ?></a> to sync the table.
+			Please <a title="Sync plugin tables." href="<?php echo ES_ADMINURL; ?>?page=es-settings&amp;ac=sync"><?php echo __( 'Click Here', 'email-subscribers' ); ?></a> to sync the table.
 			This is mandatory and it will not affect your data.
 		</p>
 	</div><?php
@@ -42,7 +42,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 		if ($result != '1') {
 			?><div class="error fade">
 				<p><strong>
-					<?php echo __( 'Selected details does not exists.', ES_TDOMAIN ); ?>
+					<?php echo __( 'Selected details does not exists.', 'email-subscribers' ); ?>
 				</strong></p>
 			</div><?php
 		} else {
@@ -53,7 +53,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 
 				//	Set success message
 				$es_success_msg = TRUE;
-				$es_success = __( 'Record deleted.', ES_TDOMAIN );
+				$es_success = __( 'Record deleted.', 'email-subscribers' );
 			}
 
 			if (isset($_GET['ac']) && $_GET['ac'] == 'resend' && isset($_GET['did']) && $_GET['did'] != '') {
@@ -64,7 +64,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 					?>
 					<div class="error fade">
 						<p><strong>
-							<?php echo __( 'To send confirmation email, please change the Opt-in option to Double Opt In.', ES_TDOMAIN ); ?>
+							<?php echo __( 'To send confirmation email, please change the Opt-in option to Double Opt In.', 'email-subscribers' ); ?>
 						</strong></p>
 					</div>
 					<?php
@@ -72,7 +72,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 					es_cls_sendmail::es_prepare_optin("single", $did, $idlist = "");
 					es_cls_dbquery::es_view_subscriber_upd_status("Unconfirmed", $did);
 					$es_success_msg = TRUE;
-					$es_success  = __( 'Confirmation emails Resent Successfully.', ES_TDOMAIN );
+					$es_success  = __( 'Confirmation emails resent successfully.', 'email-subscribers' );
 				}
 			}
 		}
@@ -92,12 +92,12 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 
 				//	Set success message
 				$es_success_msg = TRUE;
-				$es_success = __( 'Record deleted.', ES_TDOMAIN );
+				$es_success = __( 'Record deleted.', 'email-subscribers' );
 			} else {
 				?>
 				<div class="error fade is-dismissible">
 					<p><strong>
-						<?php echo __( 'No record was selected.', ES_TDOMAIN ); ?>
+						<?php echo __( 'No record was selected.', 'email-subscribers' ); ?>
 					</strong></p>
 				</div>
 				<?php
@@ -112,7 +112,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 				?>
 				<div class="error fade">
 					<p><strong>
-						<?php echo __( 'To send confirmation mail, please change the Opt-in option to Double Opt In.', ES_TDOMAIN ); ?>
+						<?php echo __( 'To send confirmation mail, please change the Opt-in option to Double Opt In.', 'email-subscribers' ); ?>
 					</strong></p>
 				</div>
 				<?php
@@ -131,12 +131,12 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 					es_cls_sendmail::es_prepare_optin("group", 0, $idlist);
 					es_cls_dbquery::es_view_subscriber_upd_status("Unconfirmed", $idlist);
 					$es_success_msg = TRUE;
-					$es_success = __( 'Confirmation emails Resent Successfully.', ES_TDOMAIN );
+					$es_success = __( 'Confirmation emails resent successfully.', 'email-subscribers' );
 				} else {
 					?>
 					<div class="error fade">
 						<p><strong>
-							<?php echo __( 'No record was selected.', ES_TDOMAIN ); ?>
+							<?php echo __( 'No record was selected.', 'email-subscribers' ); ?>
 						</strong></p>
 					</div>
 					<?php
@@ -161,12 +161,12 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 					}
 					es_cls_dbquery::es_view_subscriber_upd_group($es_email_group, $idlist);
 					$es_success_msg = TRUE;
-					$es_success = __( 'Subscribers Group updated.', ES_TDOMAIN );
+					$es_success = __( 'Subscribers Group updated.', 'email-subscribers' );
 				} else {
 					?>
 					<div class="error fade">
 						<p><strong>
-							<?php echo __( 'Please select New group to update.', ES_TDOMAIN ); ?>
+							<?php echo __( 'Please select New group to update.', 'email-subscribers' ); ?>
 						</strong></p>
 					</div>
 					<?php
@@ -175,7 +175,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 				?>
 				<div class="error fade">
 					<p><strong>
-						<?php echo __( 'No record was selected.', ES_TDOMAIN ); ?>
+						<?php echo __( 'No record was selected.', 'email-subscribers' ); ?>
 					</strong></p>
 				</div>
 				<?php
@@ -200,12 +200,12 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 					// es_cls_dbquery::es_bulk_update_subscriber_status($es_email_status, $idstatus);
 					es_cls_dbquery::es_view_subscriber_upd_status($es_email_status, $idstatus);
 					$es_success_msg = TRUE;
-					$es_success = __( 'Subscribers Status updated.', ES_TDOMAIN );
+					$es_success = __( 'Subscribers Status updated.', 'email-subscribers' );
 				} else {
 					?>
 					<div class="error fade">
 						<p><strong>
-							<?php echo __( 'Please select New Status to update.', ES_TDOMAIN ); ?>
+							<?php echo __( 'Please select New Status to update.', 'email-subscribers' ); ?>
 						</strong></p>
 					</div>
 					<?php
@@ -214,7 +214,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 				?>
 				<div class="error fade is-dismissible">
 					<p><strong>
-						<?php echo __( 'No record was selected.', ES_TDOMAIN ); ?>
+						<?php echo __( 'No record was selected.', 'email-subscribers' ); ?>
 					</strong></p>
 				</div>
 				<?php
@@ -239,12 +239,12 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 
 <div class="wrap">
 	<h2>
-		<?php echo __( 'Subscribers', ES_TDOMAIN ); ?>
-		<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=add"><?php echo __( 'Add New Subscriber', ES_TDOMAIN ); ?></a>
-		<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=import"><?php echo __( 'Import', ES_TDOMAIN ); ?></a>
-		<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=export"><?php echo __( 'Export', ES_TDOMAIN ); ?></a>
-		<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=sync"><?php echo __( 'Sync', ES_TDOMAIN ); ?></a>
-		<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', ES_TDOMAIN ); ?></a>
+		<?php echo __( 'Subscribers', 'email-subscribers' ); ?>
+		<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=add"><?php echo __( 'Add New Subscriber', 'email-subscribers' ); ?></a>
+		<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=import"><?php echo __( 'Import', 'email-subscribers' ); ?></a>
+		<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=export"><?php echo __( 'Export', 'email-subscribers' ); ?></a>
+		<a class="add-new-h2" href="<?php echo ES_ADMINURL; ?>?page=es-view-subscribers&amp;ac=sync"><?php echo __( 'Sync', 'email-subscribers' ); ?></a>
+		<a class="add-new-h2" target="_blank" href="<?php echo ES_FAV; ?>"><?php echo __( 'Help', 'email-subscribers' ); ?></a>
 		<?php 
 			do_action('es_after_action_buttons');
 		?>
@@ -253,9 +253,9 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 		<?php
 			$total_subscribers = es_cls_dbquery::es_view_subscriber_count(0);
 			$active_subscribers = es_cls_dbquery::es_active_subscribers();
-			echo '<span>'.__( 'Total Subscribers: ', ES_TDOMAIN ).'</span><span class="es_total_subscribers">'.$total_subscribers.'</span>';
+			echo '<span>'.__( 'Total Subscribers: ', 'email-subscribers' ).'</span><span class="es_total_subscribers">'.$total_subscribers.'</span>';
 			echo '<br>';
-			echo sprintf(__( 'Active Subscribers: %s', ES_TDOMAIN ), $active_subscribers );
+			echo sprintf(__( 'Active Subscribers: %s', 'email-subscribers' ), $active_subscribers );
 		?>
 	</div>
 	<div class="tool-box">
@@ -285,26 +285,26 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 
 		    //Columns for Subscribers Dashboard
 		    $es_subscribers_col = array();
-		    $es_subscribers_col['email'] = __( 'Email Address', ES_TDOMAIN ); 
-		    $es_subscribers_col['name'] = __( 'Name', ES_TDOMAIN );
-		    $es_subscribers_col['status'] =  __( 'Status', ES_TDOMAIN ); 
-		    $es_subscribers_col['group'] = __( 'Group', ES_TDOMAIN );
-		    $es_subscribers_col['date'] = __( 'Signup Date & Time<br>(Y-M-D H:I:S)', ES_TDOMAIN );
-		    $es_subscribers_col['action'] = __( 'Action', ES_TDOMAIN );
+		    $es_subscribers_col['email'] = __( 'Email Address', 'email-subscribers' );
+		    $es_subscribers_col['name'] = __( 'Name', 'email-subscribers' );
+		    $es_subscribers_col['status'] =  __( 'Status', 'email-subscribers' );
+		    $es_subscribers_col['group'] = __( 'Group', 'email-subscribers' );
+		    $es_subscribers_col['date'] = __( 'Signup Date & Time<br>(Y-M-D H:I:S)', 'email-subscribers' );
+		    $es_subscribers_col['action'] = __( 'Action', 'email-subscribers' );
 		    $es_subscribers_col = apply_filters('es_subscribers_col', $es_subscribers_col);
 			?>
 
 			<div class="tablenav">
 				<span style="text-align:left;">
 					<select name="bulk_action" id="bulk_action" onchange="return _es_action_visible(this.value)">
-						<option value=""><?php echo __( 'Bulk Actions', ES_TDOMAIN ); ?></option>
-						<option value="delete"><?php echo __( 'Delete', ES_TDOMAIN ); ?></option>
-						<option value="resend"><?php echo __( 'Resend Confirmation', ES_TDOMAIN ); ?></option>
-						<option value="groupupdate"><?php echo __( 'Update Subscribers Group', ES_TDOMAIN ); ?></option>
-						<option value="updatestatus"><?php echo __( 'Update Subscribers Status', ES_TDOMAIN ); ?></option>
+						<option value=""><?php echo __( 'Bulk Actions', 'email-subscribers' ); ?></option>
+						<option value="delete"><?php echo __( 'Delete', 'email-subscribers' ); ?></option>
+						<option value="resend"><?php echo __( 'Resend Confirmation', 'email-subscribers' ); ?></option>
+						<option value="groupupdate"><?php echo __( 'Update Subscribers Group', 'email-subscribers' ); ?></option>
+						<option value="updatestatus"><?php echo __( 'Update Subscribers Status', 'email-subscribers' ); ?></option>
 					</select>
 					<select name="es_email_group" id="es_email_group" disabled="disabled">
-						<option value=''><?php echo __( 'Select Group', ES_TDOMAIN ); ?></option>
+						<option value=''><?php echo __( 'Select Group', 'email-subscribers' ); ?></option>
 						<?php
 						$groups = array();
 						$groups = es_cls_dbquery::es_view_subscriber_group();
@@ -319,20 +319,23 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 						?>
 					</select>
 					<select name="es_update_status" id="es_update_status" disabled="disabled">
-						<option value=""><?php echo __( 'Select Status', ES_TDOMAIN ); ?></option>
-						<option value="Confirmed"><?php echo __( 'Confirmed', ES_TDOMAIN ); ?></option>
-						<option value="Unconfirmed"><?php echo __( 'Unconfirmed', ES_TDOMAIN ); ?></option>
-						<option value="Unsubscribed"><?php echo __( 'Unsubscribed', ES_TDOMAIN ); ?></option>
-						<option value="Single Opt In"><?php echo __( 'Single Opt In', ES_TDOMAIN ); ?></option>
+						<option value=""><?php echo __( 'Select Status', 'email-subscribers' ); ?></option>
+						<option value="Confirmed"><?php echo __( 'Confirmed', 'email-subscribers' ); ?></option>
+						<option value="Unconfirmed"><?php echo __( 'Unconfirmed', 'email-subscribers' ); ?></option>
+						<option value="Unsubscribed"><?php echo __( 'Unsubscribed', 'email-subscribers' ); ?></option>
+						<option value="Single Opt In"><?php echo __( 'Single Opt In', 'email-subscribers' ); ?></option>
+						<?php
+							do_action('es_after_dropdown_status');
+						?>
 					</select>
-					<input type="submit" value="<?php echo __( 'Apply', ES_TDOMAIN ); ?>" class="button action" id="doaction" name="doaction">
+					<input type="submit" value="<?php echo __( 'Apply', 'email-subscribers' ); ?>" class="button action" id="doaction" name="doaction">
 				</span>
 				<?php 
 					do_action('es_after_bulk_action');
 				?>
 				<span style="float:right;">
 					<select name="search_group_action" id="search_group_action" onchange="return _es_search_group_action(this.value)">
-						<option value=""><?php echo __( 'All Groups', ES_TDOMAIN ); ?></option>
+						<option value=""><?php echo __( 'All Groups', 'email-subscribers' ); ?></option>
 							<?php
 								$groups = array();
 								$groups = es_cls_dbquery::es_view_subscriber_group();
@@ -349,21 +352,25 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 							?>
 					</select>
 					<select name="search_sts_action" id="search_sts_action" onchange="return _es_search_sts_action(this.value)">
-						<option value=""><?php echo __( 'All Status', ES_TDOMAIN ); ?></option>
-						<option value="Confirmed" <?php if($search_sts=='Confirmed') { echo 'selected="selected"' ; } ?>><?php echo __( 'Confirmed', ES_TDOMAIN ); ?></option>
-						<option value="Unconfirmed" <?php if($search_sts=='Unconfirmed') { echo 'selected="selected"' ; } ?>><?php echo __( 'Unconfirmed', ES_TDOMAIN ); ?></option>
-						<option value="Unsubscribed" <?php if($search_sts=='Unsubscribed') { echo 'selected="selected"' ; } ?>><?php echo __( 'Unsubscribed', ES_TDOMAIN ); ?></option>
-						<option value="Single Opt In" <?php if($search_sts=='Single Opt In') { echo 'selected="selected"' ; } ?>><?php echo __( 'Single Opt In', ES_TDOMAIN ); ?></option>
+						<option value=""><?php echo __( 'All Status', 'email-subscribers' ); ?></option>
+						<option value="Confirmed" <?php if($search_sts=='Confirmed') { echo 'selected="selected"' ; } ?>><?php echo __( 'Confirmed', 'email-subscribers' ); ?></option>
+						<option value="Unconfirmed" <?php if($search_sts=='Unconfirmed') { echo 'selected="selected"' ; } ?>><?php echo __( 'Unconfirmed', 'email-subscribers' ); ?></option>
+						<option value="Unsubscribed" <?php if($search_sts=='Unsubscribed') { echo 'selected="selected"' ; } ?>><?php echo __( 'Unsubscribed', 'email-subscribers' ); ?></option>
+						<option value="Single Opt In" <?php if($search_sts=='Single Opt In') { echo 'selected="selected"' ; } ?>><?php echo __( 'Single Opt In', 'email-subscribers' ); ?></option>
+						<?php
+						do_action('es_after_dropdown_status');
+						?>
+									
 					</select>
 					<select name="search_count_action" id="search_count_action" onchange="return _es_search_count_action(this.value)">
-						<option value="1" <?php if($search_count=='1') { echo 'selected="selected"' ; } ?>><?php echo __( '1 to 500 emails', ES_TDOMAIN ); ?></option>
-						<option value="501" <?php if($search_count=='501') { echo 'selected="selected"' ; } ?>><?php echo __( '501 to 1000', ES_TDOMAIN ); ?></option>
-						<option value="1001" <?php if($search_count=='1001') { echo 'selected="selected"' ; } ?>><?php echo __( '1001 to 1500', ES_TDOMAIN ); ?></option>
-						<option value="1501" <?php if($search_count=='1501') { echo 'selected="selected"' ; } ?>><?php echo __( '1501 to 2000', ES_TDOMAIN ); ?></option>
-						<option value="2001" <?php if($search_count=='2001') { echo 'selected="selected"' ; } ?>><?php echo __( '2001 to 4000', ES_TDOMAIN ); ?></option>
-						<option value="4001" <?php if($search_count=='4001') { echo 'selected="selected"' ; } ?>><?php echo __( '4001 to 6000', ES_TDOMAIN ); ?></option>
-						<option value="6001" <?php if($search_count=='6001') { echo 'selected="selected"' ; } ?>><?php echo __( '6001 to 10000', ES_TDOMAIN ); ?></option>
-						<option value="0" <?php if($search_count=='0') { echo 'selected="selected"' ; } ?>><?php echo __( 'Display All', ES_TDOMAIN );?></option>
+						<option value="1" <?php if($search_count=='1') { echo 'selected="selected"' ; } ?>><?php echo __( '1 to 500 emails', 'email-subscribers' ); ?></option>
+						<option value="501" <?php if($search_count=='501') { echo 'selected="selected"' ; } ?>><?php echo __( '501 to 1000', 'email-subscribers' ); ?></option>
+						<option value="1001" <?php if($search_count=='1001') { echo 'selected="selected"' ; } ?>><?php echo __( '1001 to 1500', 'email-subscribers' ); ?></option>
+						<option value="1501" <?php if($search_count=='1501') { echo 'selected="selected"' ; } ?>><?php echo __( '1501 to 2000', 'email-subscribers' ); ?></option>
+						<option value="2001" <?php if($search_count=='2001') { echo 'selected="selected"' ; } ?>><?php echo __( '2001 to 4000', 'email-subscribers' ); ?></option>
+						<option value="4001" <?php if($search_count=='4001') { echo 'selected="selected"' ; } ?>><?php echo __( '4001 to 6000', 'email-subscribers' ); ?></option>
+						<option value="6001" <?php if($search_count=='6001') { echo 'selected="selected"' ; } ?>><?php echo __( '6001 to 10000', 'email-subscribers' ); ?></option>
+						<option value="0" <?php if($search_count=='0') { echo 'selected="selected"' ; } ?>><?php echo __( 'Display All', 'email-subscribers' );?></option>
 					</select>
 				</span>
 			</div>
@@ -410,16 +417,16 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 								$es_col_data['es_email_status'] = es_cls_common::es_disp_status($data['es_email_status']); 
 								$es_col_data['es_email_group'] = stripslashes($data['es_email_group']); 
 								$es_col_data['es_email_created'] = get_date_from_gmt($data['es_email_created'],'Y-m-d H:i:s');
-								$es_resend_link = ($data['es_email_status'] != 'Confirmed' && $data['es_email_status'] != 'Single Opt In' ) ? "<span class=edit>| <a onClick=javascript:_es_resend(".$data['es_email_id'].") href=javascript:void(0);>".__( "Resend Confirmation", ES_TDOMAIN )."</a> </span>" : '' ;
+								$es_resend_link = ($data['es_email_status'] != 'Confirmed' && $data['es_email_status'] != 'Single Opt In' ) ? "<span class=edit>| <a onClick=javascript:_es_resend(".$data['es_email_id'].") href=javascript:void(0);>".__( "Resend Confirmation", 'email-subscribers' )."</a> </span>" : '' ;
 								$es_col_data['es_quick_actions'] = "<div>
 																		<span class=edit>
 																			<a href=".ES_ADMINURL."?page=es-view-subscribers&amp;ac=edit&amp;did=".$data['es_email_id'].">
-																				". __( 'Edit', ES_TDOMAIN ) ."
+																				". __( 'Edit', 'email-subscribers' ) ."
 																			</a> |
 																		</span>
 																		<span class=trash>
 																			<a onClick=javascript:_es_delete(".$data["es_email_id"].") href=javascript:void(0);>
-																				". __( 'Delete', ES_TDOMAIN )."
+																				". __( 'Delete', 'email-subscribers' )."
 																			</a>
 																		</span>" 
 																		.$es_resend_link.
@@ -453,7 +460,7 @@ if (isset($_POST['frm_es_display']) && $_POST['frm_es_display'] == 'yes') {
 						} else {
 							?>
 							<tr>
-								<td colspan="7" align="center"><?php echo __( 'No records available.', ES_TDOMAIN ); ?></td>
+								<td colspan="7" align="center"><?php echo __( 'No records available.', 'email-subscribers' ); ?></td>
 							</tr>
 							<?php
 						}

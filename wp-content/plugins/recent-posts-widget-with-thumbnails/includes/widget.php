@@ -58,7 +58,7 @@
 				?><div class="rpwwt-post-author"><?php echo esc_html( $this->get_the_author() ); ?></div><?php 
 			endif;
 			if ( $bools[ 'show_categories' ] ) : 
-				?><div class="rpwwt-post-categories"><?php echo esc_html( $this->get_the_categories( $r->post->ID ) ); ?></div><?php 
+				?><div class="rpwwt-post-categories"><?php echo $this->get_the_categories( $r->post->ID ); ?></div><?php 
 			endif;
 			if ( $bools[ 'show_date' ] ) : 
 				?><div class="rpwwt-post-date"><?php echo get_the_date(); ?></div><?php 

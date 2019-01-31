@@ -218,7 +218,7 @@ Also, here is another tutorial(from other source) of creating App Id, you can ch
 	}
 	
 	
-	/*#########################  Facebook Comments Box main settings #################################*/
+	/*#########################  Main settings function #################################*/
 	
 	public function generete_wpdevart_main_section($page_parametrs){
 

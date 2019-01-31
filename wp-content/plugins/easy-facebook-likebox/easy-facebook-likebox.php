@@ -3,40 +3,14 @@
  * Plugin Name:       Easy Facebook Likebox
  * Plugin URI:        httt://wordpress.org/plugins/easy-facebook-likebox
  * Description:       Easy Facebook like box WordPress plugin allows you to easly display facebook like box fan page on your website using either widget or shortcode to increase facbook fan page likes. You can use the shortcode generated after saving the facebook like box widget. Additionally it also now allows you to dipslay the cusetomized facebook feed on your website using the same color scheme of your website. Its completely customizable with lots of optional settings. Its also responsive facebook like box at the same time.
- * Version:           4.3.5
- * Author:            Sajid Javed
- * Author URI:        http://jwebsol.com
+ * Version:           4.3.9
+ * Author:            Danish Ali Malik 
+ * Author URI:        https://maltathemes.com/danish-ali-malik
  * Text Domain:       easy-facebook-likebox
  * Domain Path:       /languages
  */
 
-// // Create a helper function for easy SDK access.
-// function efl_fs() {
-//     global $efl_fs;
 
-//     if ( ! isset( $efl_fs ) ) {
-//         // Include Freemius SDK.
-//         require_once dirname(__FILE__) . '/freemius/start.php';
-
-//         $efl_fs = fs_dynamic_init( array(
-//             'id'                => '422',
-//             'slug'              => 'easy-facebook-likebox',
-//             'type'              => 'plugin',
-//             'public_key'        => 'pk_d094d1d699779a0b87f02a7a9830c',
-//             'is_premium'        => false,
-//             'has_addons'        => false,
-//             'has_paid_plans'    => false,
-//             'menu'              => array(
-//                 'slug'       => 'easy-facebook-likebox',
-//             ),
-//         ) );
-//     }
-
-//     return $efl_fs;
-// }
-
-// // Init Freemius.
-// efl_fs();
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -83,6 +57,7 @@ add_action( 'plugins_loaded', array( 'Easy_Facebook_Likebox', 'get_instance' ) )
 if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
 
 	require_once( plugin_dir_path( __FILE__ ) . 'admin/easy-facebook-likebox-admin.php' );
+	 require_once( plugin_dir_path( __FILE__ ) . 'admin/views/other-plugins.php' );
 	add_action( 'plugins_loaded', array( 'Easy_Facebook_Likebox_Admin', 'get_instance' ) );
 
 }
@@ -105,3 +80,21 @@ function register_fblx_widget() {
 	register_widget( 'Easy_Facebook_Page_Plugin_Widget' );
 }
 add_action( 'widgets_init', 'register_fblx_widget' );
+
+add_action( 'wp_ajax_efbl_del_trans',  'efbl_del_trans_cb') ;
+
+add_action( 'wp_ajax_nopriv_efbl_del_trans',  'efbl_del_trans_cb') ;
+
+
+ function efbl_del_trans_cb(){
+
+ 	/* Saving ajax value in variable. */ 
+	$value = $_POST['efbl_option'];
+	
+	$replaced_value = str_replace('_transient_', '', $value);
+
+	$efbl_deleted_trans = delete_transient($replaced_value);
+
+	if(isset($efbl_deleted_trans)) echo wp_send_json_success($value); die();
+
+}

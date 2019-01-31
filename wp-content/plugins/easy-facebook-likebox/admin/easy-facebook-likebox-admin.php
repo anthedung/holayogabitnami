@@ -56,7 +56,7 @@ class Easy_Facebook_Likebox_Admin {
 	 *
 	 * @since     1.0.0
 	 */
-	private function __construct() {
+	public function __construct() {
 		
 		global $efbl;
 
@@ -75,6 +75,8 @@ class Easy_Facebook_Likebox_Admin {
 		
 		add_action( 'admin_init', array( $this, 'i_have_supported_efbl') );
 		add_action( 'admin_init', array( $this, 'efbl_get_options') );
+
+
 		
 		//if ( get_option('I_HAVE_SUPPORTED_THE_EFBL_PLUGIN') != 1 )
 			add_action( 'admin_notices', array( $this, 'post_installtion_upgrade_nag') );
@@ -156,6 +158,12 @@ class Easy_Facebook_Likebox_Admin {
 			wp_enqueue_script('wp-lists');
 			wp_enqueue_script('postbox');
 			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Easy_Facebook_Likebox::VERSION );
+			/*
+			* Localizing script to get admin-ajax url dynamically.
+			*/
+			wp_localize_script( $this->plugin_slug . '-admin-script', 'efbl', array(
+				'ajax_url' => admin_url( 'admin-ajax.php' )
+			));
 		}
 
 	}
@@ -166,6 +174,8 @@ class Easy_Facebook_Likebox_Admin {
 	 * @since    1.0.0
 	 */
 	public function add_plugin_admin_menu() {
+
+
 
 		/*
 		 * Add a settings page for this plugin to the Settings menu.
@@ -189,6 +199,10 @@ class Easy_Facebook_Likebox_Admin {
 			array( $this, 'display_plugin_admin_page' ),
 			plugins_url( 'easy-facebook-likebox/assets/PluginIcon.png' )
 		);
+
+		$MT_OTHER_PLUGINS = new MT_OTHER_PLUGINS();
+
+		$MT_OTHER_PLUGINS->mt_sub_menu();
 		
 		add_action('load-'.$this->plugin_screen_hook_suffix, array(&$this, 'on_load_page'));
 
@@ -196,13 +210,16 @@ class Easy_Facebook_Likebox_Admin {
 	
 	//will be executed if wordpress core detects this page has to be rendered
 	function on_load_page() {
+
+		// echo '<pre>'; print_r($this->plugin_screen_hook_suffix);exit();
 		 
  		//add several metaboxes now, all metaboxes registered during load page can be switched off/on at "Screen Options" automatically, nothing special to do therefore
 		add_meta_box('easy-facebook-how_to', __('How to use this plugin', 'easy-facebook-likebox'), array(&$this, 'on_how_to_use'), $this->plugin_screen_hook_suffix, 'normal', 'core');
 		add_meta_box('easy-facebook-feed', __('Settings', 'easy-facebook-likebox'), array(&$this, 'on_efbfeed_settings'), $this->plugin_screen_hook_suffix, 'easyfbfeed', 'core');
 		
  		add_meta_box('easy-facebook-likebox_popup', __('Like box pup up settings', 'easy-facebook-likebox'), array(&$this, 'on_popup_settings'), $this->plugin_screen_hook_suffix, 'additional', 'core');
-		add_meta_box('efbl-support_us_box', __( 'Support us by liking our fan page and/or consider some dontaion!' , 'easy-facebook-likebox'), array(&$this, 'on_support_us'), $this->plugin_screen_hook_suffix, 'side', 'core');
+		add_meta_box('efbl-support_us_box', __( 'Support us by liking our fan page and follow on twitter!' , 'easy-facebook-likebox'), array(&$this, 'on_support_us'), $this->plugin_screen_hook_suffix, 'side', 'core');
+
  		
 		 
 	}
@@ -252,13 +269,16 @@ class Easy_Facebook_Likebox_Admin {
 
 		return array_merge(
 			array(
-				'settings' => '<a href="' . admin_url( 'admin.php?page=' . $this->plugin_slug ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>'
+				'settings' => '<a href="' . admin_url( 'admin.php?page=' . $this->plugin_slug ) . '">' . __( 'Settings', $this->plugin_slug ) . '</a>',
+				'my_plugins' => '<a href="' . admin_url( 'admin.php?page=mt-other-plugins' ) . '">' . __( 'My Plugins', $this->plugin_slug ) . '</a>'
 			),
 			$links
 		);
 
 	}
 	
+
+
 	/**
 	 * Display a thank you nag when the plugin has been installed/upgraded.
 	 */
@@ -284,9 +304,9 @@ class Easy_Facebook_Likebox_Admin {
   fjs.parentNode.insertBefore(js, fjs);
 }(document, \'script\', \'facebook-jssdk\'));</script>
 
-<div class="fb-like" data-href="https://facebook.com/jwebsol" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div>
+<div class="fb-like" data-href="https://facebook.com/maltathemes" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div>
 
-<a href="https://twitter.com/SajidJavaid" class="twitter-follow-button" data-show-count="false">Follow @SajidJavaid</a>
+<a href="https://twitter.com/malta_themes" class="twitter-follow-button" data-show-count="false">Follow @MaltaThemes</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document, "script", "twitter-wjs");</script>
 
 			  	  <br /><br />
@@ -622,4 +642,6 @@ class Easy_Facebook_Likebox_Admin {
 	
 		
 	}
+
+
 }

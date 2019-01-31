@@ -1,13 +1,14 @@
 var g_ppsWindowLoaded = false
-,	g_ppsIsPageCached = false
-,	g_ppsIsPageCachedChecked = false
-,	g_ppsShowCallbacks = {}
-,	g_ppsClks = {};
+	,	g_ppsIsPageCached = false
+	,	g_ppsIsPageCachedChecked = false
+	,	g_ppsShowCallbacks = {}
+	,	g_ppsClks = {};
 jQuery(document).ready(function(){
 	if(typeof(ppsPopupsFromFooter) !== 'undefined' && ppsPopupsFromFooter && ppsPopupsFromFooter.length) {
 		ppsPopups = typeof(ppsPopups) === 'undefined' ? [] : ppsPopups;
 		ppsPopups = ppsPopups.concat( ppsPopupsFromFooter );
 	}
+	jQuery(document).trigger('ppsBeforePopupsStartInit', ppsPopups);
 	if(typeof(ppsPopups) !== 'undefined' && ppsPopups && ppsPopups.length) {
 		ppsInitBgOverlay();
 		jQuery(document).trigger('ppsBeforePopupsInit', ppsPopups);
@@ -35,7 +36,7 @@ jQuery(document).ready(function(){
 				}
 			}
 		});
-		/* For case when for some reason jQuery(window).load() will not trigger - 
+		/* For case when for some reason jQuery(window).load() will not trigger -
 		make it work correctly with re-position and re-sizing in any case */
 		setTimeout(function(){
 			g_ppsWindowLoaded = true;
@@ -58,9 +59,9 @@ function _ppsGetPopUpClick( popupId ) {
 }
 function _ppsCheckPopupOnFollowClk( lnk ) {
 	var href = lnk.href
-	,	hash = lnk.hash
-	,	wndLocation = window.location.href
-	,	wndHash = window.location.hash;
+		,	hash = lnk.hash
+		,	wndLocation = window.location.href
+		,	wndHash = window.location.hash;
 	if(hash) {
 		if(hash && hash != '') {
 			href = str_replace(href, hash, '');
@@ -83,7 +84,7 @@ function _ppsCheckPopupOnFollowClk( lnk ) {
 }
 function _ppsBindOnElementClickPopups() {
 	var $clickOnLinks = jQuery('[href*="#ppsShowPopUp_"]:not(.ppsClickBinded)');
-	if($clickOnLinks && $clickOnLinks.size()) {
+	if($clickOnLinks && $clickOnLinks.length) {
 		$clickOnLinks.each(function(){
 			jQuery(this).click(function(){
 				var popupId = jQuery(this).attr('href');
@@ -110,24 +111,24 @@ function _ppsBindOnElementClickPopups() {
 		}).addClass('ppsClickBinded');
 	}
 	var $clickOnMenuItems = jQuery('[title*="#ppsShowPopUp_"]:not(.ppsClickBinded)');	/* You can also set this in title - for menu items for example */
-	if($clickOnMenuItems && $clickOnMenuItems.size()) {
+	if($clickOnMenuItems && $clickOnMenuItems.length) {
 		$clickOnMenuItems.each(function(){
 			var title = jQuery(this).attr('title')
-			,	matched = title.match(/#ppsShowPopUp_(\d+)/);
+				,	matched = title.match(/#ppsShowPopUp_(\d+)/);
 			if(matched && matched.length == 2) {
 				var popupId = parseInt(matched[1]);
 				if(popupId) {
 					jQuery(this)
-					.data('popup-id', popupId)
-					.attr('title', str_replace(title, matched[0], ''))
-					.click(function(){
-						var popupId = jQuery(this).data('popup-id');
-						_ppsAddPopUpClick( popupId, this );
-						if(!_ppsPopupBindDelay(popupId, 'show_on_click_on_el_delay', 'show_on_click_on_el_enb_delay')) {
-							ppsShowPopup( popupId );
-						}
-						return false;
-					});
+						.data('popup-id', popupId)
+						.attr('title', str_replace(title, matched[0], ''))
+						.click(function(){
+							var popupId = jQuery(this).data('popup-id');
+							_ppsAddPopUpClick( popupId, this );
+							if(!_ppsPopupBindDelay(popupId, 'show_on_click_on_el_delay', 'show_on_click_on_el_enb_delay')) {
+								ppsShowPopup( popupId );
+							}
+							return false;
+						});
 				}
 			}
 		}).addClass('ppsClickBinded');
@@ -135,7 +136,7 @@ function _ppsBindOnElementClickPopups() {
 }
 function ppsMovePopupStyles( popup ) {
 	var $style = jQuery('<style type="text/css" />')
-	,	$replacerTag = jQuery('#ppsPopupStylesHidden_'+ popup.view_id);
+		,	$replacerTag = jQuery('#ppsPopupStylesHidden_'+ popup.view_id);
 	$style.appendTo('body').html( $replacerTag.html() );
 	$replacerTag.remove();
 }
@@ -147,7 +148,7 @@ function ppsBindPopupLove( popup ) {
 }
 function ppsBindPopupLoad( popup ) {
 	var preloadImgs = jQuery('.ppsPopupPreloadImg_'+ popup.view_id);
-	popup._imgsCount = preloadImgs.size();
+	popup._imgsCount = preloadImgs.length;
 	if(popup._imgsCount) {
 		popup._imgsLoaded = false;
 		popup._imgsLoadedCount = 0;
@@ -178,17 +179,17 @@ function ppsBindPopupLoad( popup ) {
 	}
 	/* Additional re-calculation for case if there are too much images */
 	var $shell = ppsGetPopupShell( popup )
-	,	$imgs = $shell.find('img')
-	,	imgsCnt = $imgs ? $imgs.size() : 0;
+		,	$imgs = $shell.find('img')
+		,	imgsCnt = $imgs ? $imgs.length : 0;
 	if(imgsCnt) {
 		if( popup._imgsCount ) {
 			var substracted = false;
 			preloadImgs.each(function(){
 				var $preload = jQuery(this)
-				,	preloadSrc = $preload.attr('src');
+					,	preloadSrc = $preload.attr('src');
 				$imgs.each(function(){
 					var $img = jQuery( this )
-					,	imgSrc = $img.attr('src');
+						,	imgSrc = $img.attr('src');
 					if(imgSrc == preloadSrc) {	/*Preload is same as image - don't count it*/
 						$imgs = $imgs.filter( this );
 						substracted = true;
@@ -197,7 +198,7 @@ function ppsBindPopupLoad( popup ) {
 				});
 			});
 			if( substracted ) {
-				imgsCnt = $imgs.size();
+				imgsCnt = $imgs.length;
 			}
 		}
 		if( imgsCnt ) {
@@ -239,10 +240,10 @@ function ppsBindPopupShow( popup ) {
 					var percScroll = parseInt( popup.params.main.show_on_scroll_window_perc_scroll );
 					if(percScroll) {
 						var docHt = jQuery(document).height()
-						,	wndHt = jQuery(window).height()
-						,	wndScrollPos = jQuery(window).scrollTop()
-						,	wndScrollHt = docHt - wndHt
-						,	currScrollPerc = wndScrollPos * 100 / wndScrollHt;
+							,	wndHt = jQuery(window).height()
+							,	wndScrollPos = jQuery(window).scrollTop()
+							,	wndScrollHt = docHt - wndHt
+							,	currScrollPerc = wndScrollPos * 100 / wndScrollHt;
 						if(wndScrollHt > 0 && currScrollPerc < percScroll) {
 							return;
 						}
@@ -280,62 +281,65 @@ function ppsBindPopupClose( popup ) {
 function ppsBindPopupSubscribers(popup) {
 	if(popup.params.tpl.enb_subscribe) {
 		var $shell = ppsGetPopupShell( popup )
-		,	$form = $shell.find('.ppsSubscribeForm')
-		,	$inFormCloseBtn = $form.find('.ppsPopupClose');
+			,	$form = $shell.find('.ppsSubscribeForm')
+			,	$inFormCloseBtn = $form.find('.ppsPopupClose');
 		switch(popup.params.tpl.sub_dest) {
 			case 'aweber':
 				/* No ajax action here */
-			break;
+				break;
 			case 'wordpress': case 'mailchimp': case 'mailpoet': default:
-				$form.submit(function(){
-					var submitBtn = jQuery(this).find('input[type=submit]')
+			$form.submit(function(){
+				var submitBtn = jQuery(this).find('input[type=submit]')
 					,	self = this
 					,	msgEl = jQuery(this).find('.ppsSubMsg');
-					submitBtn.attr('disabled', 'disabled');
-					jQuery(this).sendFormPps({
-						msgElID: msgEl
+				submitBtn.attr('disabled', 'disabled');
+				jQuery(this).sendFormPps({
+					msgElID: msgEl
 					,	onSuccess: function(res){
-							jQuery(self).find('input[type=submit]').removeAttr('disabled');
-							if(!res.error) {
-								var parentShell = jQuery(self).parents('.ppsSubscribeShell')
+						jQuery(self).find('input[type=submit]').removeAttr('disabled');
+						if(!res.error) {
+							var parentShell = jQuery(self).parents('.ppsSubscribeShell')
 								,	closeInsideBtn = jQuery(self).find('.ppsPopupClose');	/* Close button can be inside form - we can't remove it, because in this case user will not be able to close PopUp */
-								if(closeInsideBtn && closeInsideBtn.size()) {
-									closeInsideBtn.appendTo( parentShell );
+							if(closeInsideBtn && closeInsideBtn.length) {
+								closeInsideBtn.appendTo( parentShell );
+							}
+							msgEl.appendTo( parentShell );
+							jQuery(self).animateRemovePps(300, function(){
+								_ppsPositionPopup({shell: $shell, popup: popup, recalc: true});
+							});
+							var $hideAfterSubscribe = $shell.find('.ppsHideAfterSubscribe');
+							if($hideAfterSubscribe && $hideAfterSubscribe.length) {
+								$hideAfterSubscribe.animateRemovePps( 300 );
+							}
+							ppsPopupSubscribeSuccess( popup );
+							var redirectTo = popup.params.sub_redirect_to_btn_url_href ? popup.params.sub_redirect_to_btn_url_href : false;
+							if(!redirectTo && res.data && res.data.redirect) {
+								redirectTo = res.data.redirect;
+							}
+							if(redirectTo) {
+								toeRedirect(redirectTo, parseInt(popup.params.tpl.sub_redirect_new_wnd));
+							}
+
+						} else {
+							_ppsPopupAddStat( popup, 'subscribe_error' );	/* Save close popup statistics */
+							if(res.data && res.data.emailExistsRedirect) {
+								/* Simulate here client side subscribe success if email already exists */
+								ppsPopupSubscribeSuccess(popup, {ignoreSendStat: true});
+								if(res.data.emailExistsRedirect.indexOf('http') !== 0) {
+									res.data.emailExistsRedirect = window.location.href+ res.data.emailExistsRedirect;
 								}
-								msgEl.appendTo( parentShell );
-								jQuery(self).animateRemovePps(300, function(){
-									_ppsPositionPopup({shell: $shell, popup: popup, recalc: true});
-								});
-								var $hideAfterSubscribe = $shell.find('.ppsHideAfterSubscribe');
-								if($hideAfterSubscribe && $hideAfterSubscribe.size()) {
-									$hideAfterSubscribe.animateRemovePps( 300 );
-								}
-								ppsPopupSubscribeSuccess( popup );
-								var redirectTo = popup.params.sub_redirect_to_btn_url_href ? popup.params.sub_redirect_to_btn_url_href : false;
-								if(!redirectTo && res.data && res.data.redirect) {
-									redirectTo = res.data.redirect;
-								}
-								if(redirectTo) {
-									toeRedirect(redirectTo, parseInt(popup.params.tpl.sub_redirect_new_wnd));
-								}
-								
-							} else {
-								_ppsPopupAddStat( popup, 'subscribe_error' );	/* Save close popup statistics */
-								if(res.data && res.data.emailExistsRedirect) {
-									/* Simulate here client side subscribe success if email already exists */
-									ppsPopupSubscribeSuccess(popup, {ignoreSendStat: true});
-									toeRedirect( res.data.emailExistsRedirect );
-								}
+								toeRedirect( res.data.emailExistsRedirect );
 							}
 						}
-					});
-					return false;
+					}
 				});
-				break;
+				return false;
+			});
+			break;
 		}
-		/* If user even press Enter on exit btn in form -let it still submit it. 
+		/* If user even press Enter on exit btn in form -let it still submit it.
 		 Close only if user click it using mouse*/
-		if($inFormCloseBtn && $inFormCloseBtn.size()) {
+		if($inFormCloseBtn && $inFormCloseBtn.length) {
 			$inFormCloseBtn.keydown(function (e) {
 				if (e.keyCode == 13) {	/* Enter */
 					$form.submit();
@@ -368,24 +372,24 @@ function ppsCheckShowPopup( popup, params ) {
 	if(isNumericPps( popup ))
 		popup = ppsGetPopupById( popup );
 	var showKey = 'pps_show_'+ popup.id
-	,	prevShow = getCookiePps( showKey )
-	,	countTimes = popup.params.main.show_to == 'count_times'
-	,	timesShowedKey = 'pps_times_showed_'+ popup.id
-	,	timesShowed = parseInt(getCookiePps(timesShowedKey));
+		,	prevShow = getCookiePps( showKey )
+		,	countTimes = popup.params.main.show_to == 'count_times'
+		,	timesShowedKey = 'pps_times_showed_'+ popup.id
+		,	timesShowed = parseInt(getCookiePps(timesShowedKey));
 	if(popup.params.main.show_to == 'first_time_visit' && prevShow)
 		return;
 	if(countTimes && prevShow && prevShow != '1') {
 		var prevShowStamp = (new Date( prevShow )).getTime()
-		,	currStamp = (new Date()).getTime();
+			,	currStamp = (new Date()).getTime();
 		if(prevShowStamp) {
 			var diff = (currStamp - prevShowStamp) / 1000	// Miliseconds to seconds
-			,	hour = 3600
-			,	needShowTimes = parseInt( popup.params.main.count_times_num );
+				,	hour = 3600
+				,	needShowTimes = parseInt( popup.params.main.count_times_num );
 			if(timesShowed && needShowTimes && timesShowed >= needShowTimes) {
 				if((popup.params.main.count_times_mes == 'hour' && diff < hour)
-				|| (popup.params.main.count_times_mes == 'day' && diff < 24 * hour)
-				|| (popup.params.main.count_times_mes == 'week' && diff < 7 * 24 * hour)
-				|| (popup.params.main.count_times_mes == 'month' && diff < 30 * 24 * hour)
+					|| (popup.params.main.count_times_mes == 'day' && diff < 24 * hour)
+					|| (popup.params.main.count_times_mes == 'week' && diff < 7 * 24 * hour)
+					|| (popup.params.main.count_times_mes == 'month' && diff < 30 * 24 * hour)
 				) {
 					return;
 				}
@@ -411,6 +415,12 @@ function ppsCheckShowPopup( popup, params ) {
 		return;
 	if(_ppsCheckDisplayTime( popup ))
 		return;
+	if(popup.params.main.show_to == 'until_email_confirm' 
+		&& typeof(ppsCheckEmailConfirmed) === 'function' 
+		&& ppsCheckEmailConfirmed(popup)
+	) {
+		return;
+	}
 	params = params || {};
 	params.isUnique = prevShow ? 0 : 1;
 	ppsShowPopup(popup, params);
@@ -439,10 +449,10 @@ function _ppsCheckDisplayTime( popup ) {
 			return time;
 		};
 		var timeFrom = timeToNum(popup.params.main.show_time_from)
-		,	timeTo = timeToNum(popup.params.main.show_time_to)
-		,	currDate = new Date()
-		,	currTime = currDate.getHours() + (currDate.getMinutes() / 100);
-		
+			,	timeTo = timeToNum(popup.params.main.show_time_to)
+			,	currDate = new Date()
+			,	currTime = currDate.getHours() + (currDate.getMinutes() / 100);
+
 		if(currTime < timeFrom || currTime > timeTo) {
 			return true;
 		}
@@ -457,7 +467,7 @@ function _ppsPopupGetActionDone( popup ) {
 	if(isNumericPps( popup ))
 		popup = ppsGetPopupById( popup );
 	var actionsKey = 'pps_actions_'+ popup.id
-	,	actions = getCookiePps( actionsKey );
+		,	actions = getCookiePps( actionsKey );
 	if(actions) {
 		if(popup.type == 'age_verify' && actions.age_verify && popup.params.opts_attrs.btns_number) {
 			// Count action done for Age Berify types only if primary was clicked
@@ -492,7 +502,7 @@ function _ppsPopupSetActionDone( popup, action, smType, params ) {
 		popup = ppsGetPopupById( popup );
 	smType = smType !== null ? smType : '';
 	var actionsKey = 'pps_actions_'+ popup.id
-	,	actions = getCookiePps( actionsKey );
+		,	actions = getCookiePps( actionsKey );
 	if(!actions)
 		actions = {};
 	// Save btn ID for age verify popups
@@ -515,11 +525,28 @@ function _ppsPopupAddStat( popup, action, smType, isUnique ) {
 		return;
 	jQuery.sendFormPps({
 		msgElID: 'noMessages'
-	,	data: {mod: 'statistics', action: 'add', id: popup.id, type: action, sm_type: smType, is_unique: isUnique, 'connect_hash': popup.connect_hash}
+		,	data: {mod: 'statistics', action: 'add', id: popup.id, type: action, sm_type: smType, is_unique: isUnique, 'connect_hash': popup.connect_hash}
 	});
 	jQuery(document).trigger('ppsAfterPopupsStatAdded', {popup: popup, action: action, smType: smType, is_unique: isUnique});
 }
-
+function ppsShowPopUpOnClick( popup, element ) {
+	if(isNumericPps( popup ))
+		popup = ppsGetPopupById( popup );
+	_ppsSaveClickHref(popup, jQuery(element));
+	ppsShowPopup( popup );
+}
+function __ppsDisplayShell(params) {
+	params.shell.show();
+	// For FB PopUp only
+	if(params.shell.find('.fb-page iframe:first').length > 0) {
+		setTimeout(function(){
+			_ppsPositionPopup(params);
+		}, 500);
+	}
+}
+function __ppsHideShell(params) {
+	params.shell.hide();
+}
 /**
  * Show popup
  * @param {mixed} popup Popup object or it's ID
@@ -554,12 +581,12 @@ function ppsShowPopup( popup, params ) {
 	if(popup.params.tpl.anim && !popup.resized_for_wnd) {
 		_ppsHandlePopupAnimationShow( popup, $shell );
 	} else {
-		$shell.show();
+		__ppsDisplayShell({shell: $shell, popup: popup});
 	}
 	// For iFrames - we need to reset it's width - to make sure that it fit correct
 	if(toeInArrayPps(popup.type, ['iframe'])) {
 		var $frame = $shell.find('.ppsMainFrame');
-		if($frame && $frame.size()) {
+		if($frame && $frame.length) {
 			$frame.css('width', 'auto');
 			$frame.css('width', '100%');
 		}
@@ -585,9 +612,9 @@ function ppsShowPopup( popup, params ) {
 	popup.is_rendered = true;	// Rendered at least one time
 	jQuery(document).trigger('ppsAfterPopupsActionShow', popup);
 	runShowClb( popup, $shell );	// Run all additional added show callback functions if such was added
-	
+
 	if(toeInArrayPps(popup.type, ['iframe'])) {
-		if(popup.params.tpl.iframe_display_only 
+		if(popup.params.tpl.iframe_display_only
 			&& popup.params.tpl.iframe_display_only != ''
 			&& typeof(_ppsIFrameDisplayOnly) == 'function'
 			&& !popup.params.tpl._iframeDisplayOnlyBinded
@@ -597,7 +624,7 @@ function ppsShowPopup( popup, params ) {
 	}
 }
 function _ppsCheckVideos( params ) {
-	if(params.popup.type == 'video' 
+	if(params.popup.type == 'video'
 		&& params.popup.params.tpl.video_type == 'youtube'
 		&& params.popup.params.tpl.video_autoplay
 	) {
@@ -607,27 +634,41 @@ function _ppsCheckVideos( params ) {
 		$iframe.attr('src', $iframe.attr('src')+ '&autoplay=1');
 	}
 }
-function _ppsHandlePopupAnimationShow( popup, shell ) {
+function _ppsHandlePopupAnimationShow( popup, $shell ) {
 	var preAnimClass = popup.params.tpl.anim.old ? 'magictime' : 'animated';
-	shell.animationDuration( popup.params.tpl.anim_duration, true );
-	shell.removeClass(popup.params.tpl.anim.hide_class);
-	shell.addClass(preAnimClass+ ' '+ popup.params.tpl.anim.show_class).show();
+	$shell.animationDuration( popup.params.tpl.anim_duration, true );
+	var hideClass = popup.params.tpl.anim_close
+		? popup.params.tpl.anim_close.hide_class
+		: popup.params.tpl.anim.hide_class;
+	$shell.removeClass(hideClass);
+	$shell.addClass(preAnimClass+ ' '+ popup.params.tpl.anim.show_class);
+	__ppsDisplayShell({shell: $shell, popup: popup});
 	// This need to make properly work responsivness
 	setTimeout(function(){
-		shell.removeClass(preAnimClass+ ' '+ popup.params.tpl.anim.show_class);
+		$shell.removeClass(preAnimClass+ ' '+ popup.params.tpl.anim.show_class);
 	}, parseInt(popup.params.tpl.anim_duration));
 }
-function _ppsHandlePopupAnimationHide( popup, shell ) {
+function _ppsHandlePopupAnimationHide( popup, $shell ) {
 	var preAnimClass = popup.params.tpl.anim.old ? 'magictime' : 'animated';
-	shell.removeClass(popup.params.tpl.anim.show_class).addClass(popup.params.tpl.anim.hide_class);
+	var hideClass = popup.params.tpl.anim_close
+		? popup.params.tpl.anim_close.hide_class
+		: popup.params.tpl.anim.hide_class;
+	var cloaseAnimDuration = popup.params.tpl.anim_close_duration;
+	if(cloaseAnimDuration && cloaseAnimDuration > 0) {
+		$shell.animationDuration( cloaseAnimDuration, true );
+	} else {
+		cloaseAnimDuration = popup.params.tpl.anim_duration;
+	}
+	$shell.removeClass(popup.params.tpl.anim.show_class).addClass(hideClass);
 	setTimeout(function(){
-		shell.removeClass( preAnimClass ).hide();
+		$shell.removeClass( preAnimClass );
+		__ppsHideShell({shell: $shell, popup: popup});
 		ppsHideBgOverlay( popup );
-	}, popup.params.tpl.anim_duration );
+	}, cloaseAnimDuration );
 }
 function _ppsIframesForReload(params) {
 	var popup = params.popup
-	,	shell = params.shell ? params.shell : ppsGetPopupShell( popup );
+		,	shell = params.shell ? params.shell : ppsGetPopupShell( popup );
 	if(shell.find('iframe')) {
 		shell.find('iframe').each(function(){
 			var src = jQuery(this).attr('src');
@@ -649,16 +690,16 @@ function _ppsIsIframeForHide( params ) {
 	if(params.popup.type == 'video')
 		return true;	// First check is really simple, isn't it?:)
 	var $shell = params.shell ? params.shell : ppsGetPopupShell( params.popup )
-	,	$iFrames = $shell ? $shell.find('iframe') : false
-	,	videoFound = false;
-	if($iFrames && $iFrames.size()) {
+		,	$iFrames = $shell ? $shell.find('iframe') : false
+		,	videoFound = false;
+	if($iFrames && $iFrames.length) {
 		var videoSources = ['youtube', 'vimeo', 'dtbaker'];
 		$iFrames.each(function(){
 			var originalSrc = jQuery(this).data('original-src')
-			,	src = jQuery(this).attr('src');
+				,	src = jQuery(this).attr('src');
 			if(src || originalSrc) {
 				for(var i = 0; i < videoSources.length; i++) {
-					if((src && src.indexOf( videoSources[ i ] ) !== -1) 
+					if((src && src.indexOf( videoSources[ i ] ) !== -1)
 						|| (originalSrc && originalSrc.indexOf( videoSources[ i ] ) !== -1)
 					) {
 						videoFound = true;
@@ -674,8 +715,8 @@ function _ppsCheckBindVideo(params) {
 	params = params || {};
 	if(_ppsIsIframeForHide( params )) {
 		var $shell = params.shell ? params.shell : ppsGetPopupShell( params.popup )
-		,	$iFrames = $shell ? $shell.find('iframe,video') : false;
-		if($iFrames && $iFrames.size()) {
+			,	$iFrames = $shell ? $shell.find('iframe,video') : false;
+		if($iFrames && $iFrames.length) {
 			$iFrames.each(function(){
 				jQuery(this).data('original-src', jQuery(this).attr('src'));
 				jQuery(this).attr('src', '');
@@ -687,11 +728,11 @@ function _ppsCheckPlayVideo(params) {
 	params = params || {};
 	if(_ppsIsIframeForHide( params )) {
 		var $shell = params.shell ? params.shell : ppsGetPopupShell( params.popup )
-		,	$iFrames = $shell ? $shell.find('iframe,video') : false;
-		if($iFrames && $iFrames.size()) {
+			,	$iFrames = $shell ? $shell.find('iframe,video') : false;
+		if($iFrames && $iFrames.length) {
 			$iFrames.each(function(){
 				var originalSrc = jQuery(this).data('original-src')
-				,	src = jQuery(this).attr('src');
+					,	src = jQuery(this).attr('src');
 				if(originalSrc && originalSrc != '' && (!src || src == '')) {
 					jQuery(this).attr('src', originalSrc);
 				}
@@ -703,11 +744,11 @@ function _ppsCheckStopVideo(params) {
 	params = params || {};
 	if(_ppsIsIframeForHide( params )) {
 		var $shell = params.shell ? params.shell : ppsGetPopupShell( params.popup )
-		,	$iFrames = $shell ? $shell.find('iframe,video') : false;
+			,	$iFrames = $shell ? $shell.find('iframe,video') : false;
 		if(params.popup.params.tpl.video_extra_full_screen) {
 			return;
 		}
-		if($iFrames && $iFrames.size()) {
+		if($iFrames && $iFrames.length) {
 			$iFrames.each(function(){
 				jQuery(this).attr('src', '');
 			});
@@ -719,7 +760,7 @@ function _ppsCheckInnerScripts(params) {
 	var $shell = params.shell ? params.shell : ppsGetPopupShell( params.popup )
 	// Check scripts in description, and execute them if they are there
 	var $scripts = $shell.find('script');
-	if($scripts && $scripts.size()) {
+	if($scripts && $scripts.length) {
 		$scripts.each(function(){
 			var scriptSrc = jQuery(this).attr('src');
 			if(scriptSrc && scriptSrc != '') {
@@ -731,8 +772,8 @@ function _ppsCheckInnerScripts(params) {
 function _ppsCheckMap(params) {
 	params = params || {};
 	var shell = params.shell ? params.shell : ppsGetPopupShell( params.popup )
-	,	maps = shell.find('.gmp_map_opts');
-	if(maps && maps.size()) {
+		,	maps = shell.find('.gmp_map_opts');
+	if(maps && maps.length) {
 		// For case we need to wait until gmap scripts will be loaded
 		if(typeof(gmpGetMapByViewId) === 'undefined') {
 			setTimeout(function(){
@@ -742,7 +783,7 @@ function _ppsCheckMap(params) {
 		}
 		maps.each(function(){
 			var viewId = jQuery(this).data('view-id')
-			,	map = gmpGetMapByViewId(viewId);
+				,	map = gmpGetMapByViewId(viewId);
 			if(map) {	// If map is already there - just refresh it after popup was shown
 				map.fullRefresh ? map.fullRefresh() : map.refresh();	// For compatibilty with old methids, where there are no fullRefresh() method
 			} else {	// If there are no map - but it should be there - just create it
@@ -755,8 +796,8 @@ function _ppsCheckMap(params) {
 function _ppsCheckContactForm(params) {
 	params = params || {};
 	var $shell = params.shell ? params.shell : ppsGetPopupShell( params.popup )
-	,	$forms = $shell.find('.cfsFormShell');
-	if($forms && $forms.size()) {
+		,	$forms = $shell.find('.cfsFormShell');
+	if($forms && $forms.length) {
 		// For case we need to wait until gmap scripts will be loaded
 		if(typeof(g_cfsForms) === 'undefined') {
 			setTimeout(function(){
@@ -764,9 +805,12 @@ function _ppsCheckContactForm(params) {
 			}, 1000);
 			return;
 		}
+		if(typeof(cfsCheckInitForms) !== 'undefined') {
+			cfsCheckInitForms($shell);
+		}
 		$forms.each(function(){
 			var viewHtmlId = jQuery(this).attr('id')
-			,	form = g_cfsForms.getByViewHtmlId( viewHtmlId );
+				,	form = g_cfsForms.getByViewHtmlId( viewHtmlId );
 			if(form) {
 				form.refresh();
 			} else {	// If there are no form - but it should be there - just create it
@@ -782,8 +826,8 @@ function _ppsCheckContactForm(params) {
 function _ppsSocialIcons(params) {
 	params = params || {};
 	var shell = params.shell ? params.shell : ppsGetPopupShell( params.popup )
-	,	icons = shell.find('.supsystic-social-sharing:not(.supsystic-social-sharing-loaded)');
-	if(icons && icons.size() && typeof(window.initSupsysticSocialSharing) !== 'undefined') {
+		,	icons = shell.find('.supsystic-social-sharing:not(.supsystic-social-sharing-loaded)');
+	if(icons && icons.length && typeof(window.initSupsysticSocialSharing) !== 'undefined') {
 		icons.each(function(){
 			window.initSupsysticSocialSharing(this);
 		});
@@ -792,15 +836,15 @@ function _ppsSocialIcons(params) {
 function _ppsCheckPublication(params) {
 	params = params || {};
 	var shell = params.shell ? params.shell : ppsGetPopupShell( params.popup )
-	,	publications = shell.find('.dpsBookStageShell');
+		,	publications = shell.find('.dpsBookStageShell');
 
-	if(publications && publications.size()) {
+	if(publications && publications.length) {
 		publications.each(function(){
 			if(typeof(dpsBookMng) == 'undefined') {
 				dpsBookMng = new dpsBookManager();
 			}
 			var id = jQuery(this).find('.dpsBook').data('bookid')
-			,	publication = dpsBookMng.getById(id);
+				,	publication = dpsBookMng.getById(id);
 			if(publication) {	// If publication is already there - just reinit it after popup was shown
 				publication.getHtml().turn('destroy');
 				publication.getStage().parent().html( publication._baseHtml );
@@ -817,18 +861,29 @@ function _ppsPositionPopup( params ) {
 	params.popup = params.popup && typeof(params.popup) !== 'object' ? ppsGetPopupById( params.popup ) : params.popup;
 	var $shell = params.shell ? params.shell : ppsGetPopupShell( params.popup );
 	if($shell) {
-		var wndWidth = params.wndWidth ? params.wndWidth : jQuery(window).width()
+		var wndWidthOffset = 10, // at least 10px;
+			wndHeightOffset = 10, // at least 10px;
+			leftOffset,
+			btnClose;
+
+		btnClose = $shell.find('.ppsPopupClose');
+		if(btnClose.css('position') == 'absolute') {
+			wndWidthOffset = +wndWidthOffset - parseFloat(btnClose.css('right'));
+		}
+		leftOffset = wndWidthOffset / 2;
+		var	wndWidth = params.wndWidth ? params.wndWidth : jQuery(window).width()
 		,	wndHeight = params.wndHeight ? params.wndHeight : jQuery(window).height()
-		,	shellWidth = $shell.outerWidth()
+		,	shellWidth = $shell.outerWidth(true)
 		,	shellHeight = $shell.outerHeight()
 		,	resized = false
 		,	resizedW = false
 		,	resizedH = false
-		,	compareWidth = wndWidth - 10	// less then 10px
-		,	compareHeight = wndHeight - 10	// less then 10px
+		,	compareWidth = wndWidth - wndWidthOffset
+		,	compareHeight = wndHeight - wndHeightOffset
 		,	resizeDivision = 1
-		,	responsiveInside = $shell.hasClass('ppsResponsiveInside');
-		
+		,	responsiveInside = $shell.hasClass('ppsResponsiveInside')
+		,	isResponsedByWidthOnly = false;
+
 		if(shellHeight >= compareHeight && !responsiveInside && !(params.popup && params.popup._notResizeHeight)) {
 			var initialHeight = params.recalc ? false : parseInt($shell.data('init-height'));
 			if(!initialHeight) {
@@ -854,6 +909,7 @@ function _ppsPositionPopup( params ) {
 			if(params.popup.params.tpl.responsive_mode == 'width_only') {
 				if(resizedW) {
 					var totalPadding = shellWidth - $shell.width();	// outer width - just width == paddings
+					isResponsedByWidthOnly = shellWidth >= wndWidth;
 					$shell.css({
 						'width': 'calc(100% - '+ (totalPadding + 20)+ 'px)'
 					});
@@ -895,23 +951,33 @@ function _ppsPositionPopup( params ) {
 			}
 		}
 		params.popup.resized_for_wnd = resized;
-		jQuery(document).trigger('ppsResize', {popup: params.popup, shell: $shell, wndWidth: wndWidth, wndHeight: wndHeight});
+		jQuery(document).trigger('ppsResize', {popup: params.popup, shell: $shell, wndWidth: wndWidth, wndHeight: wndHeight, isResponsedByWidthOnly: isResponsedByWidthOnly});
 		if(!$shell.positioned_outside) {	// Make available - re-position popup from outside modules
 			var left = (wndWidth - shellWidth) / 2
 			,	top = (wndHeight - shellHeight) / 2;
 			left = left < 0 ? 0 : left;
 			top = top < 0 ? 0 : top;
 			if(resizedW) {
-				left -= (initialWidth - initialWidth * widthDivision) / 2;
+				left -= ((initialWidth - initialWidth * widthDivision) / 2) - leftOffset;
 			}
 			if(resizedH && params.popup.params.tpl.responsive_mode != 'width_only') {
 				top -= (initialHeight - initialHeight * resizeDivision) / 2;
 			}
-			
 			$shell.css({
 				'left': left
 			,	'top': top
 			});
+			if(isResponsedByWidthOnly) {
+				$shell.css({
+					'transform': 'translate(-50%, 0)',
+					'left': '0'
+				});
+				setTimeout(function() {
+					$shell.css({
+						'left': '50%'
+					});
+				}, params.popup.params.tpl.anim_duration - 20);
+			}
 		}
 	} else {
 		console.log('CAN NOT FIND POPUP SHELL TO RESIZE!');
@@ -920,21 +986,23 @@ function _ppsPositionPopup( params ) {
 function ppsClosePopup(popup) {
 	if(isNumericPps( popup ))
 		popup = ppsGetPopupById( popup );
-	var shell = ppsGetPopupShell( popup );
+	var $shell = ppsGetPopupShell( popup );
 	if(popup.params.tpl.anim) {
-		_ppsHandlePopupAnimationHide( popup, shell );
+		_ppsHandlePopupAnimationHide( popup, $shell );
 	} else {
-		shell.hide();
+		__ppsHideShell({shell: $shell, popup: popup});
 		ppsHideBgOverlay( popup );
 	}
-	_ppsCheckStopVideo({shell: shell, popup: popup});
+	_ppsCheckStopVideo({shell: $shell, popup: popup});
 	// Check disable wnd scrolling
 	if(popup.params.tpl.dsbl_wnd_scroll) {
 		enableScrollPps('html');
 		enableScrollPps('body');
 	}
 	// Check redirect after close option
-	if(popup.params.tpl.reidrect_on_close && popup.params.tpl.reidrect_on_close != '') {
+	if(parseInt(popup.params.tpl.close_redirect_to_btn_url) && popup.params.close_redirect_to_btn_url_href) {
+		toeRedirect(popup.params.close_redirect_to_btn_url_href, parseInt(popup.params.tpl.reidrect_on_close_new_wnd));
+	} else if(popup.params.tpl.reidrect_on_close && popup.params.tpl.reidrect_on_close != '') {
 		toeRedirect(popup.params.tpl.reidrect_on_close, parseInt(popup.params.tpl.reidrect_on_close_new_wnd));
 	}
 	_ppsPopupAddStat( popup, 'close' );	// Save close popup statistics
@@ -964,8 +1032,8 @@ function ppsInitBgOverlay() {
 	jQuery('#ppsPopupBgOverlay').click(function(){
 		if(ppsPopups && ppsPopups.length) {
 			for(var i = 0; i < ppsPopups.length; i++) {
-				if(ppsPopups[ i ] 
-					&& ppsPopups[ i ].params 
+				if(ppsPopups[ i ]
+					&& ppsPopups[ i ].params
 					&& ppsPopups[ i ].params.main
 					&& ppsPopups[ i ].params.main.close_on
 					&& ppsPopups[ i ].params.main.close_on == 'overlay_click'
@@ -1019,34 +1087,34 @@ function ppsShowBgOverlay(popup) {
 							case 'stretch':
 								$overlay.css({
 									'background-position': 'center center'
-								,	'background-repeat': 'no-repeat'
-								,	'background-attachment': 'fixed'
-								,	'-webkit-background-size': 'cover'
-								,	'-moz-background-size': 'cover'
-								,	'-o-background-size': 'cover'
-								,	'background-size': 'cover'
+									,	'background-repeat': 'no-repeat'
+									,	'background-attachment': 'fixed'
+									,	'-webkit-background-size': 'cover'
+									,	'-moz-background-size': 'cover'
+									,	'-o-background-size': 'cover'
+									,	'background-size': 'cover'
 								});
 								break;
 							case 'center':
 								$overlay.css({
 									'background-position': 'center center'
-								,	'background-repeat': 'no-repeat'
-								,	'background-attachment': 'scroll'
-								,	'-webkit-background-size': 'auto'
-								,	'-moz-background-size': 'auto'
-								,	'-o-background-size': 'auto'
-								,	'background-size': 'auto'
+									,	'background-repeat': 'no-repeat'
+									,	'background-attachment': 'scroll'
+									,	'-webkit-background-size': 'auto'
+									,	'-moz-background-size': 'auto'
+									,	'-o-background-size': 'auto'
+									,	'background-size': 'auto'
 								});
 								break;
 							case 'tile':
 								$overlay.css({
 									'background-position': 'left top'
-								,	'background-repeat': 'repeat'
-								,	'background-attachment': 'scroll'
-								,	'-webkit-background-size': 'auto'
-								,	'-moz-background-size': 'auto'
-								,	'-o-background-size': 'auto'
-								,	'background-size': 'auto'
+									,	'background-repeat': 'repeat'
+									,	'background-attachment': 'scroll'
+									,	'-webkit-background-size': 'auto'
+									,	'-moz-background-size': 'auto'
+									,	'-o-background-size': 'auto'
+									,	'background-size': 'auto'
 								});
 								break;
 						}
@@ -1073,7 +1141,7 @@ function ppsHideBgOverlay(popup) {
 function ppsBindPopupActions(popup) {
 	var $shell = ppsGetPopupShell( popup );
 	// TODO: make usage of ppsPopupSubscribeSuccess() function only after success subscribe process, not after subscribe action
-	if($shell.find('.ppsSubscribeForm_aweber').size()) {
+	if($shell.find('.ppsSubscribeForm_aweber').length) {
 		$shell.find('.ppsSubscribeForm_aweber').submit(function(){
 			if(jQuery(this).find('input[name=email]').val()) {
 				ppsPopupSubscribeSuccess( popup );
@@ -1081,26 +1149,26 @@ function ppsBindPopupActions(popup) {
 		});
 	}
 	// Check build-in PopUp subscribe links
-	if($shell.find('.ppsSmLink').size()) {
+	if($shell.find('.ppsSmLink').length) {
 		$shell.find('.ppsSmLink').click(function(){
 			_ppsPopupSetActionDone(popup, 'share', jQuery(this).data('type'));
 		});
 	}
 	// Check Social Share by Supsystic plugin links in PopUp
-	if($shell.find('.supsystic-social-sharing').size()) {
+	if($shell.find('.supsystic-social-sharing').length) {
 		$shell.find('.supsystic-social-sharing a').click(function(){
 			var socHost = this.hostname
-			,	socType = '';	// Social network type key
+				,	socType = '';	// Social network type key
 			if(socHost && socHost != '') {
 				switch(socHost) {
-					case 'www.facebook.com': 
-						socType = 'facebook'; 
+					case 'www.facebook.com':
+						socType = 'facebook';
 						break;
 					case 'plus.google.com':
-						socType = 'googleplus'; 
+						socType = 'googleplus';
 						break;
 					case 'twitter.com':
-						socType = 'twitter'; 
+						socType = 'twitter';
 						break;
 					default:
 						socType = socHost;
@@ -1110,16 +1178,16 @@ function ppsBindPopupActions(popup) {
 			}
 		});
 	}
-	if($shell.find('.fb_iframe_widget').size()) {
+	if($shell.find('.fb_iframe_widget').length) {
 		_ppsBindFbLikeBtnAction(popup);
 	}
 	/*For age verification templates*/
 	if(popup.type == 'age_verify') {
 		var $verifyBtns = $shell.find('.ppsBtn');
-		if($verifyBtns && $verifyBtns.size()) {
+		if($verifyBtns && $verifyBtns.length) {
 			$verifyBtns.click(function(){
 				var btnClasses = jQuery(this).attr('class').split(' ')
-				,	btnId = 0;
+					,	btnId = 0;
 				if(btnClasses && btnClasses.length) {
 					for(var i = 0; i < btnClasses.length; i++) {
 						if(btnClasses[ i ].indexOf('ppsBtn_') === 0) {
@@ -1167,9 +1235,9 @@ function ppsPopupSubscribeSuccess(popup, params) {
 function _ppsPopupBindDelay(popup, delayKey, delayEnbKey) {
 	if(popup && isNumericPps( popup ))
 		popup = ppsGetPopupById( popup );
-	var delay = (popup.params.main[ delayEnbKey ] 
-			&& parseInt(popup.params.main[ delayEnbKey ])
-			&& parseInt( popup.params.main[ delayKey ] ))
+	var delay = (popup.params.main[ delayEnbKey ]
+		&& parseInt(popup.params.main[ delayEnbKey ])
+		&& parseInt( popup.params.main[ delayKey ] ))
 		? (parseInt(popup.params.main[ delayKey ]) * 1000)
 		: 0;
 	if(delay) {
@@ -1221,7 +1289,7 @@ function ppsBindPopupForceShow( popup ) {
 function ppsCheckPopupGetNotices( popup ) {
 	var res = {
 		errors: getDataLcs('ppsErrors')
-	,	messages: getDataLcs('ppsMsgs')
+		,	messages: getDataLcs('ppsMsgs')
 	};
 	if(res.errors)
 		res.error = true;
@@ -1238,40 +1306,40 @@ function _ppsCheckIsPageCached() {
 	if(g_ppsIsPageCachedChecked)	// It was computed before - ignore one more compilation
 		return g_ppsIsPageCached;
 	jQuery('*:not(iframe,video,object)').contents().filter(function(){
-        return this.nodeType == 8;
-    }).each(function(i, e){
-		if(e.nodeValue 
+		return this.nodeType == 8;
+	}).each(function(i, e){
+		if(e.nodeValue
 			&& (e.nodeValue.indexOf('Performance optimized by W3 Total Cache') !== -1
 				|| e.nodeValue.indexOf('Cached page generated by WP-Super-Cache') !== -1)
 		) {
 			g_ppsIsPageCached = true;
 			return false;
 		}
-    });
+	});
 	g_ppsIsPageCachedChecked = true;
 	return g_ppsIsPageCached;
 }
 function _ppsUpdatePopupNonces( popup ) {
 	if(!popup._nonces_updated) {	// Update them only one time per session for each PopUp
 		var $shell = ppsGetPopupShell( popup )
-		,	$forms = $shell.find('form')
-		,	getFor = []
-		,	tryGetFor = ['ppsSubscribeForm', 'ppsLoginForm', 'ppsRegForm'];
-		if($forms && $forms.size()) {
+			,	$forms = $shell.find('form')
+			,	getFor = []
+			,	tryGetFor = ['ppsSubscribeForm', 'ppsLoginForm', 'ppsRegForm'];
+		if($forms && $forms.length) {
 			$forms.each(function(){
 				for(var i = 0; i < tryGetFor.length; i++) {
 					if(jQuery(this).hasClass( tryGetFor[ i ] )) {
 						getFor.push( tryGetFor[ i ] );
 					}
 				}
-				
+
 			});
 		}
 		if(getFor && getFor.length) {
 			jQuery.sendFormPps({
 				msgElID: 'noMessages'
-			,	data: {mod: 'popup', action: 'updateNonce', id: popup.id, get_for: getFor}
-			,	onSuccess: function(res) {
+				,	data: {mod: 'popup', action: 'updateNonce', id: popup.id, get_for: getFor}
+				,	onSuccess: function(res) {
 					if(!res.error && res.data.update_for) {
 						var $shell = ppsGetPopupShell( popup );
 						for(var className in res.data.update_for) {
@@ -1288,15 +1356,28 @@ function _ppsBindClickHrefSaving() {
 	for(var i = 0; i < ppsPopups.length; i++) {
 		if(ppsPopups[ i ].params
 			&& ppsPopups[ i ].params.tpl
-			&& parseInt(ppsPopups[ i ].params.tpl.sub_redirect_to_btn_url)
+			&& (parseInt(ppsPopups[ i ].params.tpl.sub_redirect_to_btn_url) || parseInt(ppsPopups[ i ].params.tpl.close_redirect_to_btn_url))
 		) {
-			var $btn = jQuery('[onclick*="ppsShowPopup('+ ppsPopups[ i ].id+ ')"]')
-			,	href = $btn && $btn.size() ? $btn.attr('href') : false;
-			if(href && href != '') {
-				ppsPopups[ i ].params.sub_redirect_to_btn_url_href = href;
-			}
+			var $btn = jQuery('[onclick*="ppsShowPopup('+ ppsPopups[ i ].id+ ')"]');
+			ppsPopups[ i ] = _ppsSaveClickHref(ppsPopups[ i ], $btn);
 		}
 	}
+}
+function _ppsSaveClickHref(popup, $element) {
+	if(popup.params
+		&& popup.params.tpl
+		&& $element
+		&& $element.length
+	) {
+		var href = $element.attr('href');
+		if(parseInt(popup.params.tpl.sub_redirect_to_btn_url)) {
+			popup.params.sub_redirect_to_btn_url_href = href;
+		}
+		if(parseInt(popup.params.tpl.close_redirect_to_btn_url)) {
+			popup.params.close_redirect_to_btn_url_href = href;
+		}
+	}
+	return popup;
 }
 function ppsAddShowClb( id, clb ) {
 	if(!g_ppsShowCallbacks[ id ]) {

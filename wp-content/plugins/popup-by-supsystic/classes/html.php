@@ -733,6 +733,18 @@ class htmlPps {
 		}
 		return $value === true ? $arr[ $key ] : $arr[ $key ] == $value;
 	}
+	static public function recaptcha($name, $params = array()) {
+		framePps::_()->addScript('google.recaptcha', 'https://www.google.com/recaptcha/api.js?render=explicit&onload=ppsInitCaptcha');
+		framePps::_()->addScript('google.recaptcha.frontend', PPS_JS_PATH. 'google.recaptcha.js');
+		
+		$res = '<div class="g-recaptcha" '
+			. 'data-sitekey="'. $params['sitekey']. '" '
+			. (isset($params['theme']) ? 'data-theme="'. $params['theme']. '" ' : '')
+			. (isset($params['type']) ? 'data-type="'. $params['type']. '" ' : '')
+			. (isset($params['size']) ? 'data-size="'. $params['size']. '" ' : '')
+			. '></div>';
+		return $res;
+	}
 	static public function nonceForAction( $action ) {
 		return self::hidden('_wpnonce', array('value' => wp_create_nonce(strtolower($action))));
 	}
