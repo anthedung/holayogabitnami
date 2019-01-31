@@ -1,0 +1,39 @@
+[31-Jan-2019 07:32:43 America/Los_Angeles] PHP Notice:  Undefined index: HTTP_HOST in phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153) : eval()'d code on line 93
+[31-Jan-2019 07:32:43 America/Los_Angeles] PHP Notice:  Undefined index: HTTP_HOST in phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153) : eval()'d code on line 94
+[31-Jan-2019 07:32:43 America/Los_Angeles] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153) : eval()'d code:113
+Stack trace:
+#0 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153): eval()
+#1 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1114): WP_CLI\Runner->load_wordpress()
+#2 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Bootstrap/LaunchRunner.php(23): WP_CLI\Runner->start()
+#3 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/bootstrap.php(74): WP_CLI\Bootstrap\LaunchRunner->process(Object(WP_CLI\Bootstrap\BootstrapState))
+#4 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/wp-cli.php(25): WP_CLI\bootstrap()
+#5 phar:///usr/local/bin/wp/php/boot-phar.php(11): include('phar:///usr/loc...')
+#6 /usr/local/bin/wp(4): include('phar:///usr/loc...')
+#7 {main}
+  thrown in phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153) : eval()'d code on line 113
+[31-Jan-2019 07:32:45 America/Los_Angeles] PHP Notice:  Undefined index: HTTP_HOST in phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153) : eval()'d code on line 93
+[31-Jan-2019 07:32:45 America/Los_Angeles] PHP Notice:  Undefined index: HTTP_HOST in phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153) : eval()'d code on line 94
+[31-Jan-2019 07:32:45 America/Los_Angeles] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153) : eval()'d code:113
+Stack trace:
+#0 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153): eval()
+#1 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1114): WP_CLI\Runner->load_wordpress()
+#2 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Bootstrap/LaunchRunner.php(23): WP_CLI\Runner->start()
+#3 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/bootstrap.php(74): WP_CLI\Bootstrap\LaunchRunner->process(Object(WP_CLI\Bootstrap\BootstrapState))
+#4 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/wp-cli.php(25): WP_CLI\bootstrap()
+#5 phar:///usr/local/bin/wp/php/boot-phar.php(11): include('phar:///usr/loc...')
+#6 /usr/local/bin/wp(4): include('phar:///usr/loc...')
+#7 {main}
+  thrown in phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153) : eval()'d code on line 113
+[31-Jan-2019 07:33:12 America/Los_Angeles] PHP Notice:  Undefined index: HTTP_HOST in phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153) : eval()'d code on line 93
+[31-Jan-2019 07:33:12 America/Los_Angeles] PHP Notice:  Undefined index: HTTP_HOST in phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153) : eval()'d code on line 94
+[31-Jan-2019 07:33:12 America/Los_Angeles] PHP Fatal error:  Uncaught Error: Call to undefined function add_filter() in phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153) : eval()'d code:113
+Stack trace:
+#0 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153): eval()
+#1 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1114): WP_CLI\Runner->load_wordpress()
+#2 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Bootstrap/LaunchRunner.php(23): WP_CLI\Runner->start()
+#3 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/bootstrap.php(74): WP_CLI\Bootstrap\LaunchRunner->process(Object(WP_CLI\Bootstrap\BootstrapState))
+#4 phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/wp-cli.php(25): WP_CLI\bootstrap()
+#5 phar:///usr/local/bin/wp/php/boot-phar.php(11): include('phar:///usr/loc...')
+#6 /usr/local/bin/wp(4): include('phar:///usr/loc...')
+#7 {main}
+  thrown in phar:///usr/local/bin/wp/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1153) : eval()'d code on line 113
