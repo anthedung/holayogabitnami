@@ -91,9 +91,9 @@ ini_set('error_log', dirname(__FILE__) . '/error_log.txt');
  *
 */
 
-define('WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST'] . '/');
-define('WP_HOME', 'http://' . $_SERVER['HTTP_HOST'] . '/');
-
+define('WP_SITEURL', 'https://' . $_SERVER['HTTP_HOST'] . '/');
+define('WP_HOME', 'https://' . $_SERVER['HTTP_HOST'] . '/');
+#define('FORCE_SSL_ADMIN', true);
 
 /** Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
